@@ -1,0 +1,383 @@
+{
+    "countries": [
+        {
+            "countryCode": "ae",
+            "countryName": "Émirats Arabes Unis",
+            "capital": "Abou Dhabi",
+            "lat": 24.453835,
+            "lon": 54.377401
+        },
+        {
+            "countryCode": "ar",
+            "countryName": "Argentine",
+            "capital": "Buenos Aires",
+            "lat": -34.607568,
+            "lon": -58.437089
+        },
+        {
+            "countryCode": "at",
+            "countryName": "Autriche",
+            "capital": "Vienne",
+            "lat": 48.208354,
+            "lon": 16.372504
+        },
+        {
+            "countryCode": "au",
+            "countryName": "Australie",
+            "capital": "Canberra",
+            "lat": -35.297591,
+            "lon": 149.101268
+        },
+        {
+            "countryCode": "be",
+            "countryName": "Belgique",
+            "capital": "Bruxelles",
+            "lat": 50.846557,
+            "lon": 4.351697
+        },
+        {
+            "countryCode": "bg",
+            "countryName": "Bulgarie",
+            "capital": "Sofia",
+            "lat": 42.697863,
+            "lon": 23.322179
+        },
+        {
+            "countryCode": "br",
+            "countryName": "Brésil",
+            "capital": "Brasilia",
+            "lat": -15.796489,
+            "lon":-47.866662
+        },
+        {
+            "countryCode": "ca",
+            "countryName": "Canada",
+            "capital": "Ottawa",
+            "lat": 45.421106,
+            "lon": -75.690308
+        },
+        {
+            "countryCode": "ch",
+            "countryName": "Suisse",
+            "capital": "Berne",
+            "lat": 46.948271,
+            "lon": 7.451451
+        },
+        {
+            "countryCode": "cn",
+            "countryName": "Chine",
+            "capital": "Pékin",
+            "lat": 39.906217,
+            "lon": 116.391276
+        },
+        {
+            "countryCode": "co",
+            "countryName": "Colombie",
+            "capital": "Bogota",
+            "lat": 4.653333,
+            "lon": -74.083652
+        },
+        {
+            "countryCode": "cu",
+            "countryName": "Cuba",
+            "capital": "La Havane",
+            "lat": 23.135305,
+            "lon": -82.358963
+        },
+        {
+            "countryCode": "cz",
+            "countryName": "République Tchèque",
+            "capital": "Prague",
+            "lat": 50.087465,
+            "lon": 14.421254
+        },
+        {
+            "countryCode": "de",
+            "countryName": "Allemagne",
+            "capital": "Berlin",
+            "lat": 52.517037,
+            "lon": 13.38886
+        },
+        {
+            "countryCode": "eg",
+            "countryName": "Égypte",
+            "capital": "Le Caire",
+            "lat": 30.044388,
+            "lon": 31.235726
+        },
+        {
+            "countryCode": "fr",
+            "countryName": "France",
+            "capital": "Paris",
+            "lat": 48.856697,
+            "lon": 2.351462
+        },
+        {
+            "countryCode": "gb",
+            "countryName": "Royaume-Uni",
+            "capital": "Londres",
+            "lat": 51.507322,
+            "lon": -0.127647
+        },
+        {
+            "countryCode": "gr",
+            "countryName": "Grèce",
+            "capital": "Athènes",
+            "lat": 37.983941,
+            "lon": 23.728305
+        },
+        {
+            "countryCode": "hk",
+            "countryName": "Hong Kong",
+            "capital": "Hong Kong",
+            "lat": 22.279328,
+            "lon": 114.162813
+        },
+        {
+            "countryCode": "hu",
+            "countryName": "Hongrie",
+            "capital": "Budapest",
+            "lat": 47.48139,
+            "lon": 19.146094
+        },
+        {
+            "countryCode": "id",
+            "countryName": "Indonésie",
+            "capital": "Jakarta",
+            "lat": -6.175394,
+            "lon": 106.827183
+        },
+        {
+            "countryCode": "ie",
+            "countryName": "Irlande",
+            "capital": "Dublin",
+            "lat": 53.349765,
+            "lon": -6.260273
+        },
+        {
+            "countryCode": "il",
+            "countryName": "Israël",
+            "capital": "Jérusalem",
+            "lat": 31.7959242,
+            "lon": 35.2119808
+        },
+        {
+            "countryCode": "in",
+            "countryName": "Inde",
+            "capital": "New Delhi",
+            "lat": 28.613895,
+            "lon": 77.209006
+        },
+        {
+            "countryCode": "it",
+            "countryName": "Italie",
+            "capital": "Rome",
+            "lat": 41.89332,
+            "lon": 12.482932
+        },
+        {
+            "countryCode": "jp",
+            "countryName": "Japon",
+            "capital": "Tokyo",
+            "lat": 35.682839,
+            "lon": 139.759455
+        },
+        {
+            "countryCode": "kr",
+            "countryName": "Corée du Sud",
+            "capital": "Séoul",
+            "lat": 37.566679,
+            "lon": 126.978291
+        },
+        {
+            "countryCode": "lt",
+            "countryName": "Lituanie",
+            "capital": "Vilnius",
+            "lat": 54.687046,
+            "lon": 25.282911
+        },
+        {
+            "countryCode": "lv",
+            "countryName": "Lettonie",
+            "capital": "Riga",
+            "lat": 56.949398,
+            "lon": 24.105185
+        },
+        {
+            "countryCode": "ma",
+            "countryName": "Maroc",
+            "capital": "Rabat",
+            "lat": 33.966742,
+            "lon": -6.842641
+        },
+        {
+            "countryCode": "mx",
+            "countryName": "Mexique",
+            "capital": "Mexico",
+            "lat": 19.43263,
+            "lon": -99.133178
+        },
+        {
+            "countryCode": "my",
+            "countryName": "Malaisie",
+            "capital": "Kuala Lumpur",
+            "lat": 3.151696,
+            "lon": 101.694237
+        },
+        {
+            "countryCode": "ng",
+            "countryName": "Nigéria",
+            "capital": "Abuja",
+            "lat": 9.064331,
+            "lon": 7.489297
+        },
+        {
+            "countryCode": "nl",
+            "countryName": "Pays-Bas",
+            "capital": "Amsterdam",
+            "lat": 52.37276,
+            "lon": 4.893604
+        },
+        {
+            "countryCode": "no",
+            "countryName": "Norvège",
+            "capital": "Oslo",
+            "lat": 59.91333,
+            "lon": 10.73897
+        },
+        {
+            "countryCode": "nz",
+            "countryName": "Nouvelle-Zélande",
+            "capital": "Wellington",
+            "lat": -41.288795,
+            "lon": 174.777211
+        },
+        {
+            "countryCode": "ph",
+            "countryName": "Philippines",
+            "capital": "Manille",
+            "lat": 14.590733,
+            "lon": 120.980967
+        },
+        {
+            "countryCode": "pl",
+            "countryName": "Pologne",
+            "capital": "Varsovie",
+            "lat": 52.231958,
+            "lon": 21.006725
+        },
+        {
+            "countryCode": "pt",
+            "countryName": "Portugal",
+            "capital": "Lisbonne",
+            "lat": 38.707751,
+            "lon": -9.136592
+        },
+        {
+            "countryCode": "ro",
+            "countryName": "Roumanie",
+            "capital": "Bucarest",
+            "lat": 44.436141,
+            "lon": 26.10272
+        },
+        {
+            "countryCode": "rs",
+            "countryName": "Serbie",
+            "capital": "Belgrade",
+            "lat": 44.817813,
+            "lon": 20.456897
+        },
+        {
+            "countryCode": "ru",
+            "countryName": "Russie",
+            "capital": "Moscou",
+            "lat": 55.750446,
+            "lon": 37.617494
+        },
+        {
+            "countryCode": "sa",
+            "countryName": "Arabie Saoudite",
+            "capital": "Riyad",
+            "lat": 24.638916,
+            "lon": 46.71601
+        },
+        {
+            "countryCode": "se",
+            "countryName": "Suède",
+            "capital": "Stockholm",
+            "lat": 59.325117,
+            "lon": 18.071094
+        },
+        {
+            "countryCode": "sg",
+            "countryName": "Singapour",
+            "capital": "Singapour",
+            "lat": 1.357107,
+            "lon": 103.819499
+        },
+        {
+            "countryCode": "si",
+            "countryName": "Slovénie",
+            "capital": "Ljubjana",
+            "lat": 42.174614,
+            "lon": 20.898488
+        },
+        {
+            "countryCode": "sk",
+            "countryName": "Slovaquie",
+            "capital": "Bratislava",
+            "lat": 48.151699,
+            "lon": 17.109306
+        },
+        {
+            "countryCode": "th",
+            "countryName": "Thaïlande",
+            "capital": "Bangkok",
+            "lat": 13.754424,
+            "lon": 100.49304
+        },
+        {
+            "countryCode": "tr",
+            "countryName": "Turquie",
+            "capital": "Ankara",
+            "lat": 39.920789,
+            "lon": 32.854041
+        },
+        {
+            "countryCode": "tw",
+            "countryName": "Taïwan",
+            "capital": "Taipei",
+            "lat": 25.03752,
+            "lon": 121.56368
+        },
+        {
+            "countryCode": "ua",
+            "countryName": "Ukraine",
+            "capital": "Kiev",
+            "lat": 50.450034,
+            "lon": 30.524136
+        },
+        {
+            "countryCode": "us",
+            "countryName": "États-Unis",
+            "capital": "Washington",
+            "lat": 38.895037,
+            "lon": -77.036543
+        },
+        {
+            "countryCode": "ve",
+            "countryName": "Venezuela",
+            "capital": "Caracas",
+            "lat": 10.506098,
+            "lon": -66.914602
+        },
+        {
+            "countryCode": "za",
+            "countryName": "Afrique du Sud",
+            "capital": "Le Cap",
+            "lat": -33.928992,
+            "lon": 18.417396
+        }
+        
+    ]
+}

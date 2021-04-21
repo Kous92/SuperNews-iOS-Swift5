@@ -48,19 +48,15 @@ class NewsViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     
     // Au clic sur la ligne de la liste
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
-    {        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "newsSegue", sender: self)
     }
     
     // De la cellule, on transite vers le ViewController de l'article en transférant les données de la cellule
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?)
-    {
-        if let destination = segue.destination as? ArticleViewController
-        {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
+        if let destination = segue.destination as? ArticleViewController{
             // On vérifie que le contenu de l'article existe
-            guard let index = articleTableView.indexPathForSelectedRow?.row else
-            {
+            guard let index = articleTableView.indexPathForSelectedRow?.row else {
                 return
             }
             

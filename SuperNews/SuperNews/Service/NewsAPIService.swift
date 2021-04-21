@@ -38,9 +38,9 @@ class NewsAPIService {
     }()
     */
     
-    init(country: String = "fr")
+    init()
     {
-        self.country = country
+        self.country = ""
         print(url + "&apiKey=" + apiKey)
         initURL = URL(string: url + country + "&apiKey=" + apiKey)!
         
@@ -49,7 +49,10 @@ class NewsAPIService {
         imageSession = URLSession(configuration: config)
     }
     
-    func initializeLocalNews(completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
+    func initializeLocalNews(country: String = "fr", completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
+        self.country = country
+        initURL = URL(string: url + country + "&apiKey=" + apiKey)!
+        print(initURL.absoluteString)
         getNews(url: initURL, completion: completion)
     }
     
