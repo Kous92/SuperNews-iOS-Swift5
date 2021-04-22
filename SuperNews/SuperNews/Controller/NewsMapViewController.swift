@@ -9,25 +9,60 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class NewsMapViewController: UIViewController, MKMapViewDelegate {
+class NewsMapViewController: UIViewController {
 
     @IBOutlet weak var map: MKMapView!
+    
     var countries = [Country]()
     var selectedCountryName = ""
     var selectedCountryCode = ""
+    var locationManager: CLLocationManager?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         map.delegate = self
+        locationManager = CLLocationManager()
+        locationManager?.delegate = self
         
         if countries.count == 0 {
             initializeCountryData()
         }
+        
         // Si l'utilisateur a autorisé l'accès, alors sa position sera marquée d'un point bleu.
-        // map.showsUserLocation = true
+        map.showsUserLocation = true
+        initializePosition()
         placePins()
     }
     
+    private func initializeCountryData() {
+        // Vérification de l'existence du fichier local countries.json
+        guard let path = Bundle.main.path(forResource: "countries", ofType: "json") else {
+            return
+        }
+        
+        let url = URL(fileURLWithPath: path)
+        var countryList: Countries?
+        
+        do {
+            // Récupération des données JSON en type Data
+            let data = try Data(contentsOf: url)
+            
+            // Décodage des données JSON en objets exploitables
+            countryList = try JSONDecoder().decode(Countries.self, from: data)
+            
+            if let result = countryList {
+                // print(result.countries)
+                countries = result.countries
+            } else {
+                print("Échec lors du décodage des données")
+            }
+        } catch {
+            print("ERREUR: \(error)")
+        }
+    }
+}
+
+extension NewsMapViewController: MKMapViewDelegate {
     private func placePins() {
         for i in countries.indices {
             let annotation = MKPointAnnotation()
@@ -58,9 +93,8 @@ class NewsMapViewController: UIViewController, MKMapViewDelegate {
         
         if let annotationView = annotationView, let countryCode = annotation.subtitle {
             annotationView.canShowCallout = true
-            // annotationView.
-            // annotationView.image = UIImage(named: "fr")
             
+            // En fonction du code du pays, le drapeau associé sera affiché sur la carte.
             switch countryCode {
             case "ae":
                 annotationView.image = UIImage(named: "ae")!
@@ -178,6 +212,7 @@ class NewsMapViewController: UIViewController, MKMapViewDelegate {
         return annotationView
     }
     
+    // Au clic sur le "i" de la bulle du marqueur, les news locales associées seront affichées.
     func mapView(_ mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
         if let countryCode = view.annotation?.subtitle, let countryName = view.annotation?.title {
             print("OK pour \(countryCode!)")
@@ -192,7 +227,7 @@ class NewsMapViewController: UIViewController, MKMapViewDelegate {
         print("Annotation sélectionnée: \(String(describing: view.annotation?.title!))")
     }
     
-    // De la fenêtre de l'annotation, on transite vers le ViewController de l'article en transférant les données de la cellule
+    // De la fenêtre de la bulle du marqueur, on transite vers le ViewController de l'article en transférant les données de la cellule
     override func prepare(for segue: UIStoryboardSegue, sender: Any?){
         if let destination = segue.destination as? CountryNewsViewController {
             
@@ -205,31 +240,96 @@ class NewsMapViewController: UIViewController, MKMapViewDelegate {
             destination.countryName = selectedCountryName
         }
     }
+}
+
+extension NewsMapViewController: CLLocationManagerDelegate {
+    @IBAction func locateButton(_ sender: Any) {
+        // On définit une région visible en mètres, on va définir à 10 km.
+        let regionRadius: CLLocationDistance = 10000
+        
+        switch locationManager?.authorizationStatus {
+        case .authorizedAlways, .authorizedWhenInUse:
+            guard let location = locationManager?.location else {
+                return
+            }
+            
+            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            map.setRegion(coordinateRegion, animated: true)
+        
+        default:
+            
+            break
+        }
+    }
     
-    private func initializeCountryData() {
-        // Vérification de l'existence du fichier data.json
-        guard let path = Bundle.main.path(forResource: "countries", ofType: "json") else {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let first = locations.first else {
             return
         }
         
-        let url = URL(fileURLWithPath: path)
-        var countryList: Countries?
+        let authorization = manager.authorizationStatus
         
-        do {
-            // Récupération des données JSON en type Data
-            let data = try Data(contentsOf: url)
+        // Si l'accès au service de localisation est autorisé
+        if authorization == .authorizedAlways || authorization == .authorizedWhenInUse {
+            let x = Double(first.coordinate.longitude)
+            let y = Double(first.coordinate.latitude)
+            print(String(format: "Longitude (x) = %.7f", x))
+            print(String(format: "Latitude (y) = %.7f", y))
+            // getAddress(from: first)
+        }
+    }
+    
+    private func initializePosition() {
+        var authorizedLocation = false
+        
+        // On définit la position par défaut sur Paris
+        let initialLocation = CLLocation(latitude: 48.866667, longitude: 2.333333)
+        
+        // On définit une région visible en mètres, on va définir à 100 km.
+        let regionRadius: CLLocationDistance = 1000000
+        
+        switch locationManager?.authorizationStatus {
+        case .denied: // Option: Jamais
+            print("Accès refusé au service de localisation.")
             
-            // Décodage des données JSON en objets exploitables
-            countryList = try JSONDecoder().decode(Countries.self, from: data)
+            // On affiche une alerte
+            let alert = UIAlertController(title: "Erreur", message: "Vous avez refusé l'accès au service de localisation. Merci de l'autoriser en allant dans Réglages > Confidentialité > Service de localisation > GPSLocation.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+            break
             
-            if let result = countryList {
-                // print(result.countries)
-                countries = result.countries
-            } else {
-                print("Échec lors du décodage des données")
+        case .restricted: // Restreint par le contrôle parental
+            print("Accès restreint au service de localisation par le contrôle parental.")
+            
+            // On affiche une alerte
+            let alert = UIAlertController(title: "Erreur", message: "L'accès au service de localisation est restreint par le contrôle parental.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+            break
+            
+        case .notDetermined:
+            locationManager?.requestWhenInUseAuthorization()
+            
+        default:
+            // L'accès au service de localisation est autorisé
+            locationManager?.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+            
+            // La localisation sera ici mise à jour en temps réel grâce au signal GPS.
+            locationManager?.startUpdatingLocation()
+            authorizedLocation = true
+        }
+        
+        if authorizedLocation {
+            guard let location = locationManager?.location else {
+                return
             }
-        } catch {
-            print("ERREUR: \(error)")
+            
+            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            map.setRegion(coordinateRegion, animated: true)
+            locationManager?.stopUpdatingLocation()
+        } else {
+            let coordinateRegion = MKCoordinateRegion(center: initialLocation.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            map.setRegion(coordinateRegion, animated: true)
         }
     }
 }

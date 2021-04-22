@@ -7,10 +7,9 @@
 
 import UIKit
 
-class CountryNewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class CountryNewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     @IBOutlet weak var articleTableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var countryNewsLabel: UILabel!
     
     var countryArticles = [Article]()
@@ -24,13 +23,11 @@ class CountryNewsViewController: UIViewController, UITableViewDelegate, UITableV
         countryNewsLabel.text = "Pays des news: \(countryName)"
         articleTableView.dataSource = self
         articleTableView.delegate = self
-        searchBar.delegate = self
         
         print("CountryCode = \(countryCode)")
         print("CountryCode = \(countryName)")
         
         newsAPI.country = countryCode
-        /*
         newsAPI.initializeLocalNews(country: countryCode) { [weak self] result in
             switch result {
             case .success(let newsData):
@@ -43,7 +40,6 @@ class CountryNewsViewController: UIViewController, UITableViewDelegate, UITableV
                 print("Pas de données")
             }
         }
- */
     }
     
     // Nombre d'articles.
@@ -80,32 +76,6 @@ class CountryNewsViewController: UIViewController, UITableViewDelegate, UITableV
             // On envoie au ViewController les données de l'article
             destination.article = countryArticles[index]
             destination.image = cell.articleImage.image! // Extraction de l'image du TableViewCell (on évite de refaire un téléchargement asynchrone).
-        }
-    }
-    
-    // Dès qu'on a cliqué sur la barre de recherche
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
-    {
-        searchBar.resignFirstResponder() // Le clavier disparaît (ce n'est pas automatique de base)
-        print(searchBar.text!)
-        
-        guard let search = searchBar.text, !search.isEmpty else {
-            return
-        }
-        
-        let query = search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        countryArticles.removeAll()
-        
-        newsAPI.searchNews(query: query!) { [weak self] result in
-            switch result {
-            case .success(let newsData):
-                self?.countryArticles = newsData
-                DispatchQueue.main.async {
-                    self?.articleTableView.reloadData()
-                }
-            case .failure(_):
-                print("Pas de données")
-            }
         }
     }
     

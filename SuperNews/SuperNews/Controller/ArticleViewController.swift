@@ -61,14 +61,22 @@ class ArticleViewController: UIViewController {
     }
     
     @IBAction func articleWebsiteButton(_ sender: Any) {
-        guard let urlSite = article?.url else
-        {
+        guard let urlSite = article?.url else {
             print("-> ERREUR: URL de la source indisponible.")
             return
         }
         
         // On ouvre le navigateur
-        let safari = SFSafariViewController(url: URL(string: urlSite)!)
+        guard let url = URL(string: urlSite) else {
+            // On affiche une alerte
+            let alert = UIAlertController(title: "Erreur", message: "Une erreur est survenue pour l'ouverture du navigateur avec le lien suivant: \(urlSite).", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+            
+            return
+        }
+        
+        let safari = SFSafariViewController(url: url)
         present(safari, animated: true)
     }
     

@@ -61,6 +61,11 @@ class NewsAPIService {
         getNews(url: URL(string: searchUrl)!, completion: completion)
     }
     
+    func searchCountryLocalNews(query: String, completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
+        let searchUrl = "https://newsapi.org/v2/everything?country=\(country)&q=\(query)&apiKey=" + apiKey
+        getNews(url: URL(string: searchUrl)!, completion: completion)
+    }
+    
     func getNews(url: URL, completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
         let task = URLSession.shared.dataTask(with: url) { (data, response, error) in
             
