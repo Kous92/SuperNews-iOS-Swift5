@@ -7,11 +7,19 @@
 
 import UIKit
 
-class NewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate {
+class NewsViewController: UIViewController {
 
     @IBOutlet weak var articleTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
-    var articles = [Article]()
+    
+    var articles = [Article]() {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                self?.articleTableView.reloadData()
+            }
+        }
+    }
+    
     let newsAPI = NewsAPIService.shared
     
     override func viewDidLoad() {
@@ -33,7 +41,38 @@ class NewsViewController: UIViewController, UITableViewDelegate, UITableViewData
             }
         }
     }
-    
+}
+
+extension NewsViewController: UISearchBarDelegate {
+    // Dès qu'on a cliqué sur la barre de recherche
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
+    {
+        searchBar.resignFirstResponder() // Le clavier disparaît (ce n'est pas automatique de base)
+        print(searchBar.text!)
+        
+        guard let search = searchBar.text, !search.isEmpty else {
+            return
+        }
+        
+        let query = search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        articles.removeAll()
+        
+        newsAPI.searchNews(query: query!) { [weak self] result in
+            switch result {
+            case .success(let newsData):
+                self?.articles = newsData
+                /*
+                DispatchQueue.main.async {
+                    self?.articleTableView.reloadData()
+                }*/
+            case .failure(_):
+                print("Pas de données")
+            }
+        }
+    }
+}
+
+extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     // Nombre d'articles.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return articles.count
@@ -66,32 +105,6 @@ class NewsViewController: UIViewController, UITableViewDelegate, UITableViewData
             // On envoie au ViewController les données de l'article
             destination.article = articles[index]
             destination.image = cell.articleImage.image! // Extraction de l'image du TableViewCell (on évite de refaire un téléchargement asynchrone).
-        }
-    }
-    
-    // Dès qu'on a cliqué sur la barre de recherche
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
-    {
-        searchBar.resignFirstResponder() // Le clavier disparaît (ce n'est pas automatique de base)
-        print(searchBar.text!)
-        
-        guard let search = searchBar.text, !search.isEmpty else {
-            return
-        }
-        
-        let query = search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        articles.removeAll()
-        
-        newsAPI.searchNews(query: query!) { [weak self] result in
-            switch result {
-            case .success(let newsData):
-                self?.articles = newsData
-                DispatchQueue.main.async {
-                    self?.articleTableView.reloadData()
-                }
-            case .failure(_):
-                print("Pas de données")
-            }
         }
     }
 }

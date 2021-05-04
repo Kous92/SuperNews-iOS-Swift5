@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CountryNewsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class CountryNewsViewController: UIViewController {
     
     @IBOutlet weak var articleTableView: UITableView!
     @IBOutlet weak var countryNewsLabel: UILabel!
@@ -42,6 +42,12 @@ class CountryNewsViewController: UIViewController, UITableViewDelegate, UITableV
         }
     }
     
+    @IBAction func backButton(_ sender: Any) {
+        dismiss(animated: true, completion: nil) 
+    }
+}
+
+extension CountryNewsViewController: UITableViewDelegate, UITableViewDataSource {
     // Nombre d'articles.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return countryArticles.count
@@ -77,9 +83,5 @@ class CountryNewsViewController: UIViewController, UITableViewDelegate, UITableV
             destination.article = countryArticles[index]
             destination.image = cell.articleImage.image! // Extraction de l'image du TableViewCell (on évite de refaire un téléchargement asynchrone).
         }
-    }
-    
-    @IBAction func backButton(_ sender: Any) {
-        dismiss(animated: true, completion: nil)
     }
 }
