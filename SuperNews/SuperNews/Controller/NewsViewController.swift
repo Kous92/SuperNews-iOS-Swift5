@@ -48,7 +48,7 @@ extension NewsViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
     {
         searchBar.resignFirstResponder() // Le clavier disparaît (ce n'est pas automatique de base)
-        print(searchBar.text!)
+        // print(searchBar.text!)
         
         guard let search = searchBar.text, !search.isEmpty else {
             return
@@ -61,6 +61,7 @@ extension NewsViewController: UISearchBarDelegate {
             switch result {
             case .success(let newsData):
                 self?.articles = newsData
+                // Mise à jour au niveau visuel dans la propriété observée didSet de articles.
                 /*
                 DispatchQueue.main.async {
                     self?.articleTableView.reloadData()

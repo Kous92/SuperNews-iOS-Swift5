@@ -41,7 +41,7 @@ class NewsAPIService {
     init()
     {
         self.country = ""
-        print(url + "&apiKey=" + apiKey)
+        // print(url + "&apiKey=" + apiKey)
         initURL = URL(string: url + country + "&apiKey=" + apiKey)!
         
         // Configuration d'URLSession
@@ -52,7 +52,7 @@ class NewsAPIService {
     func initializeLocalNews(country: String = "fr", completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
         self.country = country
         initURL = URL(string: url + country + "&apiKey=" + apiKey)!
-        print(initURL.absoluteString)
+        // print(initURL.absoluteString)
         getNews(url: initURL, completion: completion)
     }
     
@@ -84,7 +84,7 @@ class NewsAPIService {
                 return
             }
             
-            print("Code: \(httpResponse.statusCode)")
+            // print("Code: \(httpResponse.statusCode)")
             
             switch httpResponse.statusCode {
             // Code 200, vérifions si les données existent
@@ -100,7 +100,7 @@ class NewsAPIService {
                     }
                     
                     if let newsData = output?.articles  {
-                        print("Articles disponibles: \(newsData.count)")
+                        // print("Articles disponibles: \(newsData.count)")
                         completion(.success(newsData))
                     }
                 } else {
@@ -126,7 +126,7 @@ class NewsAPIService {
         if let imageData = images.object(forKey: imageURL.absoluteString as NSString) {
             completion(.success(imageData as Data))
             
-            print("Image en cache: \(imageURL.absoluteString)")
+            // print("Image en cache: \(imageURL.absoluteString)")
             // Le retour explicite va permettre de ne pas aller plus loin pour afficher l'image depuis la mémoire interne
             return
         }

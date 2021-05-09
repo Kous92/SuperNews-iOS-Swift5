@@ -23,7 +23,7 @@ class NewsTableViewCell: UITableViewCell {
         self.articleImage.image = nil
         
         guard let url = article.urlToImage, let imageURL = URL(string: url) else {
-            print("-> ERREUR: URL de l'image indisponible")
+            // print("-> ERREUR: URL de l'image indisponible")
             self.articleImage.image = UIImage(named: "ArticleImageNotAvailable")
             return
         }
