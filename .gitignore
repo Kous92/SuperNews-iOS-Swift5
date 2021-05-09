@@ -1,5 +1,5 @@
 # Cacher la clé d'API
-ApiKey.*
+ApiKey.plist
 
 ### macOS ###
 # General
