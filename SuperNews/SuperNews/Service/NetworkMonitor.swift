@@ -55,7 +55,7 @@ class NetworkStatus {
     
     // De ce fait, l'instance partagée va donc utiliser un constructeur privé
     private init() {
-        
+        startMonitoring()
     }
     
     deinit {

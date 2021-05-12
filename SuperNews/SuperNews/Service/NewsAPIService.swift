@@ -22,24 +22,7 @@ class NewsAPIService {
     // Cette session va permettre de ne pas solliciter les ressources réseau si l'image est dans le cache.
     let imageSession: URLSession
     
-    /*
-    // Cette session va permettre de ne pas solliciter les ressources réseau si l'image est dans le cache.
-    lazy var imageSession: URLSession = {
-        // La taille de la mémoire cache interne est définie à 512 MB. Il faut avoir la taille de cache la plus basse possible.
-        URLCache.shared.memoryCapacity = 512 * 1024 * 1024
-        
-        // Configuration d'URLSession
-        let configuration = URLSessionConfiguration.default
-        
-        // Définition de la politique de cache lors des appels réseau. Cela stockera dans le cache l'image inexistante
-        configuration.requestCachePolicy = .returnCacheDataElseLoad
-        
-        return URLSession(configuration: configuration)
-    }()
-    */
-    
-    init()
-    {
+    init() {
         self.country = ""
         // print(url + "&apiKey=" + apiKey)
         initURL = URL(string: url + country + "&apiKey=" + apiKey)!
@@ -56,8 +39,8 @@ class NewsAPIService {
         getNews(url: initURL, completion: completion)
     }
     
-    func searchNews(query: String, completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
-        let searchUrl = "https://newsapi.org/v2/everything?language=fr&q=\(query)&apiKey=" + apiKey
+    func searchNews(language: String = "fr", query: String, completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
+        let searchUrl = "https://newsapi.org/v2/everything?language=\(language)&q=\(query)&apiKey=" + apiKey
         getNews(url: URL(string: searchUrl)!, completion: completion)
     }
     

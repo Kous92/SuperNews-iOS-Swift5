@@ -11,15 +11,30 @@ class NewsViewController: UIViewController {
 
     @IBOutlet weak var articleTableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var newsAvailabilityLabel: UILabel!
     
     var articles = [Article]() {
         didSet {
+            // On met à jour la liste d'articles de façon asynchrone (dans le thread principal), les données étant récupérée dans un thread de fond.
             DispatchQueue.main.async { [weak self] in
                 self?.articleTableView.reloadData()
+                if let articles = self?.articles, articles.count > 0 {
+                    self?.articleTableView.isHidden = false
+                    self?.newsAvailabilityLabel.isHidden = true
+                } else {
+                    self?.articleTableView.isHidden = true
+                    self?.newsAvailabilityLabel.isHidden = false
+                }
             }
         }
     }
     
+    var countryCode = ""
+    var languageCode = "" {
+        didSet {
+            searchBar.placeholder = "Rechercher (langue: \(languageCode))"
+        }
+    }
     let newsAPI = NewsAPIService.shared
     
     override func viewDidLoad() {
@@ -29,16 +44,41 @@ class NewsViewController: UIViewController {
         articleTableView.delegate = self
         searchBar.delegate = self
         
-        newsAPI.initializeLocalNews { [weak self] result in
+        countryCode = UserDefaults.standard.string(forKey: "countryCode") ?? "fr"
+        languageCode = UserDefaults.standard.string(forKey: "languageCode") ?? "fr"
+        
+        newsAPI.initializeLocalNews(country: countryCode, completion: { [weak self] result in
             switch result {
             case .success(let newsData):
+                // Mise à jour au niveau visuel dans la propriété observée didSet de articles.
                 self?.articles = newsData
-                DispatchQueue.main.async {
-                    self?.articleTableView.reloadData()
-                }
             case .failure(_):
+                self?.articles.removeAll()
                 print("Pas de données")
             }
+        })
+    }
+    
+    // Lorsque la vue est affichée, se déclenche à chaque fois que l'utilisateur se rend sur cette vue
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        // L'utilisateur a choisi un pays différent dans les paramètres.
+        if let code = UserDefaults.standard.string(forKey: "countryCode"), code != countryCode {
+            print("\(code) != \(countryCode)")
+            // On refait une requête si le pays est différent
+            newsAPI.initializeLocalNews(country: code, completion: { [weak self] result in
+                switch result {
+                case .success(let newsData):
+                    // Mise à jour au niveau visuel dans la propriété observée didSet de articles.
+                    self?.articles = newsData
+                case .failure(_):
+                    self?.articles.removeAll()
+                    print("Pas de données")
+                }
+            })
+            
+            countryCode = code
         }
     }
 }
@@ -57,15 +97,11 @@ extension NewsViewController: UISearchBarDelegate {
         let query = search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         articles.removeAll()
         
-        newsAPI.searchNews(query: query!) { [weak self] result in
+        newsAPI.searchNews(language: languageCode, query: query!) { [weak self] result in
             switch result {
             case .success(let newsData):
                 self?.articles = newsData
                 // Mise à jour au niveau visuel dans la propriété observée didSet de articles.
-                /*
-                DispatchQueue.main.async {
-                    self?.articleTableView.reloadData()
-                }*/
             case .failure(_):
                 print("Pas de données")
             }

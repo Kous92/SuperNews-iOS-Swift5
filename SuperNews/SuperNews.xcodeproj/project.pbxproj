@@ -242,13 +242,13 @@
 		4BF66E7F261F4EC80078CE36 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				4BF66E94261F51A00078CE36 /* AboutViewController.swift */,
+				4B66B973262893ED007F38C6 /* ArticleViewController.swift */,
+				4B72872A263080C400A072DA /* CountryNewsViewController.swift */,
 				4BF66E4B261F4EA00078CE36 /* HomeViewController.swift */,
 				4BF66E84261F51690078CE36 /* NewsViewController.swift */,
 				4BF66E89261F51830078CE36 /* NewsMapViewController.swift */,
 				4BF66E8E261F51920078CE36 /* SettingsViewController.swift */,
-				4BF66E94261F51A00078CE36 /* AboutViewController.swift */,
-				4B66B973262893ED007F38C6 /* ArticleViewController.swift */,
-				4B72872A263080C400A072DA /* CountryNewsViewController.swift */,
 				4B0BED4C2640547700FF75F9 /* SettingsSelectionViewController.swift */,
 			);
 			path = Controller;

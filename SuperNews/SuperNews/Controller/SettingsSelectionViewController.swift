@@ -79,7 +79,7 @@ class SettingsSelectionViewController: UIViewController {
             countryList = try JSONDecoder().decode(Countries.self, from: data)
             
             if let result = countryList {
-                print(result.countries.count)
+                // print(result.countries.count)
                 countries = result.countries.sorted { $0.countryName < $1.countryName }
             } else {
                 print("Échec lors du décodage des données")
@@ -105,18 +105,30 @@ extension SettingsSelectionViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = settingsChoiceTable.dequeueReusableCell(withIdentifier: "settingsChoice") as! SettingChoiceTableViewCell
         
-        if indexPath.row == actualSelectedIndex {
-            cell.accessoryType = .checkmark
-        } else {
-            cell.accessoryType = .none
-        }
-        
         switch settingType {
         case "language":
             cell.configuration(language: languages[indexPath.row])
+            
+            if let savedLanguageSetting = UserDefaults.standard.string(forKey: "languageCode"), savedLanguageSetting == languages[indexPath.row].languageCode {
+                print("Chargé: \(savedLanguageSetting)")
+                cell.accessoryType = .checkmark
+                actualSelectedIndex = indexPath.row
+            } else {
+                cell.accessoryType = .none
+            }
+            
             return cell
         case "country":
             cell.configuration(country: countries[indexPath.row])
+            
+            if let savedCountrySetting = UserDefaults.standard.string(forKey: "countryCode"), savedCountrySetting == countries[indexPath.row].countryCode {
+                print("Chargé: \(savedCountrySetting)")
+                cell.accessoryType = .checkmark
+                actualSelectedIndex = indexPath.row
+            } else {
+                cell.accessoryType = .none
+            }
+            
             return cell
         default:
             return UITableViewCell()
@@ -145,5 +157,15 @@ extension SettingsSelectionViewController: UITableViewDelegate, UITableViewDataS
         
         // Remember this selected filter item.
         actualSelectedIndex = selected
+        
+        // Sauvegarde du paramètre avec userDefaults
+        switch settingType {
+        case "language":
+            UserDefaults.standard.setValue(languages[indexPath.row].languageCode, forKey: "languageCode")
+        case "country":
+            UserDefaults.standard.setValue(countries[indexPath.row].countryCode, forKey: "countryCode")
+        default:
+            break
+        }
     }
 }

@@ -71,10 +71,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <searchBar contentMode="redraw" placeholder="Recherche" translatesAutoresizingMaskIntoConstraints="NO" id="veN-ob-Lir">
+                            <searchBar contentMode="redraw" placeholder="Recherche (pays: fr)" translatesAutoresizingMaskIntoConstraints="NO" id="veN-ob-Lir">
                                 <rect key="frame" x="0.0" y="44" width="414" height="51"/>
                                 <textInputTraits key="textInputTraits"/>
                             </searchBar>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aucune news disponible" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9IJ-wH-L7J">
+                                <rect key="frame" x="93" y="435.5" width="228" height="25.5"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zeU-mS-CKA">
                                 <rect key="frame" x="0.0" y="95" width="414" height="718"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -166,19 +172,22 @@
                             <constraint firstItem="zeU-mS-CKA" firstAttribute="top" secondItem="veN-ob-Lir" secondAttribute="bottom" id="Pkc-0c-tLf"/>
                             <constraint firstItem="zeU-mS-CKA" firstAttribute="trailing" secondItem="1cN-eH-1qr" secondAttribute="trailing" id="Rwb-JE-FDK"/>
                             <constraint firstItem="zeU-mS-CKA" firstAttribute="bottom" secondItem="1cN-eH-1qr" secondAttribute="bottom" id="T9P-yT-NFw"/>
+                            <constraint firstItem="9IJ-wH-L7J" firstAttribute="centerX" secondItem="ALy-P5-XsB" secondAttribute="centerX" id="f90-um-pqI"/>
+                            <constraint firstItem="9IJ-wH-L7J" firstAttribute="centerY" secondItem="ALy-P5-XsB" secondAttribute="centerY" id="o0l-9Y-EDK"/>
                             <constraint firstItem="veN-ob-Lir" firstAttribute="trailing" secondItem="1cN-eH-1qr" secondAttribute="trailing" id="wHF-Vz-gFu"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="News" image="newspaper" catalog="system" id="Bne-YD-i9K"/>
                     <connections>
                         <outlet property="articleTableView" destination="zeU-mS-CKA" id="px6-wV-Z4Z"/>
+                        <outlet property="newsAvailabilityLabel" destination="9IJ-wH-L7J" id="8fb-DT-FN8"/>
                         <outlet property="searchBar" destination="veN-ob-Lir" id="cU9-xJ-y19"/>
                         <segue destination="QCX-UJ-XLl" kind="presentation" identifier="newsSegue" modalPresentationStyle="fullScreen" id="WdZ-DO-9bf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qb7-6m-5aO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="455.19999999999999" y="612.14392803598207"/>
+            <point key="canvasLocation" x="455.07246376811599" y="612.05357142857144"/>
         </scene>
         <!--Article View Controller-->
         <scene sceneID="Jrx-lL-ZXR">
