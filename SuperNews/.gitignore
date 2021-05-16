@@ -1,0 +1,5 @@
+# Cacher la clé d'API
+ApiKey.plist
+
+## User settings
+xcuserdata/
