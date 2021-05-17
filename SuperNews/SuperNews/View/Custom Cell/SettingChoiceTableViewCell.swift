@@ -17,6 +17,7 @@ class SettingChoiceTableViewCell: UITableViewCell {
     
     func configuration(country: Country) {
         self.country = country
+        // print(self.country)
         countryImage.image = UIImage(named: country.countryCode)
         countryNameLabel.text = country.countryName
     }

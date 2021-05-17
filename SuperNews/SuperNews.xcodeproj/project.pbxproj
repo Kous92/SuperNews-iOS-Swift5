@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4B01F100262EF674006CBD90 /* CountryAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B01F0FF262EF674006CBD90 /* CountryAnnotation.swift */; };
 		4B01F106262F23F2006CBD90 /* countries.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B01F105262F23F2006CBD90 /* countries.json */; };
-		4B09801F264822DA00D3CA3D /* ApiKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4B09801E264822DA00D3CA3D /* ApiKey.plist */; };
 		4B0BED4426404A6700FF75F9 /* SettingTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0BED4326404A6700FF75F9 /* SettingTableViewCell.swift */; };
 		4B0BED4726404B0700FF75F9 /* SettingsSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0BED4626404B0700FF75F9 /* SettingsSection.swift */; };
 		4B0BED4926404DC000FF75F9 /* settingsTableViewSection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4B0BED4826404DC000FF75F9 /* settingsTableViewSection.xib */; };
@@ -18,8 +17,10 @@
 		4B0BED4F2640553100FF75F9 /* SettingChoiceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0BED4E2640553100FF75F9 /* SettingChoiceTableViewCell.swift */; };
 		4B0BED512640581C00FF75F9 /* language.json in Resources */ = {isa = PBXBuildFile; fileRef = 4B0BED502640581C00FF75F9 /* language.json */; };
 		4B0BED5326405CD100FF75F9 /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0BED5226405CD100FF75F9 /* Language.swift */; };
+		4B57DFCC26516B5700B079AB /* ApiKey.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4B57DFCB26516B5700B079AB /* ApiKey.plist */; };
 		4B66B974262893ED007F38C6 /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B66B973262893ED007F38C6 /* ArticleViewController.swift */; };
 		4B72872B263080C400A072DA /* CountryNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B72872A263080C400A072DA /* CountryNewsViewController.swift */; };
+		4B73261B2652B91300F3C3EF /* CountryAutoCompletionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B73261A2652B91300F3C3EF /* CountryAutoCompletionTableViewCell.swift */; };
 		4BBAA06B26272DF1000C2D19 /* NewsAPIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAA06A26272DF1000C2D19 /* NewsAPIService.swift */; };
 		4BBAA07126272E30000C2D19 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAA07026272E30000C2D19 /* NetworkMonitor.swift */; };
 		4BBAA07726272EC0000C2D19 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4BBAA07626272EC0000C2D19 /* CustomButton.swift */; };
@@ -64,7 +65,6 @@
 /* Begin PBXFileReference section */
 		4B01F0FF262EF674006CBD90 /* CountryAnnotation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryAnnotation.swift; sourceTree = "<group>"; };
 		4B01F105262F23F2006CBD90 /* countries.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = countries.json; sourceTree = "<group>"; };
-		4B09801E264822DA00D3CA3D /* ApiKey.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ApiKey.plist; sourceTree = "<group>"; };
 		4B0BED4326404A6700FF75F9 /* SettingTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingTableViewCell.swift; sourceTree = "<group>"; };
 		4B0BED4626404B0700FF75F9 /* SettingsSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSection.swift; sourceTree = "<group>"; };
 		4B0BED4826404DC000FF75F9 /* settingsTableViewSection.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = settingsTableViewSection.xib; sourceTree = "<group>"; };
@@ -73,8 +73,10 @@
 		4B0BED4E2640553100FF75F9 /* SettingChoiceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingChoiceTableViewCell.swift; sourceTree = "<group>"; };
 		4B0BED502640581C00FF75F9 /* language.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = language.json; sourceTree = "<group>"; };
 		4B0BED5226405CD100FF75F9 /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		4B57DFCB26516B5700B079AB /* ApiKey.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ApiKey.plist; sourceTree = "<group>"; };
 		4B66B973262893ED007F38C6 /* ArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
 		4B72872A263080C400A072DA /* CountryNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryNewsViewController.swift; sourceTree = "<group>"; };
+		4B73261A2652B91300F3C3EF /* CountryAutoCompletionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryAutoCompletionTableViewCell.swift; sourceTree = "<group>"; };
 		4BBAA06A26272DF1000C2D19 /* NewsAPIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsAPIService.swift; sourceTree = "<group>"; };
 		4BBAA07026272E30000C2D19 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
 		4BBAA07626272EC0000C2D19 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
@@ -138,6 +140,7 @@
 				4B0BED4826404DC000FF75F9 /* settingsTableViewSection.xib */,
 				4B0BED4A26404E9700FF75F9 /* SettingsHeaderView.swift */,
 				4B0BED4E2640553100FF75F9 /* SettingChoiceTableViewCell.swift */,
+				4B73261A2652B91300F3C3EF /* CountryAutoCompletionTableViewCell.swift */,
 			);
 			path = "Custom Cell";
 			sourceTree = "<group>";
@@ -190,6 +193,7 @@
 				4BF66E7E261F4EC10078CE36 /* View */,
 				4BF66E7F261F4EC80078CE36 /* Controller */,
 				4BF66E47261F4EA00078CE36 /* AppDelegate.swift */,
+				4B57DFCB26516B5700B079AB /* ApiKey.plist */,
 				4BF66E49261F4EA00078CE36 /* SceneDelegate.swift */,
 				4BF66E4D261F4EA00078CE36 /* Main.storyboard */,
 				4BF66E50261F4EA00078CE36 /* Assets.xcassets */,
@@ -260,7 +264,6 @@
 				4BBAA06A26272DF1000C2D19 /* NewsAPIService.swift */,
 				4BBAA07026272E30000C2D19 /* NetworkMonitor.swift */,
 				4BBAA086262745FE000C2D19 /* NewsAPIError.swift */,
-				4B09801E264822DA00D3CA3D /* ApiKey.plist */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -368,7 +371,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4B09801F264822DA00D3CA3D /* ApiKey.plist in Resources */,
+				4B57DFCC26516B5700B079AB /* ApiKey.plist in Resources */,
 				4BF66E54261F4EA00078CE36 /* LaunchScreen.storyboard in Resources */,
 				4B0BED512640581C00FF75F9 /* language.json in Resources */,
 				4B0BED4926404DC000FF75F9 /* settingsTableViewSection.xib in Resources */,
@@ -424,6 +427,7 @@
 				4BF66E8F261F51920078CE36 /* SettingsViewController.swift in Sources */,
 				4BBAA08126272EED000C2D19 /* CustomImageView.swift in Sources */,
 				4BBAA08C26274AF7000C2D19 /* Article.swift in Sources */,
+				4B73261B2652B91300F3C3EF /* CountryAutoCompletionTableViewCell.swift in Sources */,
 				4B01F100262EF674006CBD90 /* CountryAnnotation.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

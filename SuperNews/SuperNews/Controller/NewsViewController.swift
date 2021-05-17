@@ -24,15 +24,17 @@ class NewsViewController: UIViewController {
                 } else {
                     self?.articleTableView.isHidden = true
                     self?.newsAvailabilityLabel.isHidden = false
+                    self?.newsAvailabilityLabel.text = "Aucune news disponible"
                 }
             }
         }
     }
     
     var countryCode = ""
-    var languageCode = "" {
+    var languageCode = ""
+    var languageName = "" {
         didSet {
-            searchBar.placeholder = "Rechercher (langue: \(languageCode))"
+            searchBar.placeholder = "Rechercher (langue: \(languageName))"
         }
     }
     let newsAPI = NewsAPIService.shared
@@ -46,6 +48,13 @@ class NewsViewController: UIViewController {
         
         countryCode = UserDefaults.standard.string(forKey: "countryCode") ?? "fr"
         languageCode = UserDefaults.standard.string(forKey: "languageCode") ?? "fr"
+        languageName = UserDefaults.standard.string(forKey: "languageName") ?? "France"
+        
+        if articles.count < 1 {
+            articleTableView.isHidden = true
+            newsAvailabilityLabel.isHidden = false
+            newsAvailabilityLabel.text = "La langue des news est en \(languageName). Le contenu recherché sera affiché dans la langue définie. Pour obtenir les news locales d'un pays, rendez-vous dans la carte du monde puis choisissez un pays en cliquant sur son drapeau puis sur \"i\" dans l'info-bulle."
+        }
         
         newsAPI.initializeLocalNews(country: countryCode, completion: { [weak self] result in
             switch result {
@@ -117,7 +126,10 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
     
     // Cellule à utiliser pour le TableView, avec les données téléchargées.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let newsCell = articleTableView.dequeueReusableCell(withIdentifier: "newsCell") as! NewsTableViewCell
+        guard let newsCell = articleTableView.dequeueReusableCell(withIdentifier: "newsCell") as? NewsTableViewCell else {
+            return UITableViewCell()
+        }
+        
         newsCell.configuration(with: articles[indexPath.row])
         
         return newsCell

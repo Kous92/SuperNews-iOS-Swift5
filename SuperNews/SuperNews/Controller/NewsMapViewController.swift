@@ -9,20 +9,31 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class NewsMapViewController: UIViewController {
+class NewsMapViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var map: MKMapView!
     
     var countries = [Country]()
+    var filteredCountries = [Country]()
     var selectedCountryName = ""
     var selectedCountryCode = ""
+    var searchContent = ""
     var locationManager: CLLocationManager?
+    @IBOutlet weak var countrySearchBar: UITextField!
+    @IBOutlet weak var countryAutoCompletionTableView: UITableView!
+    @IBOutlet weak var autoCompletionView: CustomView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         map.delegate = self
         locationManager = CLLocationManager()
         locationManager?.delegate = self
+        countrySearchBar?.delegate = self
+        countryAutoCompletionTableView?.delegate = self
+        countryAutoCompletionTableView.dataSource = self
+        countryAutoCompletionTableView.isHidden = true
+        countryAutoCompletionTableView.layer.cornerRadius = 6
+        autoCompletionView.isHidden = true
         
         if countries.count == 0 {
             initializeCountryData()
@@ -51,8 +62,11 @@ class NewsMapViewController: UIViewController {
             countryList = try JSONDecoder().decode(Countries.self, from: data)
             
             if let result = countryList {
-                // print(result.countries)
-                countries = result.countries
+                // print(result.countries.count)
+                countries = result.countries.sorted { $0.countryName < $1.countryName }
+                
+                // Ce tableau sera utile pour filtrer la recherche et permettre l'autocomplétion à la recherche d'un pays particulier
+                filteredCountries = countries
             } else {
                 print("Échec lors du décodage des données")
             }
@@ -257,7 +271,6 @@ extension NewsMapViewController: CLLocationManagerDelegate {
             map.setRegion(coordinateRegion, animated: true)
         
         default:
-            
             break
         }
     }
@@ -333,3 +346,88 @@ extension NewsMapViewController: CLLocationManagerDelegate {
         }
     }
 }
+
+extension NewsMapViewController: UITableViewDelegate, UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return filteredCountries.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = countryAutoCompletionTableView.dequeueReusableCell(withIdentifier: "autoCompletion") as? CountryAutoCompletionTableViewCell else {
+            return UITableViewCell()
+        }
+        
+        // print(filteredCountries[indexPath.row].countryCode)
+        cell.configuration(country: filteredCountries[indexPath.row])
+        
+        return cell
+    }
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        countryAutoCompletionTableView.reloadData()
+        countryAutoCompletionTableView.isHidden = false
+        autoCompletionView.isHidden = false
+    }
+    
+    // À ajouter en sélectionnant depuis le storyboard l'événement "Editing changed". C'est ici que l'autocomplétion se fait.
+    @IBAction func textFieldDidChange(_ sender: Any) {
+        guard let search = countrySearchBar.text?.lowercased(), !search.isEmpty else {
+            filteredCountries = countries
+            countryAutoCompletionTableView.reloadData()
+            
+            return
+        }
+        
+        filteredCountries = countries.filter({ country in
+            country.countryName.lowercased().contains(search)
+        })
+        
+        countryAutoCompletionTableView.reloadData()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print(countrySearchBar.text!)
+        countryAutoCompletionTableView.isHidden = true
+        autoCompletionView.isHidden = true
+        countrySearchBar.resignFirstResponder() // Le clavier disparaît (ce n'est pas automatique de base)
+        
+        guard let search = countrySearchBar.text, !search.isEmpty else {
+            return false
+        }
+        
+        // Centrer sur le pays en question
+        if countries.contains(where: {search == $0.countryName}) {
+            let target = countries[countries.firstIndex(where: {search == $0.countryName})!]
+            // On définit une région visible en mètres, on va définir à 10 km.
+            let regionRadius: CLLocationDistance = 10000
+            let countryLocation = CLLocationCoordinate2D(latitude: target.lat, longitude: target.lon)
+            let coordinateRegion = MKCoordinateRegion(center: countryLocation, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            map.setRegion(coordinateRegion, animated: true)
+        }
+        
+        print("\(search) non trouvé, impossible d'être centré là-dessus.")
+        return false
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Unselect the row.
+        countryAutoCompletionTableView.deselectRow(at: indexPath, animated: false)
+        countryAutoCompletionTableView.isHidden = true
+        autoCompletionView.isHidden = true
+        countrySearchBar.resignFirstResponder() // Le clavier disparaît (ce n'est pas automatique de base)
+        let search = filteredCountries[indexPath.row].countryName
+        countrySearchBar.text = search
+        
+        // Centrer sur le pays en question
+        if filteredCountries.contains(where: {search == $0.countryName}) {
+            let target = filteredCountries[indexPath.row]
+            // On définit une région visible en mètres, on va définir à 10 km.
+            let regionRadius: CLLocationDistance = 10000
+            let countryLocation = CLLocationCoordinate2D(latitude: target.lat, longitude: target.lon)
+            let coordinateRegion = MKCoordinateRegion(center: countryLocation, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+            map.setRegion(coordinateRegion, animated: true)
+        }
+    }
+}
+
+

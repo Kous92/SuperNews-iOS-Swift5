@@ -162,6 +162,7 @@ extension SettingsSelectionViewController: UITableViewDelegate, UITableViewDataS
         switch settingType {
         case "language":
             UserDefaults.standard.setValue(languages[indexPath.row].languageCode, forKey: "languageCode")
+            UserDefaults.standard.setValue(languages[indexPath.row].languageName, forKey: "languageName")
         case "country":
             UserDefaults.standard.setValue(countries[indexPath.row].countryCode, forKey: "countryCode")
         default:
