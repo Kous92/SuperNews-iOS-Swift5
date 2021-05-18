@@ -10,8 +10,8 @@ import UIKit
 class NewsViewController: UIViewController {
 
     @IBOutlet weak var articleTableView: UITableView!
-    @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var newsAvailabilityLabel: UILabel!
+    @IBOutlet weak var searchBar: UITextField!
     
     var articles = [Article]() {
         didSet {
@@ -34,7 +34,7 @@ class NewsViewController: UIViewController {
     var languageCode = ""
     var languageName = "" {
         didSet {
-            searchBar.placeholder = "Rechercher (langue: \(languageName))"
+            searchBar.attributedPlaceholder = NSAttributedString(string: "Rechercher (langue: \(languageName))", attributes: [.foregroundColor: UIColor.label])
         }
     }
     let newsAPI = NewsAPIService.shared
@@ -48,7 +48,7 @@ class NewsViewController: UIViewController {
         
         countryCode = UserDefaults.standard.string(forKey: "countryCode") ?? "fr"
         languageCode = UserDefaults.standard.string(forKey: "languageCode") ?? "fr"
-        languageName = UserDefaults.standard.string(forKey: "languageName") ?? "France"
+        languageName = UserDefaults.standard.string(forKey: "languageName") ?? "Français"
         
         if articles.count < 1 {
             articleTableView.isHidden = true
@@ -89,10 +89,40 @@ class NewsViewController: UIViewController {
             
             countryCode = code
         }
+        
+        // L'utilisateur a choisi une langue différent dans les paramètres.
+        if let language = UserDefaults.standard.string(forKey: "languageCode"), let name = UserDefaults.standard.string(forKey: "languageName"), name != languageName && language != languageCode {
+            languageCode = language
+            languageName = name
+        }
     }
 }
 
-extension NewsViewController: UISearchBarDelegate {
+extension NewsViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        searchBar.resignFirstResponder() // Le clavier disparaît (ce n'est pas automatique de base)
+        
+        guard let search = searchBar.text, !search.isEmpty else {
+            return false
+        }
+        
+        let query = search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+        articles.removeAll()
+        
+        newsAPI.searchNews(language: languageCode, query: query!) { [weak self] result in
+            switch result {
+            case .success(let newsData):
+                self?.articles = newsData
+                // Mise à jour au niveau visuel dans la propriété observée didSet de articles.
+            case .failure(_):
+                print("Pas de données")
+            }
+        }
+        
+        return true
+    }
+    
+    /*
     // Dès qu'on a cliqué sur la barre de recherche
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
     {
@@ -116,6 +146,7 @@ extension NewsViewController: UISearchBarDelegate {
             }
         }
     }
+ */
 }
 
 extension NewsViewController: UITableViewDelegate, UITableViewDataSource {

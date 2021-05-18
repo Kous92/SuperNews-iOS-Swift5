@@ -22,10 +22,10 @@ class SettingsSelectionViewController: UIViewController {
         
         switch settingType {
         case "country":
-            settingLabel.text = "Langue des news"
+            settingLabel.text = "Pays des news"
             initCountryData()
         case "language":
-            settingLabel.text = "Pays des news"
+            settingLabel.text = "Languer des news"
             initLanguageData()
         default:
             break

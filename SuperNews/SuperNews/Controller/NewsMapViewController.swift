@@ -29,6 +29,7 @@ class NewsMapViewController: UIViewController, UITextFieldDelegate {
         locationManager = CLLocationManager()
         locationManager?.delegate = self
         countrySearchBar?.delegate = self
+        countrySearchBar.attributedPlaceholder = NSAttributedString(string: "Pays", attributes: [.foregroundColor: UIColor.label])
         countryAutoCompletionTableView?.delegate = self
         countryAutoCompletionTableView.dataSource = self
         countryAutoCompletionTableView.isHidden = true

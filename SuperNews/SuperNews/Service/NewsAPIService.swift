@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import Alamofire
 
 class NewsAPIService {
     // Ici une seule instance (singleton) suffit pour le monitoring du réseau
@@ -55,17 +56,17 @@ class NewsAPIService {
         self.country = country
         initURL = URL(string: url + country + "&apiKey=" + apiKey)!
         // print(initURL.absoluteString)
-        getNews(url: initURL, completion: completion)
+        getNewsAlamofire(url: initURL, completion: completion)
     }
     
     func searchNews(language: String = "fr", query: String, completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
         let searchUrl = "https://newsapi.org/v2/everything?language=\(language)&q=\(query)&apiKey=" + apiKey
-        getNews(url: URL(string: searchUrl)!, completion: completion)
+        getNewsAlamofire(url: URL(string: searchUrl)!, completion: completion)
     }
     
     func searchCountryLocalNews(query: String, completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
         let searchUrl = "https://newsapi.org/v2/everything?country=\(country)&q=\(query)&apiKey=" + apiKey
-        getNews(url: URL(string: searchUrl)!, completion: completion)
+        getNewsAlamofire(url: URL(string: searchUrl)!, completion: completion)
     }
     
     func getNews(url: URL, completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
@@ -121,6 +122,43 @@ class NewsAPIService {
             }
         }
         task.resume()
+    }
+    
+    func getNewsAlamofire(url: URL, completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
+        AF.request(url).validate().responseDecodable(of: ArticleOutput.self) { response in
+            switch response.result {
+                case .success:
+                guard let data = response.value else {
+                    completion(.failure(.downloadError))
+                    
+                    return
+                }
+                
+                if let newsData = data.articles {
+                    // print("Articles disponibles: \(newsData.count)")
+                    completion(.success(newsData))
+                }
+                    
+                case let .failure(error):
+                guard let httpResponse = response.response else {
+                    print("ERREUR: \(error)")
+                    return
+                }
+                
+                switch httpResponse.statusCode {
+                    case 400:
+                        completion(.failure(.parametersMissing))
+                    case 401:
+                        completion(.failure(.invalidApiKey))
+                    case 404:
+                        completion(.failure(.notFound))
+                    case 500:
+                        completion(.failure(.serverError))
+                    default:
+                        completion(.failure(.unknown))
+                }
+            }
+        }
     }
     
     func downloadImage(with imageURL: URL, completion: @escaping (Result<Data, NewsAPIError>) -> (Void)) {
