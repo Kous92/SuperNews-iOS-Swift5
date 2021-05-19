@@ -34,7 +34,7 @@ class NewsViewController: UIViewController {
     var languageCode = ""
     var languageName = "" {
         didSet {
-            searchBar.attributedPlaceholder = NSAttributedString(string: "Rechercher (langue: \(languageName))", attributes: [.foregroundColor: UIColor.label])
+            searchBar.attributedPlaceholder = NSAttributedString(string: "Rechercher (langue: \(languageName))", attributes: [.foregroundColor: UIColor(named: "Placeholder") ?? UIColor.label])
         }
     }
     let newsAPI = NewsAPIService.shared

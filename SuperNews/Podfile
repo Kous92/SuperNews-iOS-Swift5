@@ -8,6 +8,7 @@ target 'SuperNews' do
   # Pods for SuperNews
   pod 'Alamofire', '~> 5.2'
   pod 'AlamofireImage', '~> 4.1'
+  pod 'Kingfisher', '~> 6.0'
 
   target 'SuperNewsTests' do
     inherit! :search_paths

@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class NewsTableViewCell: UITableViewCell {
 
@@ -28,6 +29,13 @@ class NewsTableViewCell: UITableViewCell {
             return
         }
         
+        // Avec Kingfisher, c'est asynchrone, rapide et efficace. Le cache est géré automatiquement.
+        let defaultImage = UIImage(named: "ArticleImageNotAvailable")
+        let resource = ImageResource(downloadURL: imageURL)
+        articleImage.kf.indicatorType = .activity // Indicateur pendant le téléchargement
+        articleImage.kf.setImage(with: resource, placeholder: defaultImage)
+        
+        /*
         // Si l'url existe et que l'image n'est pas encore définie, on télécharge l'image de façon asynchrone
         newsAPI.downloadImage(with: imageURL) { [weak self] result -> (Void) in
             switch result {
@@ -49,6 +57,7 @@ class NewsTableViewCell: UITableViewCell {
                 }
             }
         }
+ */
         // loadImageWithCache(withURL: imageURL, session: newsAPI.imageSession)
     }
     
