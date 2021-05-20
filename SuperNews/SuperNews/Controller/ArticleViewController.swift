@@ -33,10 +33,8 @@ class ArticleViewController: UIViewController {
         articleSourceLabel.text = article?.source?.name ?? "Source indisponible"
     }
     
-    private func stringToDateFormat(date: String?) -> String?
-    {
-        if let publishDate = date
-        {
+    private func stringToDateFormat(date: String?) -> String? {
+        if let publishDate = date {
             let formatter1 = DateFormatter()
             let formatter2 = DateFormatter()
             formatter1.locale = Locale(identifier: "en_US_POSIX")

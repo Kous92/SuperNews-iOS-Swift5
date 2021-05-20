@@ -13,9 +13,6 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var dayTimeLabel: UILabel!
     
     var timer: Timer?
-    var currentTime: Date {
-        return Date()
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,17 +23,9 @@ class HomeViewController: UIViewController {
         timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(HomeViewController.updateTimeLabel), userInfo: nil, repeats: true)
     }
     
-    @objc func updateTimeLabel() {
-        let formatter1 = DateFormatter()
-        formatter1.timeStyle = .medium
-        formatter1.locale = Locale(identifier: "FR-fr")
-        
-        let formatter2 = DateFormatter()
-        formatter2.dateStyle = .full
-        formatter2.locale = Locale(identifier: "FR-fr")
-        
-        dayDateLabel.text = formatter2.string(from: currentTime as Date).capitalized
-        dayTimeLabel.text = formatter1.string(from: currentTime as Date)
+    @objc func updateTimeLabel() {        
+        dayDateLabel.text = getTodayDate()
+        dayTimeLabel.text = getTodayTime()
     }
     
     // Lors que l'on quitte l'appli

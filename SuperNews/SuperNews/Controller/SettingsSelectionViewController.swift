@@ -23,10 +23,10 @@ class SettingsSelectionViewController: UIViewController {
         switch settingType {
         case "country":
             settingLabel.text = "Pays des news"
-            initCountryData()
+            initializeCountryData()
         case "language":
-            settingLabel.text = "Languer des news"
-            initLanguageData()
+            settingLabel.text = "Langue des news"
+            initializeLanguageData()
         default:
             break
         }
@@ -34,58 +34,19 @@ class SettingsSelectionViewController: UIViewController {
         settingsChoiceTable.dataSource = self
     }
     
-    private func initLanguageData() {
-        // Vérification de l'existence du fichier local language.json
-        guard let path = Bundle.main.path(forResource: "language", ofType: "json") else {
-            print("PAS DE DONNÉES")
-            return
-        }
+    private func initializeCountryData() {
+        let countryData = getLocalCountryData()
         
-        let url = URL(fileURLWithPath: path)
-        var languageList: Languages?
-        
-        do {
-            // Récupération des données JSON en type Data
-            let data = try Data(contentsOf: url)
-            
-            // Décodage des données JSON en objets exploitables
-            languageList = try JSONDecoder().decode(Languages.self, from: data)
-            
-            if let result = languageList {
-                languages = result.language.sorted { $0.languageName < $1.languageName }
-            } else {
-                print("Échec lors du décodage des données")
-            }
-        } catch {
-            print("ERREUR: \(error)")
+        if let data = countryData {
+            countries = data
         }
     }
     
-    private func initCountryData() {
-        // Vérification de l'existence du fichiers local countries.json
-        guard let path = Bundle.main.path(forResource: "countries", ofType: "json") else {
-            print("PAS DE DONNÉES")
-            return
-        }
+    private func initializeLanguageData() {
+        let languageData = getLocalLanguageData()
         
-        let url = URL(fileURLWithPath: path)
-        var countryList: Countries?
-        
-        do {
-            // Récupération des données JSON en type Data
-            let data = try Data(contentsOf: url)
-            
-            // Décodage des données JSON en objets exploitables
-            countryList = try JSONDecoder().decode(Countries.self, from: data)
-            
-            if let result = countryList {
-                // print(result.countries.count)
-                countries = result.countries.sorted { $0.countryName < $1.countryName }
-            } else {
-                print("Échec lors du décodage des données")
-            }
-        } catch {
-            print("ERREUR: \(error)")
+        if let data = languageData {
+            languages = data
         }
     }
 }

@@ -9,6 +9,29 @@
 			<key>orderHint</key>
 			<integer>6</integer>
 		</dict>
+		<key>SuperNewsTests.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>4BF66E43261F4EA00078CE36</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4BF66E59261F4EA00078CE36</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>4BF66E64261F4EA00078CE36</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 	</dict>
 </dict>
 </plist>

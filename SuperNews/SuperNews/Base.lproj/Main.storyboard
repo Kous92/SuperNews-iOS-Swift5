@@ -346,6 +346,7 @@
                                             </stackView>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Eg-eo-pYd" customClass="CustomButton" customModule="SuperNews" customModuleProvider="target">
                                                 <rect key="frame" x="124" y="814.66666666666663" width="180" height="50"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="articleWebsiteButton"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="50" id="JdZ-yu-HVM"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="wxU-2j-ybI"/>
@@ -699,6 +700,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Pays" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="2Oo-6a-OU3">
                                         <rect key="frame" x="50" y="14.666666666666664" width="323" height="21"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="countrySearchBar"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                         <connections>
