@@ -158,6 +158,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="articleTableView"/>
+                                </userDefinedRuntimeAttributes>
                             </tableView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cme-kX-FEt" userLabel="Search View" customClass="CustomView" customModule="SuperNews" customModuleProvider="target">
                                 <rect key="frame" x="20" y="44" width="388" height="50"/>
@@ -173,6 +176,7 @@
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Rechercher" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="QAb-23-afQ">
                                         <rect key="frame" x="55" y="14.666666666666664" width="323" height="21"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="newsSearchBar"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="search"/>
                                         <connections>
@@ -1193,7 +1197,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="r4K-hm-7Ep"/>
+        <segue reference="WdZ-DO-9bf"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Alamofire" width="133.33332824707031" height="133.33332824707031"/>
