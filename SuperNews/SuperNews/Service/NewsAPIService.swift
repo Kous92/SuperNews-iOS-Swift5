@@ -14,8 +14,22 @@ class NewsAPIService {
     
     let url: String = "https://newsapi.org/v2/top-headlines?country="
     var initURL: URL
-    let apiKey: String = "1e78ee975c234d6d917ddcfc008123fb"
+    var apiKey: String = ""
     var country: String
+    
+    private func getApiKey() -> String? {
+        guard let path = Bundle.main.path(forResource: "ApiKey", ofType: "plist") else {
+            print("ERREUR: Fichier ApiKey.plist inexistant")
+            return nil
+        }
+        
+        guard let dictionary = NSDictionary(contentsOfFile: path) else {
+            print("ERREUR: Données indisponibles")
+            return nil
+        }
+        
+        return dictionary.object(forKey: "NewsApiKey") as? String
+    }
     /*
     private var apiKey: String = {
         get {
@@ -50,6 +64,7 @@ class NewsAPIService {
         // Configuration d'URLSession
         let config = URLSessionConfiguration.default
         imageSession = URLSession(configuration: config)
+        self.apiKey = getApiKey() ?? ""
     }
     
     func initializeLocalNews(country: String = "fr", completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {

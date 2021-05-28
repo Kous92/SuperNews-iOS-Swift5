@@ -43,11 +43,10 @@ class SuperNewsUITests: XCTestCase {
         
         // XCTAssert(app.staticTexts["Bienvenue"].exists)
         XCTAssert(app.images["magnifyingglass"].exists, "Le logo de recherche (loupe) existe.")
-        XCTAssert(app.textFields["newsSearchBar"].exists, "La barre de recherche existe.")
         
         // Le TableView existe
         let articleTableView = app.tables["articleTableView"]
-        XCTAssertTrue(articleTableView.exists, "Le TableView des articles existe")
+        XCTAssertTrue(articleTableView.waitForExistence(timeout: 2.0), "Le TableView des articles existe")
         
         // On vérifie l'existence des cellules
         let tableCells = articleTableView.cells
@@ -64,12 +63,60 @@ class SuperNewsUITests: XCTestCase {
                     promise.fulfill()
                 }
             }
-            waitForExpectations(timeout: 40, handler: nil)
+            waitForExpectations(timeout: 10, handler: nil)
             XCTAssertTrue(true, "Finished validating the table cells")
          
         } else {
             XCTAssert(false, "Was not able to find any table cells")
         }
+    }
+    
+    func testSearchNews() throws {
+        app = XCUIApplication()
+        app.launch()
+        app.tabBars.buttons["News"].tap()
+        
+        XCTAssertTrue(app.textFields["newsSearchBar"].waitForExistence(timeout: 2.0), "La barre de recherche n'existe pas.")
+        let searchBar = app.textFields["newsSearchBar"]
+        searchBar.tap()
+        /*
+        searchBar.keys["A"].tap()
+        searchBar.keys["p"].tap()
+        searchBar.keys["l"].tap()
+        searchBar.keys["l"].tap()
+        searchBar.keys["e"].tap()
+ */
+        searchBar.typeText("Apple")
+        XCTAssertTrue(app.keyboards.buttons["Search"].waitForExistence(timeout: 2.0))
+        app.keyboards.buttons["Search"].tap()
+        
+        let articleTableView = app.tables["articleTableView"]
+        XCTAssertTrue(articleTableView.waitForExistence(timeout: 2.0), "Le TableView des articles existe")
+        
+        // On vérifie l'existence des cellules
+        let tableCells = articleTableView.cells
+        
+        if tableCells.count > 0 {
+            let promise = expectation(description: "En attente des TableViewCells")
+            
+            for i in 0 ..< tableCells.count {
+                // Grab the first cell and verify that it exists and tap it
+                let tableCell = tableCells.element(boundBy: i)
+                XCTAssertTrue(tableCell.exists, "La cellule \(i) n'existe pas")
+         
+                if i == (tableCells.count - 1) {
+                    promise.fulfill()
+                }
+            }
+            waitForExpectations(timeout: 10, handler: nil)
+            XCTAssertTrue(true, "Validation terminée, les données sont téléchargées et disposées dans les cellules.")
+         
+        } else {
+            XCTAssert(false, "Pas de cellules disponibles")
+        }
+        
+        // Clic sur la première cellule
+        tableCells.element(boundBy: 0).tap()
     }
     
     func testLaunchPerformance() throws {

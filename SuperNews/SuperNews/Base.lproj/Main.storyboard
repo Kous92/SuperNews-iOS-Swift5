@@ -73,8 +73,8 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Aucune news disponible" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9IJ-wH-L7J">
-                                <rect key="frame" x="25" y="451.66666666666669" width="378" height="23"/>
-                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
+                                <rect key="frame" x="25" y="453.33333333333331" width="378" height="19.333333333333314"/>
+                                <fontDescription key="fontDescription" type="system" weight="medium" pointSize="16"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -94,12 +94,14 @@
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="Titre de l'article en détails qui peut s'étendre sur plusieurs lignes." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" translatesAutoresizingMaskIntoConstraints="NO" id="HZw-6K-zdz">
                                                             <rect key="frame" x="15" y="15" width="378" height="80.666666666666671"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="NewsTitleCell"/>
                                                             <fontDescription key="fontDescription" type="system" weight="medium" pointSize="19"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                         <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" image="ArticleImageNotAvailable" translatesAutoresizingMaskIntoConstraints="NO" id="1Oa-Cd-EfR" customClass="CustomImageView" customModule="SuperNews" customModuleProvider="target">
                                                             <rect key="frame" x="15" y="110.66666666666669" width="378" height="240"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="NewsImageCell"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="height" constant="240" id="nUQ-hA-mrw"/>
                                                             </constraints>
@@ -111,6 +113,7 @@
                                                         </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Source de l'article" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.55000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="Gxq-30-zqk">
                                                             <rect key="frame" x="15" y="365.66666666666669" width="378" height="19.333333333333314"/>
+                                                            <accessibility key="accessibilityConfiguration" identifier="NewsSourceCell"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
@@ -150,6 +153,7 @@
                                                 <constraint firstAttribute="trailing" secondItem="RCI-ir-qm5" secondAttribute="trailing" constant="10" id="r2p-vd-zne"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <accessibility key="accessibilityConfiguration" identifier="NewsTableViewCell"/>
                                         <connections>
                                             <outlet property="articleCellView" destination="RCI-ir-qm5" id="xzT-8R-CRO"/>
                                             <outlet property="articleImage" destination="1Oa-Cd-EfR" id="bq0-No-sVY"/>
@@ -208,10 +212,20 @@
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
                             </view>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="NTL-iR-mMh">
+                                <rect key="frame" x="174" y="423" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="lIu-B4-Xd8"/>
+                                    <constraint firstAttribute="width" constant="80" id="vdz-T1-w8l"/>
+                                </constraints>
+                                <color key="color" systemColor="labelColor"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1cN-eH-1qr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="NTL-iR-mMh" firstAttribute="centerY" secondItem="ALy-P5-XsB" secondAttribute="centerY" id="62X-73-6s9"/>
+                            <constraint firstItem="NTL-iR-mMh" firstAttribute="centerX" secondItem="ALy-P5-XsB" secondAttribute="centerX" id="FMw-Mj-nBa"/>
                             <constraint firstItem="zeU-mS-CKA" firstAttribute="leading" secondItem="1cN-eH-1qr" secondAttribute="leading" id="FlU-JR-1ti"/>
                             <constraint firstItem="cme-kX-FEt" firstAttribute="leading" secondItem="1cN-eH-1qr" secondAttribute="leading" constant="20" id="Pea-QH-6d0"/>
                             <constraint firstItem="zeU-mS-CKA" firstAttribute="trailing" secondItem="1cN-eH-1qr" secondAttribute="trailing" id="Rwb-JE-FDK"/>
@@ -229,6 +243,7 @@
                         <outlet property="articleTableView" destination="zeU-mS-CKA" id="px6-wV-Z4Z"/>
                         <outlet property="newsAvailabilityLabel" destination="9IJ-wH-L7J" id="8fb-DT-FN8"/>
                         <outlet property="searchBar" destination="QAb-23-afQ" id="M3k-je-tVd"/>
+                        <outlet property="spinner" destination="NTL-iR-mMh" id="EAC-OO-G7T"/>
                         <segue destination="QCX-UJ-XLl" kind="presentation" identifier="newsSegue" modalPresentationStyle="fullScreen" id="WdZ-DO-9bf"/>
                     </connections>
                 </viewController>
@@ -547,6 +562,14 @@
                                     <action selector="backButton:" destination="QCX-UJ-XLl" eventType="touchUpInside" id="Q6L-UG-3k8"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="EvT-Zt-CMx">
+                                <rect key="frame" x="174" y="423" width="80" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="80" id="GLu-Lx-NBB"/>
+                                    <constraint firstAttribute="width" constant="80" id="pCY-os-JuB"/>
+                                </constraints>
+                                <color key="color" systemColor="labelColor"/>
+                            </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pays des news: Afrique du Sud" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sWL-2x-KB5">
                                 <rect key="frame" x="55" y="57" width="318" height="24"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
@@ -558,6 +581,7 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="gi6-LP-ika" firstAttribute="leading" secondItem="nfx-Nc-pxR" secondAttribute="leading" id="8HB-BM-XJ3"/>
+                            <constraint firstItem="EvT-Zt-CMx" firstAttribute="centerX" secondItem="isv-1d-Fg6" secondAttribute="centerX" id="8XB-kQ-Hcw"/>
                             <constraint firstItem="sWL-2x-KB5" firstAttribute="leading" secondItem="Y4Z-55-VuK" secondAttribute="trailing" constant="10" id="Jai-GJ-u58"/>
                             <constraint firstItem="nfx-Nc-pxR" firstAttribute="trailing" secondItem="sWL-2x-KB5" secondAttribute="trailing" constant="55" id="KAR-vW-nKF"/>
                             <constraint firstItem="Y4Z-55-VuK" firstAttribute="top" secondItem="nfx-Nc-pxR" secondAttribute="top" constant="10" id="MdH-5W-tnC"/>
@@ -566,12 +590,14 @@
                             <constraint firstItem="sWL-2x-KB5" firstAttribute="top" secondItem="nfx-Nc-pxR" secondAttribute="top" constant="13" id="TqJ-wm-pUc"/>
                             <constraint firstItem="gi6-LP-ika" firstAttribute="top" secondItem="sWL-2x-KB5" secondAttribute="bottom" constant="20" id="b4y-os-UN6"/>
                             <constraint firstItem="Y4Z-55-VuK" firstAttribute="leading" secondItem="nfx-Nc-pxR" secondAttribute="leading" constant="15" id="ogM-Ch-wph"/>
+                            <constraint firstItem="EvT-Zt-CMx" firstAttribute="centerY" secondItem="isv-1d-Fg6" secondAttribute="centerY" id="vkt-Mc-Gj0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="8uP-Qt-Q85"/>
                     <connections>
                         <outlet property="articleTableView" destination="gi6-LP-ika" id="omp-xY-eFc"/>
                         <outlet property="countryNewsLabel" destination="sWL-2x-KB5" id="B6s-LI-4sJ"/>
+                        <outlet property="spinner" destination="EvT-Zt-CMx" id="IjA-eL-eOx"/>
                         <segue destination="QCX-UJ-XLl" kind="presentation" identifier="countryArticleSegue" modalPresentationStyle="fullScreen" id="r4K-hm-7Ep"/>
                     </connections>
                 </viewController>

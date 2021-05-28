@@ -11,6 +11,7 @@ class CountryNewsViewController: UIViewController {
     
     @IBOutlet weak var articleTableView: UITableView!
     @IBOutlet weak var countryNewsLabel: UILabel!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     var countryArticles = [Article]()
     let newsAPI = NewsAPIService.shared
@@ -23,6 +24,10 @@ class CountryNewsViewController: UIViewController {
         countryNewsLabel.text = "Pays des news: \(countryName)"
         articleTableView.dataSource = self
         articleTableView.delegate = self
+        articleTableView.isHidden = true
+        spinner.isHidden = false
+        spinner.startAnimating()
+        spinner.hidesWhenStopped = true
         
         print("CountryCode = \(countryCode)")
         print("CountryCode = \(countryName)")
@@ -35,6 +40,8 @@ class CountryNewsViewController: UIViewController {
                 // print(newsData)
                 DispatchQueue.main.async {
                     self?.articleTableView.reloadData()
+                    self?.articleTableView.isHidden = false
+                    self?.spinner.stopAnimating()
                 }
             case .failure(_):
                 print("Pas de données")

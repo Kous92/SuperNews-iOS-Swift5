@@ -12,12 +12,16 @@ class NewsViewController: UIViewController {
     @IBOutlet weak var articleTableView: UITableView!
     @IBOutlet weak var newsAvailabilityLabel: UILabel!
     @IBOutlet weak var searchBar: UITextField!
+    @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     var articles = [Article]() {
         didSet {
             // On met à jour la liste d'articles de façon asynchrone (dans le thread principal), les données étant récupérée dans un thread de fond.
             DispatchQueue.main.async { [weak self] in
                 self?.articleTableView.reloadData()
+                self?.spinner.stopAnimating()
+                self?.spinner.isHidden = true
+                
                 if let articles = self?.articles, articles.count > 0 {
                     self?.articleTableView.isHidden = false
                     self?.newsAvailabilityLabel.isHidden = true
@@ -52,10 +56,12 @@ class NewsViewController: UIViewController {
         
         if articles.count < 1 {
             articleTableView.isHidden = true
-            newsAvailabilityLabel.isHidden = false
-            newsAvailabilityLabel.text = "La langue des news est en \(languageName). Le contenu recherché sera affiché dans la langue définie. Pour obtenir les news locales d'un pays, rendez-vous dans la carte du monde puis choisissez un pays en cliquant sur son drapeau puis sur \"i\" dans l'info-bulle."
+            spinner.startAnimating()
+            spinner.isHidden = false
+            // newsAvailabilityLabel.isHidden = false
+            // newsAvailabilityLabel.text = "La langue des news est en \(languageName). Le contenu recherché sera affiché dans la langue définie. Pour obtenir les news locales d'un pays, rendez-vous dans la carte du monde puis choisissez un pays en cliquant sur son drapeau puis sur \"i\" dans l'info-bulle."
         }
-        
+
         newsAPI.initializeLocalNews(country: countryCode, completion: { [weak self] result in
             switch result {
             case .success(let newsData):
@@ -72,8 +78,17 @@ class NewsViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        // L'utilisateur a choisi une langue différente dans les paramètres.
+        if let language = UserDefaults.standard.string(forKey: "languageCode"), let name = UserDefaults.standard.string(forKey: "languageName"), name != languageName && language != languageCode {
+            languageCode = language
+            languageName = name
+        }
+        
         // L'utilisateur a choisi un pays différent dans les paramètres.
         if let code = UserDefaults.standard.string(forKey: "countryCode"), code != countryCode {
+            articleTableView.isHidden = true
+            spinner.startAnimating()
+            spinner.isHidden = false
             print("\(code) != \(countryCode)")
             // On refait une requête si le pays est différent
             newsAPI.initializeLocalNews(country: code, completion: { [weak self] result in
@@ -89,12 +104,6 @@ class NewsViewController: UIViewController {
             
             countryCode = code
         }
-        
-        // L'utilisateur a choisi une langue différent dans les paramètres.
-        if let language = UserDefaults.standard.string(forKey: "languageCode"), let name = UserDefaults.standard.string(forKey: "languageName"), name != languageName && language != languageCode {
-            languageCode = language
-            languageName = name
-        }
     }
 }
 
@@ -108,6 +117,9 @@ extension NewsViewController: UITextFieldDelegate {
         
         let query = search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         articles.removeAll()
+        spinner.startAnimating()
+        spinner.isHidden = false
+        articleTableView.isHidden = true
         
         newsAPI.searchNews(language: languageCode, query: query!) { [weak self] result in
             switch result {
@@ -124,8 +136,7 @@ extension NewsViewController: UITextFieldDelegate {
     
     /*
     // Dès qu'on a cliqué sur la barre de recherche
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
-    {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         searchBar.resignFirstResponder() // Le clavier disparaît (ce n'est pas automatique de base)
         // print(searchBar.text!)
         

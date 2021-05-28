@@ -21,6 +21,6 @@ Frameworks tiers:
 
 ## Tests unitaires et UI
 
-Utilise XCTest, couverture actuelle du code: **18,3%**
+Utilise XCTest, couverture actuelle du code: **28,1%**
 - Tests unitaires classiques et asynchrones.
 - Tests UI classiques et asynchones.
