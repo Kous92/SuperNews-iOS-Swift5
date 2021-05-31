@@ -19,6 +19,9 @@ class NewsMapViewController: UIViewController, UITextFieldDelegate {
     var selectedCountryCode = ""
     var searchContent = ""
     var locationManager: CLLocationManager?
+    var geocoder: CLGeocoder!
+    let annotationQueue = DispatchQueue(label: "MapAnnotations")
+    
     @IBOutlet weak var countrySearchBar: UITextField!
     @IBOutlet weak var countryAutoCompletionTableView: UITableView!
     @IBOutlet weak var autoCompletionView: CustomView!
@@ -27,6 +30,7 @@ class NewsMapViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         map.delegate = self
         locationManager = CLLocationManager()
+        geocoder = CLGeocoder()
         locationManager?.delegate = self
         countrySearchBar?.delegate = self
         countrySearchBar.attributedPlaceholder = NSAttributedString(string: "Pays", attributes: [.foregroundColor: UIColor(named: "Placeholder") ?? UIColor.label])
@@ -37,13 +41,20 @@ class NewsMapViewController: UIViewController, UITextFieldDelegate {
         autoCompletionView.isHidden = true
         
         if countries.count == 0 {
-            initializeCountryData()
+            annotationQueue.async { [unowned self] in
+                self.initializeCountryData()
+            }
+            // initializeCountryData()
         }
         
         // Si l'utilisateur a autorisé l'accès, alors sa position sera marquée d'un point bleu.
         map.showsUserLocation = true
-        initializePosition()
-        placePins()
+        
+        annotationQueue.async { [unowned self] in
+            self.initializePosition()
+            self.placePins()
+        }
+        // placePins()
     }
     
     private func initializeCountryData() {
@@ -59,13 +70,15 @@ class NewsMapViewController: UIViewController, UITextFieldDelegate {
 
 extension NewsMapViewController: MKMapViewDelegate {
     private func placePins() {
-        for i in countries.indices {
-            let annotation = MKPointAnnotation()
-            // let annotation = CountryAnnotation(title: countries[i].countryName, subtitle: countries[i].capital, coordinate: CLLocationCoordinate2D(latitude: countries[i].lat, longitude: countries[i].lon), countryCode: countries[i].countryCode)
-            annotation.coordinate = CLLocationCoordinate2D(latitude: countries[i].lat, longitude: countries[i].lon)
-            annotation.title = countries[i].countryName
-            annotation.subtitle = countries[i].countryCode
-            map.addAnnotation(annotation)
+        DispatchQueue.main.async { [unowned self] in
+            for i in self.countries.indices {
+                let annotation = MKPointAnnotation()
+                // let annotation = CountryAnnotation(title: countries[i].countryName, subtitle: countries[i].capital, coordinate: CLLocationCoordinate2D(latitude: countries[i].lat, longitude: countries[i].lon), countryCode: countries[i].countryCode)
+                annotation.coordinate = CLLocationCoordinate2D(latitude: self.countries[i].lat, longitude: self.countries[i].lon)
+                annotation.title = self.countries[i].countryName
+                annotation.subtitle = self.countries[i].countryCode
+                self.map.addAnnotation(annotation)
+            }
         }
     }
     
@@ -252,6 +265,10 @@ extension NewsMapViewController: CLLocationManagerDelegate {
             map.setRegion(coordinateRegion, animated: true)
         
         default:
+            // On affiche une alerte
+            let alert = UIAlertController(title: "Erreur", message: "Localisation indisponible. Assurez-vous que le signal GPS soit disponible en vérifiant les autorisations dans Réglages > Confidentialité > Service de localisation > SuperNews.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
             break
         }
     }
@@ -269,6 +286,8 @@ extension NewsMapViewController: CLLocationManagerDelegate {
             let y = Double(first.coordinate.latitude)
             print(String(format: "Longitude (x) = %.7f", x))
             print(String(format: "Latitude (y) = %.7f", y))
+            
+            // Décoder la position
             // getAddress(from: first)
         }
     }
@@ -279,53 +298,101 @@ extension NewsMapViewController: CLLocationManagerDelegate {
         // On définit la position par défaut sur Paris
         let initialLocation = CLLocation(latitude: 48.866667, longitude: 2.333333)
         
-        // On définit une région visible en mètres, on va définir à 100 km.
+        // On définit une région visible en mètres, on va définir à 1 000 km.
         let regionRadius: CLLocationDistance = 1000000
         
         switch locationManager?.authorizationStatus {
         case .denied: // Option: Jamais
-            print("Accès refusé au service de localisation.")
+            // print("Accès refusé au service de localisation.")
             
-            // On affiche une alerte
-            let alert = UIAlertController(title: "Erreur", message: "Vous avez refusé l'accès au service de localisation. Merci de l'autoriser en allant dans Réglages > Confidentialité > Service de localisation > GPSLocation.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alert, animated: true)
+            DispatchQueue.main.async { [weak self] in
+                // On affiche une alerte
+                let alert = UIAlertController(title: "Erreur", message: "Vous avez refusé l'accès au service de localisation. Merci de l'autoriser en allant dans Réglages > Confidentialité > Service de localisation > SuperNews.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self?.present(alert, animated: true)
+            }
+           
             break
             
         case .restricted: // Restreint par le contrôle parental
-            print("Accès restreint au service de localisation par le contrôle parental.")
+            // print("Accès restreint au service de localisation par le contrôle parental.")
             
-            // On affiche une alerte
-            let alert = UIAlertController(title: "Erreur", message: "L'accès au service de localisation est restreint par le contrôle parental.", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
-            self.present(alert, animated: true)
+            DispatchQueue.main.async { [weak self] in
+                // On affiche une alerte
+                let alert = UIAlertController(title: "Erreur", message: "L'accès au service de localisation est restreint par le contrôle parental.", preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+                self?.present(alert, animated: true)
+            }
+            
             break
             
         case .notDetermined:
             locationManager?.requestWhenInUseAuthorization()
             
         default:
-            // L'accès au service de localisation est autorisé
-            locationManager?.desiredAccuracy = kCLLocationAccuracyBestForNavigation
-            
-            // La localisation sera ici mise à jour en temps réel grâce au signal GPS.
-            locationManager?.startUpdatingLocation()
-            authorizedLocation = true
-        }
-        
-        if authorizedLocation {
-            guard let location = locationManager?.location else {
-                return
+            DispatchQueue.main.async { [weak self] in
+                // L'accès au service de localisation est autorisé
+                self?.locationManager?.desiredAccuracy = kCLLocationAccuracyBestForNavigation
+                
+                // La localisation sera ici mise à jour en temps réel grâce au signal GPS.
+                self?.locationManager?.startUpdatingLocation()
+                authorizedLocation = true
+                
+                if authorizedLocation {
+                    guard let location = self?.locationManager?.location else {
+                        return
+                    }
+                    
+                    let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+                    
+                    /*
+                    if let country = reverseGeocoding() {
+                        print("Pays décodé: \(country)")
+                        
+                        let localCountry = countries.filter { $0.countryName == country }
+                        print(localCountry.count)
+                        
+                        // La position GPS est dans l'un des pays de la liste locale.
+                        if localCountry.count > 0, let local = localCountry.first {
+                            coordinateRegion.center = CLLocation(latitude: local.lat, longitude: local.lon).coordinate
+                            
+                            print("Centré sur la position suivante: x = \(local.lon), y = \(local.lat)")
+                        }
+                    }
+                     */
+                    
+                    self?.map.setRegion(coordinateRegion, animated: true)
+                    self?.locationManager?.stopUpdatingLocation()
+                } else {
+                    let coordinateRegion = MKCoordinateRegion(center: initialLocation.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
+                    self?.map.setRegion(coordinateRegion, animated: true)
+                }
             }
-            
-            let coordinateRegion = MKCoordinateRegion(center: location.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
-            map.setRegion(coordinateRegion, animated: true)
-            locationManager?.stopUpdatingLocation()
-        } else {
-            let coordinateRegion = MKCoordinateRegion(center: initialLocation.coordinate, latitudinalMeters: regionRadius, longitudinalMeters: regionRadius)
-            map.setRegion(coordinateRegion, animated: true)
         }
     }
+    
+    /*
+    private func reverseGeocoding() -> String? {
+        guard let location = locationManager?.location else {
+            return nil
+        }
+        
+        var address: String?
+        
+        geocoder.reverseGeocodeLocation(location) { place, error in
+            if let error = error {
+                print("Le géocodage inverse de la position actuelle a échoué, adresse indisponible. (\(error))")
+            } else {
+                if let placemarks = place, let placemark = placemarks.first {
+                    print(placemark.country ?? "Pays inconnu")
+                    address = placemark.country
+                }
+            }
+        }
+        
+        return address
+    }
+ */
 }
 
 extension NewsMapViewController: UITableViewDelegate, UITableViewDataSource {

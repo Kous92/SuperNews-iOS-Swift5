@@ -267,6 +267,7 @@
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nmt-dM-EIm">
                                                 <rect key="frame" x="15" y="10" width="30" height="30"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="BackButton"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="Ffs-gd-qp0"/>
                                                     <constraint firstAttribute="width" constant="30" id="H1T-yU-ksf"/>
@@ -549,6 +550,7 @@
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y4Z-55-VuK">
                                 <rect key="frame" x="15" y="54" width="30" height="30"/>
+                                <accessibility key="accessibilityConfiguration" identifier="BackButton"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="4e6-6p-2CV"/>
                                     <constraint firstAttribute="width" constant="30" id="eLa-k2-0Ix"/>
@@ -1116,6 +1118,7 @@
                                             </stackView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Projet personnel réalisé par Koussaïla BEN MAMAR, ingénieur jeune diplômé d'EFREI Paris. Mai 2021." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAF-eo-zBq">
                                                 <rect key="frame" x="25" y="1208.6666666666667" width="378" height="61"/>
+                                                <accessibility key="accessibilityConfiguration" identifier="Copyright"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -1223,7 +1226,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="WdZ-DO-9bf"/>
+        <segue reference="r4K-hm-7Ep"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Alamofire" width="133.33332824707031" height="133.33332824707031"/>

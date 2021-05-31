@@ -13,7 +13,6 @@ import XCTest
 class SuperNewsUITests: XCTestCase {
     
     // Les tests UI doivent lancer l'application qu'ils testent avec app.launch().
-    var app: XCUIApplication!
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
@@ -21,6 +20,7 @@ class SuperNewsUITests: XCTestCase {
         continueAfterFailure = false
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        XCUIApplication().launch()
     }
 
     override func tearDownWithError() throws {
@@ -28,17 +28,17 @@ class SuperNewsUITests: XCTestCase {
     }
 
     func testHome() throws {
-        app = XCUIApplication()
-        app.launch()
+        let app = XCUIApplication()
+        // app.launch()
         app.tabBars.buttons["Accueil"].tap()
         
         XCTAssert(app.staticTexts["Bienvenue"].exists)
     }
     
     // En cliquant sur "News", on s'assure que les cellules apparaissent. Test de type asynchrone (étant donné le téléchargement asynchrone des données).
-    func testNews() throws {
-        app = XCUIApplication()
-        app.launch()
+    func testNews() {
+        let app = XCUIApplication()
+        // app.launch()
         app.tabBars.buttons["News"].tap()
         
         // XCTAssert(app.staticTexts["Bienvenue"].exists)
@@ -71,9 +71,9 @@ class SuperNewsUITests: XCTestCase {
         }
     }
     
-    func testSearchNews() throws {
-        app = XCUIApplication()
-        app.launch()
+    func testSearchNews() {
+        let app = XCUIApplication()
+        // app.launch()
         app.tabBars.buttons["News"].tap()
         
         XCTAssertTrue(app.textFields["newsSearchBar"].waitForExistence(timeout: 2.0), "La barre de recherche n'existe pas.")
@@ -95,6 +95,7 @@ class SuperNewsUITests: XCTestCase {
         
         // On vérifie l'existence des cellules
         let tableCells = articleTableView.cells
+        XCTAssertGreaterThan(tableCells.count, 0)
         
         if tableCells.count > 0 {
             let promise = expectation(description: "En attente des TableViewCells")
@@ -117,6 +118,22 @@ class SuperNewsUITests: XCTestCase {
         
         // Clic sur la première cellule
         tableCells.element(boundBy: 0).tap()
+    }
+    
+    func testSettings() {
+        
+    }
+    
+    func testAbout() {
+        let app = XCUIApplication()
+        // app.launch()
+        app.tabBars.buttons["À propos"].tap()
+        
+        XCTAssertTrue(app.staticTexts["À propos"].exists)
+        app.swipeUp()
+        
+        XCTAssertTrue(app.staticTexts["Copyright"].exists)
+        app.swipeDown()
     }
     
     func testLaunchPerformance() throws {

@@ -30,26 +30,7 @@ class NewsAPIService {
         
         return dictionary.object(forKey: "NewsApiKey") as? String
     }
-    /*
-    private var apiKey: String = {
-        get {
-            // 1
-            guard let filePath = Bundle.main.path(forResource: "ApiKey", ofType: "plist") else {
-                fatalError("Le fichier 'ApiKey.plist' n'existe pas.")
-            }
-            // 2
-            let plist = NSDictionary(contentsOfFile: filePath)
-            guard let value = plist?.object(forKey: "NewsApiKey") as? String else {
-                fatalError("Impossible de trouver la clé 'NewsApiKey' dans 'ApiKey.plist'.")
-            }
-            // 3
-            if (value.starts(with: "_")) {
-            fatalError("Register for a TMDB developer account and get an API key at https://developers.themoviedb.org/3/getting-started/introduction.")
-            }
-            return value
-        }
-    }
-     */
+
     // Le cache pour les images déjà téléchargées
     private var images = NSCache<NSString, NSData>()
     
