@@ -42,7 +42,7 @@ class SuperNewsUITests: XCTestCase {
         app.tabBars.buttons["News"].tap()
         
         // XCTAssert(app.staticTexts["Bienvenue"].exists)
-        XCTAssert(app.images["magnifyingglass"].exists, "Le logo de recherche (loupe) existe.")
+        XCTAssert(app.images["magnifyingglass"].waitForExistence(timeout: 2.0), "Le logo de recherche (loupe) n'existe pas.")
         
         // Le TableView existe
         let articleTableView = app.tables["articleTableView"]
@@ -79,14 +79,46 @@ class SuperNewsUITests: XCTestCase {
         XCTAssertTrue(app.textFields["newsSearchBar"].waitForExistence(timeout: 2.0), "La barre de recherche n'existe pas.")
         let searchBar = app.textFields["newsSearchBar"]
         searchBar.tap()
-        /*
-        searchBar.keys["A"].tap()
-        searchBar.keys["p"].tap()
-        searchBar.keys["l"].tap()
-        searchBar.keys["l"].tap()
-        searchBar.keys["e"].tap()
- */
         searchBar.typeText("Apple")
+        XCTAssertTrue(app.keyboards.buttons["Search"].waitForExistence(timeout: 2.0))
+        app.keyboards.buttons["Search"].tap()
+        
+        let articleTableView = app.tables["articleTableView"]
+        XCTAssertTrue(articleTableView.waitForExistence(timeout: 2.0), "Le TableView des articles existe")
+        
+        // On vérifie l'existence des cellules
+        let tableCells = articleTableView.cells
+        XCTAssertGreaterThan(tableCells.count, 0)
+        
+        if tableCells.count > 0 {
+            let promise = expectation(description: "En attente des TableViewCells")
+            
+            for i in 0 ..< tableCells.count {
+                // Grab the first cell and verify that it exists and tap it
+                let tableCell = tableCells.element(boundBy: i)
+                XCTAssertTrue(tableCell.exists, "La cellule \(i) n'existe pas")
+         
+                if i == (tableCells.count - 1) {
+                    promise.fulfill()
+                }
+            }
+            waitForExpectations(timeout: 10, handler: nil)
+            XCTAssertTrue(true, "Validation terminée, les données sont téléchargées et disposées dans les cellules.")
+         
+        } else {
+            XCTAssert(false, "Pas de cellules disponibles")
+        }
+    }
+    
+    func testNewsSearchFullNavigation() {
+        let app = XCUIApplication()
+        // app.launch()
+        app.tabBars.buttons["News"].tap()
+        
+        XCTAssertTrue(app.textFields["newsSearchBar"].waitForExistence(timeout: 2.0), "La barre de recherche n'existe pas.")
+        let searchBar = app.textFields["newsSearchBar"]
+        searchBar.tap()
+        searchBar.typeText("PSG")
         XCTAssertTrue(app.keyboards.buttons["Search"].waitForExistence(timeout: 2.0))
         app.keyboards.buttons["Search"].tap()
         
@@ -118,10 +150,47 @@ class SuperNewsUITests: XCTestCase {
         
         // Clic sur la première cellule
         tableCells.element(boundBy: 0).tap()
+        app.swipeUp()
+        XCTAssertTrue(app.buttons["Site web de l'article"].exists)
+        app.buttons["Site web de l'article"].tap()
+        XCTAssertTrue(app.buttons["OK"].exists)
+        app.buttons["OK"].tap()
+        app.swipeDown()
+        XCTAssertTrue(app.buttons["BackButton"].exists)
+        app.buttons["BackButton"].tap()
+    }
+    
+    func testMap() {
+        let app = XCUIApplication()
+        app.tabBars.buttons["Carte du monde"].tap()
+        
+        // La carte peut être longue à charger
+        XCTAssertTrue(app.otherElements["NewsMap"].waitForExistence(timeout: 5.0), "La carte n'existe pas")
+        XCTAssertTrue(app.textFields["countrySearchBar"].waitForExistence(timeout: 2.0), "La barre de recherche n'existe pas.")
+        let searchBar = app.textFields["countrySearchBar"]
+        searchBar.tap()
+        
+        let autoCompletionTableView = app.tables["AutocompletionTableView"]
+        XCTAssertTrue(autoCompletionTableView.waitForExistence(timeout: 2.0), "Le TableView de l'autocomplétion n'existe pas")
+        searchBar.typeText("France")
+        
+        XCTAssertTrue(app.keyboards.buttons["Search"].waitForExistence(timeout: 2.0))
+        // app.keyboards.buttons["Search"].tap()
+        
+        // On vérifie l'existence des cellules
+        let tableCells = autoCompletionTableView.cells
+        XCTAssertGreaterThan(tableCells.count, 0)
+        // Clic sur la première cellule
+        tableCells.element(boundBy: 0).tap()
     }
     
     func testSettings() {
+        let app = XCUIApplication()
+        app.tabBars.buttons["Paramètres"].tap()
+        XCTAssert(app.staticTexts["Paramètres"].exists)
         
+        let articleTableView = app.tables["SettingsTableView"]
+        XCTAssertTrue(articleTableView.waitForExistence(timeout: 2.0), "Le TableView des paramètres n'existe pas")
     }
     
     func testAbout() {

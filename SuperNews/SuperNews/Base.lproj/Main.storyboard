@@ -574,6 +574,7 @@
                             </activityIndicatorView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pays des news: Afrique du Sud" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sWL-2x-KB5">
                                 <rect key="frame" x="55" y="57" width="318" height="24"/>
+                                <accessibility key="accessibilityConfiguration" identifier="newsCountryLabel"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -694,9 +695,13 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="A3E-eE-Es7">
                                 <rect key="frame" x="0.0" y="0.0" width="428" height="843"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="NewsMap"/>
+                                </userDefinedRuntimeAttributes>
                             </mapView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k7J-v2-u5d" customClass="CustomButton" customModule="SuperNews" customModuleProvider="target">
                                 <rect key="frame" x="373" y="783" width="40" height="40"/>
+                                <accessibility key="accessibilityConfiguration" identifier="LocationButton"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="BWv-J8-g0Q"/>
                                     <constraint firstAttribute="height" constant="40" id="IQa-HU-vbo"/>
@@ -809,6 +814,9 @@
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
+                                        <userDefinedRuntimeAttributes>
+                                            <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="AutocompletionTableView"/>
+                                        </userDefinedRuntimeAttributes>
                                     </tableView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -934,6 +942,9 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="SettingsTableView"/>
+                                </userDefinedRuntimeAttributes>
                             </tableView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="c1H-gG-EY2"/>
