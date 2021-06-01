@@ -189,9 +189,115 @@ class SuperNewsUITests: XCTestCase {
         app.tabBars.buttons["Paramètres"].tap()
         XCTAssert(app.staticTexts["Paramètres"].exists)
         
-        let articleTableView = app.tables["SettingsTableView"]
-        XCTAssertTrue(articleTableView.waitForExistence(timeout: 2.0), "Le TableView des paramètres n'existe pas")
+        let settingsTableView = app.tables["SettingsTableView"]
+        XCTAssertTrue(settingsTableView.waitForExistence(timeout: 2.0), "Le TableView des paramètres n'existe pas")
+        
+        // On vérifie l'existence des cellules
+        let tableCells = settingsTableView.cells
+        XCTAssertGreaterThan(tableCells.count, 0)
     }
+    
+    func testSetNewsCountry() {
+        let app = XCUIApplication()
+        app.tabBars.buttons["Paramètres"].tap()
+        XCTAssert(app.staticTexts["Paramètres"].exists)
+        
+        let settingsTableView = app.tables["SettingsTableView"]
+        XCTAssertTrue(settingsTableView.waitForExistence(timeout: 2.0), "Le TableView des paramètres n'existe pas")
+        
+        // On vérifie l'existence des cellules
+        let tableCells = settingsTableView.cells
+        XCTAssertGreaterThan(tableCells.count, 0)
+        
+        // Clic sur la seconde cellule
+        tableCells.element(boundBy: 1).tap()
+        
+        XCTAssert(app.staticTexts["Pays des news"].exists)
+        
+        let settingsChoiceTableView = app.tables["settingsChoiceTable"]
+        XCTAssertTrue(settingsChoiceTableView.waitForExistence(timeout: 2.0), "Le TableView des paramètres n'existe pas")
+        
+        // On vérifie l'existence des cellules
+        let cells = settingsChoiceTableView.cells
+        XCTAssertGreaterThan(cells.count, 0)
+        
+        // Par rapport à NewsAPI, il y a 54 pays disponibles
+        XCTAssertEqual(cells.count, 54)
+        
+        if tableCells.count > 0 {
+            let promise = expectation(description: "En attente des TableViewCells")
+            
+            for i in 0 ..< tableCells.count {
+                let tableCell = tableCells.element(boundBy: i)
+                XCTAssertTrue(tableCell.exists, "La cellule \(i) n'existe pas")
+         
+                if i == (tableCells.count - 1) {
+                    promise.fulfill()
+                }
+            }
+            waitForExpectations(timeout: 10, handler: nil)
+            XCTAssertTrue(true, "Échec, les 54 cellules ne sont pas présentes")
+         
+        } else {
+            XCTFail()
+        }
+        XCTAssert(app.staticTexts["Allemagne"].exists)
+        tableCells.element(boundBy: 1).tap()
+        
+        app.swipeUp()
+    }
+    
+    func testSetNewsLanguage() {
+        let app = XCUIApplication()
+        app.tabBars.buttons["Paramètres"].tap()
+        XCTAssert(app.staticTexts["Paramètres"].exists)
+        
+        let settingsTableView = app.tables["SettingsTableView"]
+        XCTAssertTrue(settingsTableView.waitForExistence(timeout: 2.0), "Le TableView des paramètres n'existe pas")
+        
+        // On vérifie l'existence des cellules
+        let tableCells = settingsTableView.cells
+        XCTAssertGreaterThan(tableCells.count, 0)
+        
+        // Clic sur la première cellule
+        tableCells.element(boundBy: 0).tap()
+        
+        XCTAssert(app.staticTexts["Langue des news"].exists)
+        
+        let settingsChoiceTableView = app.tables["settingsChoiceTable"]
+        XCTAssertTrue(settingsChoiceTableView.waitForExistence(timeout: 2.0), "Le TableView des paramètres n'existe pas")
+        
+        // On vérifie l'existence des cellules
+        let cells = settingsChoiceTableView.cells
+        XCTAssertGreaterThan(cells.count, 0)
+        
+        // Par rapport à NewsAPI, il y a 14 langues disponibles
+        XCTAssertEqual(cells.count, 14)
+        
+        if tableCells.count > 0 {
+            let promise = expectation(description: "En attente des TableViewCells")
+            
+            for i in 0 ..< tableCells.count {
+                let tableCell = tableCells.element(boundBy: i)
+                XCTAssertTrue(tableCell.exists, "La cellule \(i) n'existe pas")
+         
+                if i == (tableCells.count - 1) {
+                    promise.fulfill()
+                }
+            }
+            waitForExpectations(timeout: 10, handler: nil)
+            XCTAssertTrue(true, "Échec, les 54 cellules ne sont pas présentes")
+         
+        } else {
+            XCTFail()
+        }
+        
+        XCTAssert(app.staticTexts["Anglais"].exists)
+        tableCells.element(boundBy: 1).tap()
+        
+        app.swipeUp()
+    }
+    
     
     func testAbout() {
         let app = XCUIApplication()

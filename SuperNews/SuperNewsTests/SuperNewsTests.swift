@@ -45,6 +45,7 @@ class SuperNewsTests: XCTestCase {
     func testFetchLocalNewsNetwork() {
         let expectation = expectation(description: "Récupérer les news locales par le réseau.")
         let newsAPI = NewsAPIService.shared
+        newsAPI.keyUnitTestMode = false
         
         newsAPI.initializeLocalNews(country: "fr", completion: { result in
             expectation.fulfill()
@@ -65,6 +66,7 @@ class SuperNewsTests: XCTestCase {
     func testFetchQueryNewsNetwork() {
         let expectation = expectation(description: "Récupérer les news locales par le réseau avec une recherche.")
         let newsAPI = NewsAPIService.shared
+        newsAPI.keyUnitTestMode = false
         
         newsAPI.searchNews(language: "fr", query: "Apple") { result in
             expectation.fulfill()
@@ -75,6 +77,47 @@ class SuperNewsTests: XCTestCase {
             case .failure(_):
                 XCTFail()
                 print("Pas de données")
+            }
+        }
+        
+        waitForExpectations(timeout: 5.0, handler: nil)
+    }
+    
+    func testNoArticlesAvailableFetch() {
+        let expectation = expectation(description: "Vérifier que sur une recherche farfelue que l'erreur est retournée.")
+        let newsAPI = NewsAPIService.shared
+        newsAPI.keyUnitTestMode = false
+        
+        newsAPI.searchNews(language: "fr", query: "rjbkbt21521") { result in
+            expectation.fulfill()
+            switch result {
+            case .success(_):
+                XCTFail()
+            case .failure(let error):
+                XCTAssertEqual(error.rawValue, "Pas d'articles disponibles.", "L'erreur attendue ne s'est pas déclenchée.")
+                print(error.rawValue)
+                print(error.localizedDescription)
+            }
+        }
+        
+        waitForExpectations(timeout: 5.0, handler: nil)
+    }
+    
+    func testNoAPIKeyFetch() {
+        let expectation = expectation(description: "Récupérer les news locales par le réseau avec une recherche.")
+        let newsAPI = NewsAPIService.shared
+        newsAPI.keyUnitTestMode = true
+        newsAPI.apiKey = ""
+        
+        newsAPI.searchNews(language: "fr", query: "Apple") { result in
+            expectation.fulfill()
+            switch result {
+            case .success(_):
+                XCTFail()
+            case .failure(let error):
+                XCTAssertEqual(error.rawValue, "Erreur 401: La clé d'API fournie est invalide ou inexistante.", "L'erreur 401 n'est pas déclenchée.")
+                print(error.rawValue)
+                print(error.localizedDescription)
             }
         }
         

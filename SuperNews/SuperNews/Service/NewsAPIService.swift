@@ -16,6 +16,7 @@ class NewsAPIService {
     var initURL: URL
     var apiKey: String = ""
     var country: String
+    var keyUnitTestMode: Bool
     
     private func getApiKey() -> String? {
         guard let path = Bundle.main.path(forResource: "ApiKey", ofType: "plist") else {
@@ -41,6 +42,7 @@ class NewsAPIService {
         self.country = ""
         // print(url + "&apiKey=" + apiKey)
         initURL = URL(string: url + country + "&apiKey=" + apiKey)!
+        self.keyUnitTestMode = false
         
         // Configuration d'URLSession
         let config = URLSessionConfiguration.default
@@ -49,6 +51,11 @@ class NewsAPIService {
     }
     
     func initializeLocalNews(country: String = "fr", completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
+        // Cela sera surtout utile dans le cadre des tests unitaires.
+        if apiKey.isEmpty && keyUnitTestMode == false {
+            apiKey = getApiKey() ?? ""
+        }
+        
         self.country = country
         initURL = URL(string: url + country + "&apiKey=" + apiKey)!
         // print(initURL.absoluteString)
@@ -56,11 +63,22 @@ class NewsAPIService {
     }
     
     func searchNews(language: String = "fr", query: String, completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
+        
+        // Cela sera surtout utile dans le cadre des tests unitaires.
+        if apiKey.isEmpty && keyUnitTestMode == false {
+            apiKey = getApiKey() ?? ""
+        }
+        
         let searchUrl = "https://newsapi.org/v2/everything?language=\(language)&q=\(query)&apiKey=" + apiKey
         getNewsAlamofire(url: URL(string: searchUrl)!, completion: completion)
     }
     
     func searchCountryLocalNews(query: String, completion: @escaping (Result<[Article], NewsAPIError>) -> ()) {
+        // Cela sera surtout utile dans le cadre des tests unitaires.
+        if apiKey.isEmpty && keyUnitTestMode == false {
+            apiKey = getApiKey() ?? ""
+        }
+        
         let searchUrl = "https://newsapi.org/v2/everything?country=\(country)&q=\(query)&apiKey=" + apiKey
         getNewsAlamofire(url: URL(string: searchUrl)!, completion: completion)
     }
@@ -124,16 +142,17 @@ class NewsAPIService {
         AF.request(url).validate().responseDecodable(of: ArticleOutput.self) { response in
             switch response.result {
                 case .success:
-                guard let data = response.value else {
-                    completion(.failure(.downloadError))
-                    
-                    return
-                }
+                    guard let data = response.value else {
+                        completion(.failure(.downloadError))
+                        return
+                    }
                 
-                if let newsData = data.articles {
-                    // print("Articles disponibles: \(newsData.count)")
-                    completion(.success(newsData))
-                }
+                    if let newsData = data.articles, newsData.count > 0 {
+                        // print("Articles disponibles: \(newsData.count)")
+                        completion(.success(newsData))
+                    } else {
+                        completion(.failure(.noArticles))
+                    }
                     
                 case let .failure(error):
                 guard let httpResponse = response.response else {
