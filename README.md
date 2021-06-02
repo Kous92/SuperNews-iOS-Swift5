@@ -75,9 +75,9 @@ Cette application iOS native est réalisée avec:
 - Xcode 12
 - Swift 5.4
 
-Architecture MVC:
-- Principal avantage: sa facilité pour l'implémentation des interactions et des fonctionnalités.
-- Inconvénients: `ViewController` massifs, difficultés pour les tester avec des tests unitaires.
+Architecture MVC (Model View Controller):
+- Principal avantage: sa facilité pour l'implémentation des interactions et des fonctionnalités. C'est aussi l'architecture par défaut avec UIKit.
+- Inconvénients: `ViewController` massifs, difficultés pour les tester avec des tests unitaires. Pas adaptée pour la programmation réactive (RxSwift, Combine, ...).
 
 Patterns:
 - DataSource: par le biais des TableView (pour la récupération des données)
@@ -111,6 +111,11 @@ En cliquant sur "News" dans la barre de navigation du bas, l'interface des news 
 
 Pour rechercher le contenu, il suffit tout simplement de toucher la barre de recherche puis de saisir le contenu recherché. Par défaut la langue des news est en français.<br>
 <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsSearch.png" width="250">
+
+### <a name="newsmap"></a>Carte des news
+
+Avec les possibilités que donne NewsAPI, il est donc possible de récupérer les news en tendance de 54 pays différents. Je propose donc ici une option de carte interactive où des marqueurs personnalisés apparaîssent sur la carte représentant le pays en question, comme ci-dessous:<br>
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapDark.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapLight.png" width="250"><br>
 
 ## <a name="testing"></a>Tests unitaires et UI
 
