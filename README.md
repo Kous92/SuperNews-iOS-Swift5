@@ -114,8 +114,14 @@ Pour rechercher le contenu, il suffit tout simplement de toucher la barre de rec
 
 ### <a name="newsmap"></a>Carte des news
 
-Avec les possibilités que donne NewsAPI, il est donc possible de récupérer les news en tendance de 54 pays différents. Je propose donc ici une option de carte interactive où des marqueurs personnalisés apparaîssent sur la carte représentant le pays en question, comme ci-dessous:<br>
+Avec les possibilités que donne NewsAPI, il est donc possible de récupérer les news en tendance de 54 pays différents dans le monde entier. Je propose donc ici une option de carte interactive où des marqueurs personnalisés apparaîssent sur la carte représentant le pays en question, comme ci-dessous:<br>
 <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapDark.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapLight.png" width="250"><br>
+
+La barre de recherche en haut vous permettra de center la carte sur les pays à leurs positions respectives. En la touchant, une liste d'autocomplétion apparaît et change par un filtrage en fonction de la saisie. Par exemple, si je veux centrer la carte sur les Émirats Arabes Unis, je valide ma recherche soit en saississant le nom du pays, soit en sélectionnant sa cellule de la liste d'autocomplétion, et cela va donc centrer la carte sur le pays et le marqueur en question, comme ci-dessous:<br>
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapSearch1.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapSearch2.png" width="250"><br>
+
+En cliquant sur le drapeau de la carte, une info-bulle apparaît, cliquez sur le "i" pour afficher les news locales du pays sélectionné.
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapSearch3.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapLocalNews.png" width="250"><br>
 
 ## <a name="testing"></a>Tests unitaires et UI
 

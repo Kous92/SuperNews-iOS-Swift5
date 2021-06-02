@@ -106,6 +106,7 @@ extension NewsMapViewController: MKMapViewDelegate {
             switch countryCode {
             case "ae":
                 annotationView.image = UIImage(named: "ae")!
+            case "ar":
                 annotationView.image = UIImage(named: "ar")!
             case "at":
                 annotationView.image = UIImage(named: "at")!
