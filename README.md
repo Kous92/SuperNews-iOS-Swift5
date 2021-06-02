@@ -120,8 +120,18 @@ Avec les possibilités que donne NewsAPI, il est donc possible de récupérer le
 La barre de recherche en haut vous permettra de center la carte sur les pays à leurs positions respectives. En la touchant, une liste d'autocomplétion apparaît et change par un filtrage en fonction de la saisie. Par exemple, si je veux centrer la carte sur les Émirats Arabes Unis, je valide ma recherche soit en saississant le nom du pays, soit en sélectionnant sa cellule de la liste d'autocomplétion, et cela va donc centrer la carte sur le pays et le marqueur en question, comme ci-dessous:<br>
 <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapSearch1.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapSearch2.png" width="250"><br>
 
-En cliquant sur le drapeau de la carte, une info-bulle apparaît, cliquez sur le "i" pour afficher les news locales du pays sélectionné.
+En cliquant sur le drapeau de la carte, une info-bulle apparaît, cliquez sur le "i" pour afficher les news locales du pays sélectionné.<br>
 <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapSearch3.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapLocalNews.png" width="250"><br>
+
+### <a name="settings"></a>Paramètres langue et pays des news
+
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/HomeDark.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/Settings.png" width="250"><br>
+
+Pour les paramètres, vous pouvez définir votre pays favori des news en sélectionnant "Pays des news" puis le pays de votre choix parmi les 54 disponibles (par exemple les États-Unis). Une fois sélectionné, allez dans "News" et vous verrez les news locales des États-Unis.<br>
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/SettingsCountry.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsCountrySettings.png" width="250"><br>
+
+Pour la langue, même chose depuis les paramètres, en sélectionnant "Langue des news" puis la langue de votre choix parmi les 14 langues disponibles (exemple: Arabe). Avec la langue sélectionnée, allez dans "News" et vous verrez dans la barre de recherche la langue sélectionnée (ici: arabe par exemple) et en recherchant un contenu dans la langue choisie, les news s'afficheront s'il y en a de disponibles.<br>
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/SettingsLanguage.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsLanguageSettings1.png" width="250"><img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsLanguageSettings2.png" width="250"><br>
 
 ## <a name="testing"></a>Tests unitaires et UI
 
