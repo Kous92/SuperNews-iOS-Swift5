@@ -60,7 +60,22 @@ class NewsAPIService {
     }
 }
 ```
-## <a name="framework"></a>Architecture et frameworks
+
+Dernière chose, ayant utilisé CocoaPods pour exploiter les frameworks tiers Alamofire et Kingfisher, merci d'ouvrir le fichier **xcworkspace** au lieu du fichier **xcodeproj**.
+
+## <a name="frameworks"></a>Architecture et frameworks
+
+Cette application iOS native est réalisée avec:
+- Xcode 12
+- Swift 5.4
+
+Architecture MVC:
+- Principal avantage: sa facilité pour l'implémentation des interactions et des fonctionnalités.
+- Inconvénients: `ViewController` massifs, difficultés pour les tester avec des tests unitaires.
+
+Patterns:
+- DataSource: par le biais des TableView (pour la récupération des données)
+- Delegate: par le biais des TableView (pour les actions sur les cellules), pour les barres de recherche, la carte interactive.
 
 Frameworks officiels:
 - UIKit
@@ -69,9 +84,9 @@ Frameworks officiels:
 - Network
 - SafariServices
 
-Frameworks tiers:
-- Alamofire
-- Kingfisher
+Frameworks tiers (par le biais de CocoaPods):
+- Alamofire: appels HTTPS et téléchargement des news.
+- Kingfisher: téléchargement d'images asynchrones et optimisés avec le cache.
 
 ## <a name="testing"></a>Tests unitaires et UI
 
@@ -108,7 +123,7 @@ Je propose 9 tests UI automatisés indépendants dont certains asynchrones:
 9. `testAbout()`: Un test automatisé simple qui pointe sur la page "À propos", vérifie que le texte du haut existe, swipe pour aller en bas du ScrollView, vérifie l'existence du texte du bas et swipe de nouveau pour revenir en haut du ScrollView.
 
 Ces tests UI automatisés couvrent **58,8%** du code de l'application.<br>
-![Couverture tests UI](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/UITestsCodeCoverage.png)
+![Couverture tests UI](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/UITestCodeCoverage.png)
 
 ### Au niveau global pour les tests
 
