@@ -1,8 +1,10 @@
 # Super News iOS
 
-![Icône Super News iOS](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/IconeSuperNewsiOS.png)<br>
+![Icône Super News iOS](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/IconeSuperNewsiOS.png)<br>
 
-Projet personnel en développement iOS. Application iOS native de news en temps réel ayant les fonctionnalités suivantes:
+Projet personnel en développement iOS. Cette idée que je propose ici est basée sur un mini-projet de développement iOS réalisé au sein de mon stage de fin d'études chez Capgemini, lors d'une session d'upskilling iOS en interne. Ici, il s'agit donc d'une version améliorée d'une application récupérant les news avec des fonctionnalités supplémentaires en exploitant davantage les ressources de l'API REST NewsAPI.<br>
+
+Application iOS native de news en temps réel ayant les fonctionnalités suivantes:
 - Téléchargement asynchrone et récupération de news locales d'un pays par le biais d'une API REST
 - Carte des news par pays (avec option de recherche d'un pays)
 - Paramètres de news locales favorites et de langue des news lors de la recherche.
@@ -12,17 +14,18 @@ Projet personnel en développement iOS. Application iOS native de news en temps 
 ## Plan de navigation
 - [Important: avant d'essayer l'appli iOS](#important)
 - [Architecture et Frameworks](#frameworks)
+- [Fonctionnalités et captures d'écrans](#features)
 - [Tests unitaires et UI](#testing)
 
-## <a name="important"></a>IMPORTANT AVANT D'ESSAYER L'APPLI iOS<a>
+## <a name="important"></a>IMPORTANT: À LIRE AVANT D'ESSAYER L'APPLI iOS
 
 L'appli exploite l'API REST de **NewsAPI**, une clé d'API est donc requise. Pour cela, obtenez votre clé sur le site de [NewsAPI](https://newsapi.org/), dans la rubrique **Account** du compte que vous avez créé:<br>
-![Page clé NewsAPI](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/NewsAPIKey.png)<br>
+![Page clé NewsAPI](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsAPIKey.png)<br>
 
 **Pour des raisons de sécurité, le fichier ApiKey.plist n'est pas présent dans le repo GitHub**.<br>
 
 Une fois la clé récupérée, créez un fichier **ApiKey.plist**, en le plaçant dans le même emplacement du dossier SuperNews du projet Xcode, où se situent les fichiers storyboard. Créez alors une propriété de type **String** avec `ApiKey` en tant que clé, et la clé d'API que vous avez récupérée en tant que valeur. Prenez exemple comme ci-dessous:
-![NewsAPI.plist](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/NewsApiKeyPlist.png)<br>
+![NewsAPI.plist](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsApiKeyPlist.png)<br>
 
 Ou bien dans dans ce même fichier en y ajoutant le code sous format XML et en y mettant sa clé d'API entre les balises `</string>`:
 ```xml
@@ -88,6 +91,17 @@ Frameworks tiers (par le biais de CocoaPods):
 - Alamofire: appels HTTPS et téléchargement des news.
 - Kingfisher: téléchargement d'images asynchrones et optimisés avec le cache.
 
+Interface:
+- UIKit avec Storyboard.
+- Auto Layout (adapté pour les iPhone).
+- Support dark mode et light mode.
+
+## <a name="features"></a>Fonctionnalités et captures d'écran.
+
+L'application iOS comporte diverses fonctionnalités. À l'ouverture, la page d'accueil s'affiche comme ceci avec la date et heure locale actuelle:<br>
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/HomeDark.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/HomeLight.png" width="250">
+
+
 ## <a name="testing"></a>Tests unitaires et UI
 
 Dans tout développement d'applications iOS, comme sur d'autres plateformes, les tests unitaires et UI (User Interface, traduisez par interface utilisateur) sont essentiels pour vérifier le bon fonctionnement de l'application avant les bêta-tests par des utilisateurs et sa mise en production sur l'AppStore.
@@ -106,9 +120,9 @@ Les tests unitaires sont les tests en boîte blanche **(White box)** où on a un
 7. `testNoAPIKeyFetch()`: Un test asynchrone qui va vérfier par le biais d'une requête HTTP GET que l'erreur 401 se déclenche lorsqu'il y n'y a pas de clé d'API fournie.
 
 Ces tests unitaires couvrent **12%** du code de l'application.<br>
-![Couverture tests unitaires](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/UnitTestsCodeCoverage.png)
+![Couverture tests unitaires](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/UnitTestsCodeCoverage.png)
 
-### Test UI (Black box)
+### Tests UI automatisés (Black box)
 
 Les tests UI sont les tests en boîte noire **(Black box)** où on n'a pas de visibilité sur le code, mais une visibilité sur l'interface visuelle. Pour cela, XCTest utilise `XCUIApplication` pour permettre de simuler les interactions d'une application de façon automatique, et de vérifier l'existence des élements attendus dans l'interface. L'architecture de l'application importe peu dans les tests UI, l'essentiel étant de tester comme un utilisateur lambda. Par rapport au tests unitaires, la couverture du code est donc plus élevée, mais en contrepartie de tests qui peuvent être longs à exécuter.
 Je propose 9 tests UI automatisés indépendants dont certains asynchrones:
@@ -123,9 +137,9 @@ Je propose 9 tests UI automatisés indépendants dont certains asynchrones:
 9. `testAbout()`: Un test automatisé simple qui pointe sur la page "À propos", vérifie que le texte du haut existe, swipe pour aller en bas du ScrollView, vérifie l'existence du texte du bas et swipe de nouveau pour revenir en haut du ScrollView.
 
 Ces tests UI automatisés couvrent **58,8%** du code de l'application.<br>
-![Couverture tests UI](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/UITestCodeCoverage.png)
+![Couverture tests UI](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/UITestCodeCoverage.png)
 
 ### Au niveau global pour les tests
 
 En exécutant les 16 tests automatisés, unitaires et UI, la couverture actuelle du code est de **57,3%**.<br>
-![Couverture tests unitaires et UI](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/TestsCodeCoverage.png)
+![Couverture tests unitaires et UI](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/TestsCodeCoverage.png)
