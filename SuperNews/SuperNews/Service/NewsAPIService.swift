@@ -9,7 +9,6 @@ import Foundation
 import Alamofire
 
 class NewsAPIService {
-    // Ici une seule instance (singleton) suffit pour le monitoring du réseau
     static let shared = NewsAPIService()
     
     let url: String = "https://newsapi.org/v2/top-headlines?country="
