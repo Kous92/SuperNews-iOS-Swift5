@@ -125,7 +125,7 @@ En cliquant sur le drapeau de la carte, une info-bulle apparaît, cliquez sur le
 
 ### <a name="settings"></a>Paramètres langue et pays des news
 
-<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/HomeDark.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/Settings.png" width="250"><br>
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/Settings.png" width="250"><br>
 
 Pour les paramètres, vous pouvez définir votre pays favori des news en sélectionnant "Pays des news" puis le pays de votre choix parmi les 54 disponibles (par exemple les États-Unis). Une fois sélectionné, allez dans "News" et vous verrez les news locales des États-Unis.<br>
 <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/SettingsCountry.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsCountrySettings.png" width="250"><br>
