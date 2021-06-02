@@ -16,6 +16,18 @@ L'appli exploite l'API REST de **NewsAPI**, une clé d'API est donc requise. Pou
 Une fois la clé récupérée, créez un fichier **ApiKey.plist**, en le plaçant dans le même emplacement du dossier SuperNews du projet Xcode, où se situent les fichiers storyboard. Créez alors une propriété de type **String** avec `ApiKey` en tant que clé, et la clé d'API que vous avez récupérée en tant que valeur. Prenez exemple comme ci-dessous:
 ![NewsAPI.plist](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/NewsApiKeyPlist.png)<br>
 
+Ou bien dans dans ce même fichier en y ajoutant le code sous format XML et en y mettant sa clé d'API entre les balises `</string>`:
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>NewsApiKey</key>
+	<string>VOTRE CLÉ D'API</string>
+</dict>
+</plist>
+```
+
 La clé sera ensuite récupérée par la fonction privée ci-dessous de la classe singleton `NewsAPIService`, en lisant le contenu du fichier plist créé au préalable et initialisé depuis le constructeur de `NewsAPIService` via la propriété `shared`.
 ```swift
 class NewsAPIService {
