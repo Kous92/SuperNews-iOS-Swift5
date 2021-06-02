@@ -8,77 +8,58 @@
 import Foundation
 import UIKit
 
-@IBDesignable class CustomView: UIView
-{
-    @IBInspectable var cornerRadius: CGFloat = 0
-    {
-        didSet
-        {
+@IBDesignable class CustomView: UIView {
+    @IBInspectable var cornerRadius: CGFloat = 0 {
+        didSet {
             self.layer.cornerRadius = cornerRadius
         }
     }
     
-    @IBInspectable var borderWidth: CGFloat = 0
-    {
-        didSet
-        {
+    @IBInspectable var borderWidth: CGFloat = 0 {
+        didSet {
             self.layer.borderWidth = borderWidth
         }
     }
 
-    @IBInspectable var borderColor: UIColor = UIColor.clear
-    {
-        didSet
-        {
+    @IBInspectable var borderColor: UIColor = UIColor.clear {
+        didSet {
             self.layer.borderColor = borderColor.cgColor
         }
     }
     
-    @IBInspectable var shadowRadius: CGFloat = 0
-    {
-        didSet
-        {
+    @IBInspectable var shadowRadius: CGFloat = 0 {
+        didSet {
             self.layer.shadowRadius = shadowRadius
         }
     }
     
-    @IBInspectable var shadowColor: UIColor = UIColor.clear
-    {
-        didSet
-        {
+    @IBInspectable var shadowColor: UIColor = UIColor.clear {
+        didSet {
             self.layer.shadowColor = shadowColor.cgColor
         }
     }
     
-    @IBInspectable var shadowOpacity: Float = 0.0
-    {
-        didSet
-        {
+    @IBInspectable var shadowOpacity: Float = 0.0 {
+        didSet {
             self.layer.shadowOpacity = shadowOpacity
         }
     }
     
-    @IBInspectable var shadowOffset: CGSize = CGSize(width: 0.0, height: 0.0)
-    {
-        didSet
-        {
+    @IBInspectable var shadowOffset: CGSize = CGSize(width: 0.0, height: 0.0) {
+        didSet {
             self.layer.shadowOffset = shadowOffset
         }
     }
     
     // Gradient
-    @IBInspectable var firstColor: UIColor = UIColor.clear
-    {
-        didSet
-        {
+    @IBInspectable var firstColor: UIColor = UIColor.clear {
+        didSet {
             updateView()
         }
     }
     
-    @IBInspectable var secondColor: UIColor = UIColor.clear
-    {
-        didSet
-        {
+    @IBInspectable var secondColor: UIColor = UIColor.clear {
+        didSet {
             updateView()
         }
     }
@@ -91,26 +72,20 @@ import UIKit
         }
     }
     
-    override class var layerClass: AnyClass
-    {
-        get
-        {
+    override class var layerClass: AnyClass {
+        get {
             return CAGradientLayer.self
         }
     }
     
-    func updateView()
-    {
+    func updateView() {
         let layer = self.layer as! CAGradientLayer
         layer.colors = [firstColor.cgColor, secondColor.cgColor]
         
-        if horizontalGradient
-        {
+        if horizontalGradient {
             layer.startPoint = CGPoint(x: 0.0, y: 0.5)
             layer.endPoint = CGPoint(x: 1.0, y: 0.5)
-        }
-        else
-        {
+        } else {
             layer.startPoint = CGPoint(x: 0.0, y: 0.0)
             layer.endPoint = CGPoint(x: 0.0, y: 1.0)
         }

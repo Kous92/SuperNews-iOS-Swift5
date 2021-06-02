@@ -40,7 +40,6 @@ class NewsAPIService {
     
     init() {
         self.country = ""
-        // print(url + "&apiKey=" + apiKey)
         initURL = URL(string: url + country + "&apiKey=" + apiKey)!
         self.keyUnitTestMode = false
         
