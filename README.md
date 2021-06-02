@@ -81,13 +81,13 @@ En iOS natif, on utilise le framework XCTest. Avec l'architecture MVC, l'inconv�
 ### Tests unitaires (White box)
 
 Les tests unitaires sont les tests en boîte blanche (White box) où on a une visibilité sur le code, afin de tester les fonctionnalités de l'application. Je propose 7 tests unitaires indépendants dont certains asynchrones:
-- 1) `testFetchLocalCountriesJSON()`: Un test simple qui vérifie que les données du fichier JSON en objets Swift soient bien lues et décodées pour la liste des pays.
-- 2) `testLocalCountry()`: Un test qui en plus de charger le fichier JSON va vérifier avec certains filtres que les données attendues soient présentes.
-- 3) `testFetchLocalLanguagesJSON()`: Un test simple qui vérifie que les données du fichier JSON en objets Swift soient bien lues et décodées pour la liste des langues.
-- 4) `testFetchLocalNewsNetwork()`: Un test asynchrone qui va vérfier par le biais d'une requête HTTP GET que les news locales de la France soient bien téléchargées et décodées en objets Swift.
-- 5) `testFetchQueryNewsNetwork()`: Un test asynchrone qui va vérfier par le biais d'une requête HTTP GET que les news d'une recherche simple (exemple avec Apple en français) soient bien téléchargées et décodées en objets Swift.
-- 6) `testNoArticlesAvailableFetch()`: Un test asynchrone qui va vérfier par le biais d'une requête HTTP GET que l'erreur `.noArticles` de l'énumération `NewsAPIError`soient disponibles, en effectuant une recherche sur un contenu impossible à trouver dans les news.
-- 7) `testNoAPIKeyFetch()`: Un test asynchrone qui va vérfier par le biais d'une requête HTTP GET que l'erreur 401 se déclenche lorsqu'il y n'y a pas de clé d'API fournie.
+1. `testFetchLocalCountriesJSON()`: Un test simple qui vérifie que les données du fichier JSON en objets Swift soient bien lues et décodées pour la liste des pays.
+2. `testLocalCountry()`: Un test qui en plus de charger le fichier JSON va vérifier avec certains filtres que les données attendues soient présentes.
+3. `testFetchLocalLanguagesJSON()`: Un test simple qui vérifie que les données du fichier JSON en objets Swift soient bien lues et décodées pour la liste des langues.
+4. `testFetchLocalNewsNetwork()`: Un test asynchrone qui va vérfier par le biais d'une requête HTTP GET que les news locales de la France soient bien téléchargées et décodées en objets Swift.
+5. `testFetchQueryNewsNetwork()`: Un test asynchrone qui va vérfier par le biais d'une requête HTTP GET que les news d'une recherche simple (exemple avec Apple en français) soient bien téléchargées et décodées en objets Swift.
+6. `testNoArticlesAvailableFetch()`: Un test asynchrone qui va vérfier par le biais d'une requête HTTP GET que l'erreur `.noArticles` de l'énumération `NewsAPIError`soient disponibles, en effectuant une recherche sur un contenu impossible à trouver dans les news.
+7. `testNoAPIKeyFetch()`: Un test asynchrone qui va vérfier par le biais d'une requête HTTP GET que l'erreur 401 se déclenche lorsqu'il y n'y a pas de clé d'API fournie.
 
 Ces tests unitaires couvrent **10,2%** du code de l'application:<br>
 ![Tests unitaires et couvertures](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/UnitTestsCodeCoverage.png)
