@@ -11,6 +11,7 @@ Projet personnel en développement iOS. Application iOS native de news en temps 
 
 ## Plan de navigation
 - [Important: avant d'essayer l'appli iOS](#important)
+- [Architecture et Frameworks](#frameworks)
 - [Tests unitaires et UI](#testing)
 
 ## <a name="important"></a>IMPORTANT AVANT D'ESSAYER L'APPLI iOS<a>
@@ -59,7 +60,7 @@ class NewsAPIService {
     }
 }
 ```
-## Frameworks
+## <a name="framework"></a>Architecture et frameworks
 
 Frameworks officiels:
 - UIKit
@@ -80,7 +81,7 @@ En iOS natif, on utilise le framework XCTest. Avec l'architecture MVC, l'inconv�
 
 ### Tests unitaires (White box)
 
-Les tests unitaires sont les tests en boîte blanche (White box) où on a une visibilité sur le code, afin de tester les fonctionnalités de l'application. Je propose 7 tests unitaires indépendants dont certains asynchrones:
+Les tests unitaires sont les tests en boîte blanche **(White box)** où on a une visibilité sur le code, afin de tester les fonctionnalités de l'application. Je propose 7 tests unitaires indépendants dont certains asynchrones:
 1. `testFetchLocalCountriesJSON()`: Un test simple qui vérifie que les données du fichier JSON en objets Swift soient bien lues et décodées pour la liste des pays.
 2. `testLocalCountry()`: Un test qui en plus de charger le fichier JSON va vérifier avec certains filtres que les données attendues soient présentes.
 3. `testFetchLocalLanguagesJSON()`: Un test simple qui vérifie que les données du fichier JSON en objets Swift soient bien lues et décodées pour la liste des langues.
@@ -89,9 +90,27 @@ Les tests unitaires sont les tests en boîte blanche (White box) où on a une vi
 6. `testNoArticlesAvailableFetch()`: Un test asynchrone qui va vérfier par le biais d'une requête HTTP GET que l'erreur `.noArticles` de l'énumération `NewsAPIError`soient disponibles, en effectuant une recherche sur un contenu impossible à trouver dans les news.
 7. `testNoAPIKeyFetch()`: Un test asynchrone qui va vérfier par le biais d'une requête HTTP GET que l'erreur 401 se déclenche lorsqu'il y n'y a pas de clé d'API fournie.
 
-Ces tests unitaires couvrent **10,2%** du code de l'application:<br>
-![Tests unitaires et couvertures](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/UnitTestsCodeCoverage.png)
+Ces tests unitaires couvrent **12%** du code de l'application.<br>
+![Couverture tests unitaires](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/UnitTestsCodeCoverage.png)
 
-Utilise XCTest, couverture actuelle du code: **28,1%**
-- Tests unitaires classiques et asynchrones.
-- Tests UI classiques et asynchones.
+### Test UI (Black box)
+
+Les tests UI sont les tests en boîte noire **(Black box)** où on n'a pas de visibilité sur le code, mais une visibilité sur l'interface visuelle. Pour cela, XCTest utilise `XCUIApplication` pour permettre de simuler les interactions d'une application de façon automatique, et de vérifier l'existence des élements attendus dans l'interface. L'architecture de l'application importe peu dans les tests UI, l'essentiel étant de tester comme un utilisateur lambda. Par rapport au tests unitaires, la couverture du code est donc plus élevée, mais en contrepartie de tests qui peuvent être longs à exécuter.
+Je propose 9 tests UI automatisés indépendants dont certains asynchrones:
+1. `testHome()`: Un test automatisé simple qui pointe sur la page d'accueil et qui vérifie que le texte du haut **"Bienvenue"** existe.
+2. `testNews()`: Un test automatisé asynchrone qui pointe sur la page des news, qui vérifie l'existence de la barre de recherche et qui vérifie l'existence des cellules du TableView après téléchargement des news locales.
+3. `testSearchNews()`: Un test automatisé asynchrone qui pointe sur la page des news, qui vérifie l'existence de la barre de recherche, saisit un texte et valide pour rechercher un contenu. Vérifie ensuite l'existence des cellules du TableView après téléchargement des news recherchées.
+4. `testNewsSearchFullNavigation()`: Même chose que le test précédent, mais en plus qui clique sur la première cellule, swipe, vérifie l'existence du bouton vers le site web
+5. `testMap()`: Un test automatisé qui pointe sur la page de la carte, vérifie l'existence de la carte (MapKit) et la barre de recherche. En cliquant sur cette barre, un TableView doit apparaître pour les options d'auto-complétion parmi les pays disponibles, son existence est vérifie en premier lieu. Le texte "France" est saisi dans la barre de recherche puis validé pour vérifier ensuite qu'il n'y ait que cette cellule dans l'auto-complétion pour y cliquer dessus ensuite.
+6. `testSettings()`: Un test automatisé qui pointe sur la page des paramètres, vérifie l'existence du TableView où les 2 options de la langue et du pays des news sont présentes.
+7. `testSetNewsCountry()`: Reprend le test précédent, clique sur la seconde cellule, vérifie qu'il y a bien les 54 pays en option conformément au fichier local `countries.json` et à l'API REST **NewsAPI**, dans un TableView. Clique ensuite sur la seconde cellule (exemple: Allemagne).
+8. `testSetNewsCountry()`: Comme le test précédent, clique sur la première cellule, vérifie qu'il y a bien les 14 langues en option conformément au fichier local `countries.json` et à l'API REST **NewsAPI**, dans un TableView. Clique ensuite sur la seconde cellule (exemple: Anglais).
+9. `testAbout()`: Un test automatisé simple qui pointe sur la page "À propos", vérifie que le texte du haut existe, swipe pour aller en bas du ScrollView, vérifie l'existence du texte du bas et swipe de nouveau pour revenir en haut du ScrollView.
+
+Ces tests UI automatisés couvrent **58,8%** du code de l'application.<br>
+![Couverture tests UI](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/UITestsCodeCoverage.png)
+
+### Au niveau global pour les tests
+
+En exécutant les 16 tests automatisés, unitaires et UI, la couverture actuelle du code est de **57,3%**.<br>
+![Couverture tests unitaires et UI](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/TestsCodeCoverage.png)

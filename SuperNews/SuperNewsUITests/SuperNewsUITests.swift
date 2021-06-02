@@ -27,7 +27,7 @@ class SuperNewsUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testHome() throws {
+    func testHome() {
         let app = XCUIApplication()
         // app.launch()
         app.tabBars.buttons["Accueil"].tap()
@@ -241,6 +241,7 @@ class SuperNewsUITests: XCTestCase {
         } else {
             XCTFail()
         }
+        
         XCTAssert(app.staticTexts["Allemagne"].exists)
         tableCells.element(boundBy: 1).tap()
         
@@ -311,6 +312,8 @@ class SuperNewsUITests: XCTestCase {
         app.swipeDown()
     }
     
+    // On n'en a pas besoin pour le moment
+    /*
     func testLaunchPerformance() throws {
         if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
             // This measures how long it takes to launch your application.
@@ -319,4 +322,5 @@ class SuperNewsUITests: XCTestCase {
             }
         }
     }
+     */
 }
