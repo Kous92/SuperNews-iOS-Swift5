@@ -15,6 +15,9 @@ Application iOS native de news en temps réel ayant les fonctionnalités suivant
 - [Important: avant d'essayer l'appli iOS](#important)
 - [Architecture et Frameworks](#frameworks)
 - [Fonctionnalités et captures d'écrans](#features)
+    + [News et recherches](#news)
+    + [Carte des news](#newsmap)
+    + [Paramètres langue et pays des news](#settings)
 - [Tests unitaires et UI](#testing)
 
 ## <a name="important"></a>IMPORTANT: À LIRE AVANT D'ESSAYER L'APPLI iOS
@@ -96,11 +99,18 @@ Interface:
 - Auto Layout (adapté pour les iPhone).
 - Support dark mode et light mode.
 
-## <a name="features"></a>Fonctionnalités et captures d'écran.
+## <a name="features"></a>Fonctionnalités et captures d'écran
 
-L'application iOS comporte diverses fonctionnalités. À l'ouverture, la page d'accueil s'affiche comme ceci avec la date et heure locale actuelle:<br>
+L'application iOS comporte diverses fonctionnalités. À l'ouverture, la page d'accueil s'affiche comme ci-dessous avec la date et heure locale actuelle:<br>
 <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/HomeDark.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/HomeLight.png" width="250">
 
+### <a name="news"></a>News et recherche
+
+En cliquant sur "News" dans la barre de navigation du bas, l'interface des news apparaît comme ceci avec les news locales téléchargées et affichées avec leurs images (par défaut ceux de la France, le pays change en fonction du paramètre choisi):<br>
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsDark.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsLight.png" width="250"><br>
+
+Pour rechercher le contenu, il suffit tout simplement de toucher la barre de recherche puis de saisir le contenu recherché. Par défaut la langue des news est en français.<br>
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsSearch.png" width="250">
 
 ## <a name="testing"></a>Tests unitaires et UI
 
