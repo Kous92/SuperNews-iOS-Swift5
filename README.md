@@ -1,10 +1,13 @@
-# SuperNews iOS
+# Super News iOS
+
+![Icône Super News iOS](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/IconeSuperNewsiOS.png)<br>
 
 Projet personnel en développement iOS. Application iOS native de news en temps réel ayant les fonctionnalités suivantes:
-- Téléchargement et récupération de news locales d'un pays par le biais d'une API REST
-- Carte des news par pays.
-- Paramètres de localisation GPS, de news locales favorites (automatique avec le GPS ou manuelle)
+- Téléchargement asynchrone et récupération de news locales d'un pays par le biais d'une API REST
+- Carte des news par pays (avec option de recherche d'un pays)
+- Paramètres de news locales favorites et de langue des news lors de la recherche.
 - Architecture MVC
+- Tests Unitaires et UI
 
 ## IMPORTANT AVANT D'ESSAYER L'APPLI iOS
 
