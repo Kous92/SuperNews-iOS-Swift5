@@ -16,7 +16,7 @@ class NewsViewController: UIViewController {
     
     var articles = [Article]() {
         didSet {
-            // On met à jour la liste d'articles de façon asynchrone (dans le thread principal), les données étant récupérée dans un thread de fond.
+            // On met à jour la liste d'articles de façon asynchrone (dans le thread principal), les données étant récupérées dans un thread de fond.
             DispatchQueue.main.async { [weak self] in
                 self?.articleTableView.reloadData()
                 self?.spinner.stopAnimating()
