@@ -11,6 +11,8 @@ Application iOS native de news en temps réel ayant les fonctionnalités suivant
 - Architecture MVC
 - Tests Unitaires et UI
 
+## Branche actuelle: MVVM
+
 ## Plan de navigation
 - [Important: avant d'essayer l'appli iOS](#important)
 - [Architecture et Frameworks](#frameworks)
