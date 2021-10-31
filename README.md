@@ -89,8 +89,7 @@ Architecture MVVM (Model View ViewModel):
     + Complexe pour des projets de petite taille.
     + Maîtrise compliquée pour les débutants
 
-[MVVM](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/mvvm/MVVM.png)<br>
-
+![MVVM](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/mvvm/MVVM.png)<br>
 
 Patterns:
 - DataSource: par le biais des TableView (pour la récupération des données)
