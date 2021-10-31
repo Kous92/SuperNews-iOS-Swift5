@@ -88,7 +88,7 @@ Architecture MVVM (Model View ViewModel):
     + Les `ViewModel` deviennent massifs si la séparation des éléments ne sont pas maîtrisés, notamment si le principe de responsabilité unique n'est pas correctement appliqué.
     + Complexe pour des projets de petite taille.
     + Maîtrise compliquée pour les débutants
-![Page clé NewsAPI](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/mvvm/Screenshots/MVVM.png)<br>
+[MVVM](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/mvvm/Screenshots/MVVM.png)<br>
 
 
 Patterns:
