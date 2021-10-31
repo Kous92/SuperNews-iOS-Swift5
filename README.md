@@ -8,7 +8,7 @@ Application iOS native de news en temps réel ayant les fonctionnalités suivant
 - Téléchargement asynchrone et récupération de news locales d'un pays par le biais d'une API REST
 - Carte des news par pays (avec option de recherche d'un pays)
 - Paramètres de news locales favorites et de langue des news lors de la recherche.
-- Architecture MVC
+- Architecture MVVM
 - Tests Unitaires et UI
 
 ## Branche actuelle: MVVM
@@ -74,16 +74,27 @@ Dernière chose, ayant utilisé CocoaPods pour exploiter les frameworks tiers Al
 ## <a name="frameworks"></a>Architecture et frameworks
 
 Cette application iOS native est réalisée avec:
-- Xcode 12
-- Swift 5.4
+- Xcode 13
+- Swift 5.5
 
-Architecture MVC (Model View Controller):
-- Principal avantage: sa facilité pour l'implémentation des interactions et des fonctionnalités. C'est aussi l'architecture par défaut avec UIKit.
-- Inconvénients: `ViewController` massifs, difficultés pour les tester avec des tests unitaires. Pas adaptée pour la programmation réactive (RxSwift, Combine, ...).
+Architecture MVVM (Model View ViewModel):
+- Principaux avantages: 
+    + Architecture adaptée pour séparer la vue de la logique métier par le biais de `ViewModel`.
+    + `ViewController` allégés.
+    + Tests facilités de la logique métier
+    + Adaptée avec **SwiftUI**
+    + Adaptée pour la programmation réactive (**RxSwift, Combine**)
+- Inconvénients:
+    + Les `ViewModel` deviennent massifs si la séparation des éléments ne sont pas maîtrisés, notamment si le principe de responsabilité unique n'est pas correctement appliqué.
+    + Complexe pour des projets de petite taille.
+    + Maîtrise compliquée pour les débutants
+![Page clé NewsAPI](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/mvvm/Screenshots/MVVM.png)<br>
+
 
 Patterns:
 - DataSource: par le biais des TableView (pour la récupération des données)
 - Delegate: par le biais des TableView (pour les actions sur les cellules), pour les barres de recherche, la carte interactive.
+- Injection de dépendances
 
 Frameworks officiels:
 - UIKit
