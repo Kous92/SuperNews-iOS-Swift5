@@ -171,6 +171,13 @@
 			path = "Custom Views";
 			sourceTree = "<group>";
 		};
+		4B77A15C275048720065A4F3 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		4BF66E3B261F4EA00078CE36 = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +203,7 @@
 		4BF66E46261F4EA00078CE36 /* SuperNews */ = {
 			isa = PBXGroup;
 			children = (
+				4B77A15C275048720065A4F3 /* Settings */,
 				4BF66E80261F4EE10078CE36 /* Service */,
 				4BF66E7D261F4EBC0078CE36 /* Model */,
 				4BF66E7E261F4EC10078CE36 /* View */,
