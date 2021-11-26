@@ -13,7 +13,7 @@ class CountryAnnotation: NSObject, MKAnnotation {
     var subtitle: String?
     var coordinate: CLLocationCoordinate2D
     var countryCode: String?
-        
+    
     init(title: String, subtitle: String, coordinate: CLLocationCoordinate2D, countryCode: String) {
         self.title = title
         self.subtitle = subtitle

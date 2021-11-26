@@ -174,42 +174,5 @@ class NewsAPIService {
         }
     }
     
-    func downloadImage(with imageURL: URL, completion: @escaping (Result<Data, NewsAPIError>) -> (Void)) {
-        // Si l'image en question existe déjà dans le cache
-        if let imageData = images.object(forKey: imageURL.absoluteString as NSString) {
-            completion(.success(imageData as Data))
-            
-            // print("Image en cache: \(imageURL.absoluteString)")
-            // Le retour explicite va permettre de ne pas aller plus loin pour afficher l'image depuis la mémoire interne
-            return
-        }
-        
-        // La tâche asynchrone en tâche de fond va gérer le téléchargement des données de l'image
-        let task = imageSession.downloadTask(with: imageURL) { localUrl, response, error in
-            if error != nil {
-                completion(.failure(.downloadError))
-                return
-            }
-
-            guard let httpResponse = response as? HTTPURLResponse, (200...299).contains(httpResponse.statusCode) else {
-                completion(.failure(.serverError))
-                return
-            }
-
-            guard let localUrl = localUrl else {
-                completion(.failure(.parametersMissing))
-                return
-            }
-            
-            do {
-                let data = try Data(contentsOf: localUrl)
-                self.images.setObject(data as NSData, forKey: imageURL.absoluteString as NSString)
-                completion(.success(data))
-            } catch _ {
-                completion(.failure(.decodeError))
-            }
-        }
-
-        task.resume()
-    }
+    
 }
