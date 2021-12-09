@@ -8,7 +8,7 @@ Application iOS native de news en temps réel ayant les fonctionnalités suivant
 - Téléchargement asynchrone et récupération de news locales d'un pays par le biais d'une API REST
 - Carte des news par pays (avec option de recherche d'un pays)
 - Paramètres de news locales favorites et de langue des news lors de la recherche.
-- Architecture MVC
+- Architecture MVC (**migration en cours vers MVVM (premiers travaux consultables dans la branche MVVM**)
 - Tests Unitaires et UI
 
 ## Plan de navigation
@@ -72,8 +72,8 @@ Dernière chose, ayant utilisé CocoaPods pour exploiter les frameworks tiers Al
 ## <a name="frameworks"></a>Architecture et frameworks
 
 Cette application iOS native est réalisée avec:
-- Xcode 12
-- Swift 5.4
+- Xcode 13
+- Swift 5.5
 
 Architecture MVC (Model View Controller):
 - Principal avantage: sa facilité pour l'implémentation des interactions et des fonctionnalités. C'est aussi l'architecture par défaut avec UIKit.
