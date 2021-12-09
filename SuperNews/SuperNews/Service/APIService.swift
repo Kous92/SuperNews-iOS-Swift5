@@ -8,5 +8,6 @@
 import Foundation
 
 protocol APIService {
-    
+    func initializeLocalNews(country: String, completion: @escaping (Result<ArticleOutput, NewsAPIError>) -> ())
+    func searchNews(language: String, query: String, completion: @escaping (Result<ArticleOutput, NewsAPIError>) -> ())
 }

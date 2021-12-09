@@ -8,14 +8,14 @@
 import Foundation
 
 // MARK: - Response
-struct ArticleOutput: Codable {
+struct ArticleOutput: Decodable {
     let status: String?
     let totalResults: Int?
     let articles: [Article]?
 }
 
 // MARK: - Article
-struct Article: Codable {
+struct Article: Decodable {
     let source: Source?
     let author: String?
     let title: String?
@@ -27,7 +27,7 @@ struct Article: Codable {
 }
 
 // MARK: - Source
-struct Source: Codable {
+struct Source: Decodable {
     let id: String?
     let name: String?
 }

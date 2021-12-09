@@ -80,7 +80,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="zeU-mS-CKA">
-                                <rect key="frame" x="0.0" y="104" width="428" height="739"/>
+                                <rect key="frame" x="0.0" y="105" width="428" height="738"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="newsCell" rowHeight="420" id="knW-ET-9gP" customClass="NewsTableViewCell" customModule="SuperNews" customModuleProvider="target">
@@ -167,52 +167,6 @@
                                     <userDefinedRuntimeAttribute type="string" keyPath="accessibilityIdentifier" value="articleTableView"/>
                                 </userDefinedRuntimeAttributes>
                             </tableView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cme-kX-FEt" userLabel="Search View" customClass="CustomView" customModule="SuperNews" customModuleProvider="target">
-                                <rect key="frame" x="20" y="44" width="388" height="50"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="magnifyingglass" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="dks-Z8-7kQ">
-                                        <rect key="frame" x="15" y="13.666666666666661" width="25" height="23.333333333333336"/>
-                                        <color key="tintColor" systemColor="labelColor"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="GyD-3F-mBY"/>
-                                            <constraint firstAttribute="width" constant="25" id="RQK-N1-UC0"/>
-                                        </constraints>
-                                    </imageView>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Rechercher" textAlignment="natural" minimumFontSize="17" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="QAb-23-afQ">
-                                        <rect key="frame" x="55" y="14.666666666666664" width="323" height="21"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <accessibility key="accessibilityConfiguration" identifier="newsSearchBar"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <textInputTraits key="textInputTraits" returnKeyType="search"/>
-                                        <connections>
-                                            <action selector="textFieldDidChange:" destination="2Bl-X1-nTL" eventType="editingChanged" id="7Gz-6g-06M"/>
-                                        </connections>
-                                    </textField>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="QAb-23-afQ" secondAttribute="trailing" constant="10" id="8qU-sX-mul"/>
-                                    <constraint firstAttribute="height" constant="50" id="GyL-di-JfJ"/>
-                                    <constraint firstItem="dks-Z8-7kQ" firstAttribute="centerY" secondItem="cme-kX-FEt" secondAttribute="centerY" id="SPb-im-h6e"/>
-                                    <constraint firstItem="QAb-23-afQ" firstAttribute="leading" secondItem="dks-Z8-7kQ" secondAttribute="trailing" constant="15" id="ZMs-hg-q2N"/>
-                                    <constraint firstItem="dks-Z8-7kQ" firstAttribute="leading" secondItem="cme-kX-FEt" secondAttribute="leading" constant="15" id="rHG-mE-sm5"/>
-                                    <constraint firstItem="QAb-23-afQ" firstAttribute="centerY" secondItem="cme-kX-FEt" secondAttribute="centerY" id="tij-5D-F86"/>
-                                </constraints>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="cornerRadius">
-                                        <real key="value" value="25"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="number" keyPath="borderWidth">
-                                        <real key="value" value="1"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="firstColor">
-                                        <color key="value" name="News Gradient First"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="secondColor">
-                                        <color key="value" name="News Gradient Second"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
                             <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="NTL-iR-mMh">
                                 <rect key="frame" x="174" y="423" width="80" height="80"/>
                                 <constraints>
@@ -221,29 +175,33 @@
                                 </constraints>
                                 <color key="color" systemColor="labelColor"/>
                             </activityIndicatorView>
+                            <searchBar contentMode="redraw" placeholder="Recherche" translatesAutoresizingMaskIntoConstraints="NO" id="5mm-wV-gnf">
+                                <rect key="frame" x="0.0" y="54" width="428" height="51"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </searchBar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="1cN-eH-1qr"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="NTL-iR-mMh" firstAttribute="centerY" secondItem="ALy-P5-XsB" secondAttribute="centerY" id="62X-73-6s9"/>
+                            <constraint firstItem="5mm-wV-gnf" firstAttribute="leading" secondItem="1cN-eH-1qr" secondAttribute="leading" id="7jb-YA-uhX"/>
                             <constraint firstItem="NTL-iR-mMh" firstAttribute="centerX" secondItem="ALy-P5-XsB" secondAttribute="centerX" id="FMw-Mj-nBa"/>
                             <constraint firstItem="zeU-mS-CKA" firstAttribute="leading" secondItem="1cN-eH-1qr" secondAttribute="leading" id="FlU-JR-1ti"/>
-                            <constraint firstItem="cme-kX-FEt" firstAttribute="leading" secondItem="1cN-eH-1qr" secondAttribute="leading" constant="20" id="Pea-QH-6d0"/>
                             <constraint firstItem="zeU-mS-CKA" firstAttribute="trailing" secondItem="1cN-eH-1qr" secondAttribute="trailing" id="Rwb-JE-FDK"/>
                             <constraint firstItem="zeU-mS-CKA" firstAttribute="bottom" secondItem="1cN-eH-1qr" secondAttribute="bottom" id="T9P-yT-NFw"/>
-                            <constraint firstItem="zeU-mS-CKA" firstAttribute="top" secondItem="cme-kX-FEt" secondAttribute="bottom" constant="10" id="fcz-Z2-iVh"/>
+                            <constraint firstItem="5mm-wV-gnf" firstAttribute="top" secondItem="1cN-eH-1qr" secondAttribute="top" constant="10" id="UEw-ib-JmD"/>
                             <constraint firstItem="1cN-eH-1qr" firstAttribute="trailing" secondItem="9IJ-wH-L7J" secondAttribute="trailing" constant="25" id="gj2-Hc-yhH"/>
-                            <constraint firstItem="1cN-eH-1qr" firstAttribute="trailing" secondItem="cme-kX-FEt" secondAttribute="trailing" constant="20" id="gzZ-qW-FFW"/>
                             <constraint firstItem="9IJ-wH-L7J" firstAttribute="leading" secondItem="1cN-eH-1qr" secondAttribute="leading" constant="25" id="ivI-pt-eRg"/>
                             <constraint firstItem="9IJ-wH-L7J" firstAttribute="centerY" secondItem="ALy-P5-XsB" secondAttribute="centerY" id="o0l-9Y-EDK"/>
-                            <constraint firstItem="cme-kX-FEt" firstAttribute="top" secondItem="1cN-eH-1qr" secondAttribute="top" id="r9P-ve-tkD"/>
+                            <constraint firstItem="5mm-wV-gnf" firstAttribute="trailing" secondItem="1cN-eH-1qr" secondAttribute="trailing" id="w4I-RN-qdE"/>
+                            <constraint firstItem="zeU-mS-CKA" firstAttribute="top" secondItem="5mm-wV-gnf" secondAttribute="bottom" id="wGh-eY-atZ"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="News" image="newspaper" catalog="system" id="Bne-YD-i9K"/>
                     <connections>
                         <outlet property="articleTableView" destination="zeU-mS-CKA" id="px6-wV-Z4Z"/>
                         <outlet property="newsAvailabilityLabel" destination="9IJ-wH-L7J" id="8fb-DT-FN8"/>
-                        <outlet property="searchBar" destination="QAb-23-afQ" id="M3k-je-tVd"/>
+                        <outlet property="searchBar" destination="5mm-wV-gnf" id="fvO-Dz-zxu"/>
                         <outlet property="spinner" destination="NTL-iR-mMh" id="EAC-OO-G7T"/>
                         <segue destination="QCX-UJ-XLl" kind="presentation" identifier="newsSegue" modalPresentationStyle="fullScreen" id="WdZ-DO-9bf"/>
                     </connections>
@@ -1241,7 +1199,7 @@
         </designable>
     </designables>
     <inferredMetricsTieBreakers>
-        <segue reference="r4K-hm-7Ep"/>
+        <segue reference="WdZ-DO-9bf"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Alamofire" width="133.33332824707031" height="133.33332824707031"/>

@@ -6,72 +6,34 @@
 //
 
 import UIKit
+import Combine
 
 class NewsViewController: UIViewController {
-
+    
     @IBOutlet weak var articleTableView: UITableView!
     @IBOutlet weak var newsAvailabilityLabel: UILabel!
-    @IBOutlet weak var searchBar: UITextField!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
+    @IBOutlet weak var searchBar: UISearchBar!
     
-    var articles = [Article]() {
-        didSet {
-            // On met à jour la liste d'articles de façon asynchrone (dans le thread principal), les données étant récupérée dans un thread de fond.
-            DispatchQueue.main.async { [weak self] in
-                self?.articleTableView.reloadData()
-                self?.spinner.stopAnimating()
-                self?.spinner.isHidden = true
-                
-                if let articles = self?.articles, articles.count > 0 {
-                    self?.articleTableView.isHidden = false
-                    self?.newsAvailabilityLabel.isHidden = true
-                } else {
-                    self?.articleTableView.isHidden = true
-                    self?.newsAvailabilityLabel.isHidden = false
-                    self?.newsAvailabilityLabel.text = "Aucune news disponible"
-                }
-            }
-        }
-    }
+    @Published private(set) var searchQuery = ""
+    private var subscriptions = Set<AnyCancellable>()
+    private var viewModel = NewsViewModel()
     
     var countryCode = ""
     var languageCode = ""
     var languageName = "" {
         didSet {
-            searchBar.attributedPlaceholder = NSAttributedString(string: "Rechercher (langue: \(languageName))", attributes: [.foregroundColor: UIColor(named: "Placeholder") ?? UIColor.label])
+            
         }
     }
-    let newsAPI = NewsAPIService.shared
+    // let newsAPI = NewsAPIService.shared
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        articleTableView.dataSource = self
-        articleTableView.delegate = self
-        searchBar.delegate = self
-        
-        countryCode = UserDefaults.standard.string(forKey: "countryCode") ?? "fr"
-        languageCode = UserDefaults.standard.string(forKey: "languageCode") ?? "fr"
-        languageName = UserDefaults.standard.string(forKey: "languageName") ?? "Français"
-        
-        if articles.count < 1 {
-            articleTableView.isHidden = true
-            spinner.startAnimating()
-            spinner.isHidden = false
-            // newsAvailabilityLabel.isHidden = false
-            // newsAvailabilityLabel.text = "La langue des news est en \(languageName). Le contenu recherché sera affiché dans la langue définie. Pour obtenir les news locales d'un pays, rendez-vous dans la carte du monde puis choisissez un pays en cliquant sur son drapeau puis sur \"i\" dans l'info-bulle."
-        }
-
-        newsAPI.initializeLocalNews(country: countryCode, completion: { [weak self] result in
-            switch result {
-            case .success(let newsData):
-                // Mise à jour au niveau visuel dans la propriété observée didSet de articles.
-                self?.articles = newsData
-            case .failure(_):
-                self?.articles.removeAll()
-                print("Pas de données")
-            }
-        })
+        loadCountryAndLanguage()
+        setTableView()
+        setSearchBar()
+        setBindings()
     }
     
     // Lorsque la vue est affichée, se déclenche à chaque fois que l'utilisateur se rend sur cette vue
@@ -80,90 +42,158 @@ class NewsViewController: UIViewController {
         
         // L'utilisateur a choisi une langue différente dans les paramètres.
         if let language = UserDefaults.standard.string(forKey: "languageCode"), let name = UserDefaults.standard.string(forKey: "languageName"), name != languageName && language != languageCode {
-            languageCode = language
-            languageName = name
+            viewModel.languageCode = language
+            viewModel.languageName = name
         }
         
         // L'utilisateur a choisi un pays différent dans les paramètres.
         if let code = UserDefaults.standard.string(forKey: "countryCode"), code != countryCode {
-            articleTableView.isHidden = true
-            spinner.startAnimating()
-            spinner.isHidden = false
+            viewModel.countryCode = code
+            /*
+             articleTableView.isHidden = true
+             spinner.startAnimating()
+             spinner.isHidden = false
+             */
             print("\(code) != \(countryCode)")
-            // On refait une requête si le pays est différent
-            newsAPI.initializeLocalNews(country: code, completion: { [weak self] result in
-                switch result {
-                case .success(let newsData):
-                    // Mise à jour au niveau visuel dans la propriété observée didSet de articles.
-                    self?.articles = newsData
-                case .failure(_):
-                    self?.articles.removeAll()
-                    print("Pas de données")
-                }
-            })
-            
-            countryCode = code
         }
+        
+        viewModel.initNews()
     }
 }
 
-extension NewsViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        searchBar.resignFirstResponder() // Le clavier disparaît (ce n'est pas automatique de base)
-        
-        guard let search = searchBar.text, !search.isEmpty else {
-            return false
-        }
-        
-        let query = search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        articles.removeAll()
-        spinner.startAnimating()
-        spinner.isHidden = false
+// MARK: - Fonctions pour la gestion des vues et des liens avec la vue modèle
+extension NewsViewController {
+    private func setTableView() {
+        // Configuration TableView
         articleTableView.isHidden = true
-        
-        newsAPI.searchNews(language: languageCode, query: query!) { [weak self] result in
-            switch result {
-            case .success(let newsData):
-                self?.articles = newsData
-                // Mise à jour au niveau visuel dans la propriété observée didSet de articles.
-            case .failure(_):
-                print("Pas de données")
-            }
-        }
-        
-        return true
+        articleTableView.dataSource = self
+        articleTableView.delegate = self
     }
     
-    /*
-    // Dès qu'on a cliqué sur la barre de recherche
-    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
-        searchBar.resignFirstResponder() // Le clavier disparaît (ce n'est pas automatique de base)
-        // print(searchBar.text!)
-        
-        guard let search = searchBar.text, !search.isEmpty else {
-            return
-        }
-        
-        let query = search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
-        articles.removeAll()
-        
-        newsAPI.searchNews(language: languageCode, query: query!) { [weak self] result in
-            switch result {
-            case .success(let newsData):
-                self?.articles = newsData
-                // Mise à jour au niveau visuel dans la propriété observée didSet de articles.
-            case .failure(_):
-                print("Pas de données")
-            }
-        }
+    private func setSearchBar() {
+        // Configuration barre de recherche
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "Annuler"
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .white
+        searchBar.backgroundImage = UIImage() // Supprimer le fond par défaut
+        searchBar.showsCancelButton = false
+        searchBar.delegate = self
     }
- */
+    
+    private func displayNoResult() {
+        articleTableView.isHidden = true
+        newsAvailabilityLabel.isHidden = false
+        newsAvailabilityLabel.text = "Aucun résultat pour \"\(searchQuery)\". Veuillez réessayer avec une autre recherche."
+    }
+    
+    private func loadCountryAndLanguage() {
+        viewModel.countryCode = UserDefaults.standard.string(forKey: "countryCode") ?? "fr"
+        viewModel.languageCode = UserDefaults.standard.string(forKey: "languageCode") ?? "fr"
+        viewModel.languageName = UserDefaults.standard.string(forKey: "languageName") ?? "Français"
+    }
+    
+    private func updateTableView() {
+        newsAvailabilityLabel.isHidden = true
+        articleTableView.isHidden = false
+        articleTableView.reloadData()
+    }
+    
+    private func setBindings() {
+        func setSearchBinding() {
+            $searchQuery
+                .receive(on: RunLoop.main)
+                .removeDuplicates()
+                .sink { [weak self] value in
+                    print(value)
+                    self?.viewModel.searchQuery = value
+                }.store(in: &subscriptions)
+        }
+        
+        func setCountryBinding() {
+            viewModel.$languageName
+                .receive(on: RunLoop.main)
+                .removeDuplicates()
+                .sink { [weak self] value in
+                    print(value)
+                    self?.searchBar.placeholder = "Recherche (langue: \(value))"
+                }.store(in: &subscriptions)
+        }
+        
+        func setUpdateBinding() {
+            viewModel.updateResult
+                .receive(on: RunLoop.main)
+                .sink { completion in
+                    switch completion {
+                    case .finished:
+                        print("OK: terminé")
+                    case .failure(let error):
+                        print("Erreur reçue: \(error.rawValue)")
+                    }
+                } receiveValue: { [weak self] updated in
+                    self?.spinner.stopAnimating()
+                    self?.spinner.isHidden = true
+                    
+                    if updated {
+                        self?.updateTableView()
+                    } else {
+                        self?.displayNoResult()
+                    }
+                }.store(in: &subscriptions)
+        }
+        
+        func setLoadingBinding() {
+            viewModel.isLoading
+                .receive(on: RunLoop.main)
+                .sink { [weak self] isLoading in
+                    if isLoading {
+                        self?.spinner.startAnimating()
+                        self?.spinner.isHidden = false
+                        self?.articleTableView.isHidden = true
+                    }
+                }.store(in: &subscriptions)
+        }
+        // L'intérêt d'utiliser des fonctions imbriquées est de pouvoir respecter le 1er prinicipe du SOLID étant le principe de responsabilité unique (SRP: Single Responsibility Principle)
+        setLoadingBinding()
+        setSearchBinding()
+        setUpdateBinding()
+        setLoadingBinding()
+    }
 }
 
-extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
+/*
+ extension NewsViewController: UITextFieldDelegate {
+ func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+ searchBar.resignFirstResponder() // Le clavier disparaît (ce n'est pas automatique de base)
+ 
+ guard let search = searchBar.text, !search.isEmpty else {
+ return false
+ }
+ 
+ let query = search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+ articles.removeAll()
+ spinner.startAnimating()
+ spinner.isHidden = false
+ articleTableView.isHidden = true
+ 
+ newsAPI.searchNews(language: languageCode, query: query!) { [weak self] result in
+ switch result {
+ case .success(let newsData):
+ self?.articles = newsData
+ // Mise à jour au niveau visuel dans la propriété observée didSet de articles.
+ case .failure(_):
+ print("Pas de données")
+ }
+ }
+ 
+ return true
+ }
+ }
+ */
+
+extension NewsViewController: UITableViewDataSource {
     // Nombre d'articles.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return articles.count
+        return viewModel.newsViewModels.count
+        // return articles.count
     }
     
     // Cellule à utiliser pour le TableView, avec les données téléchargées.
@@ -172,11 +202,35 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
             return UITableViewCell()
         }
         
-        newsCell.configuration(with: articles[indexPath.row])
+        newsCell.configuration(with: viewModel.newsViewModels[indexPath.row])
         
         return newsCell
     }
+}
+
+extension NewsViewController: UISearchBarDelegate {
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        self.searchBar.setShowsCancelButton(true, animated: true) // Afficher le bouton d'annulation
+    }
     
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        self.searchQuery = searchText
+    }
+    
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+        self.searchQuery = ""
+        self.searchBar.text = ""
+        searchBar.resignFirstResponder() // Masquer le clavier et stopper l'édition du texte
+    }
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        searchBar.resignFirstResponder() // Masquer le clavier et stopper l'édition du texte
+        self.searchBar.setShowsCancelButton(false, animated: true) // Masquer le bouton d'annulation
+    }
+}
+
+extension NewsViewController: UITableViewDelegate {
+    /*
     // Au clic sur la ligne de la liste
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "newsSegue", sender: self)
@@ -198,4 +252,5 @@ extension NewsViewController: UITableViewDelegate, UITableViewDataSource {
             destination.image = cell.articleImage.image! // Extraction de l'image du TableViewCell (on évite de refaire un téléchargement asynchrone).
         }
     }
+    */
 }

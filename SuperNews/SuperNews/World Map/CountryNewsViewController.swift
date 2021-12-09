@@ -14,7 +14,7 @@ class CountryNewsViewController: UIViewController {
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     
     var countryArticles = [Article]()
-    let newsAPI = NewsAPIService.shared
+    let newsAPI = NewsAPIService()
     var countryCode = ""
     var countryName = ""
     
@@ -32,11 +32,11 @@ class CountryNewsViewController: UIViewController {
         print("CountryCode = \(countryCode)")
         print("CountryCode = \(countryName)")
         
-        newsAPI.country = countryCode
+        // newsAPI.country = countryCode
         newsAPI.initializeLocalNews(country: countryCode) { [weak self] result in
             switch result {
             case .success(let newsData):
-                self?.countryArticles = newsData
+                self?.countryArticles = newsData.articles ?? []
                 // print(newsData)
                 DispatchQueue.main.async {
                     self?.articleTableView.reloadData()
@@ -64,7 +64,7 @@ extension CountryNewsViewController: UITableViewDelegate, UITableViewDataSource 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let newsCell = articleTableView.dequeueReusableCell(withIdentifier: "localNewsCell") as! NewsTableViewCell
         // print(countryArticles[indexPath.row])
-        newsCell.configuration(with: countryArticles[indexPath.row])
+        // newsCell.configuration(with: countryArticles[indexPath.row])
         
         return newsCell
     }
