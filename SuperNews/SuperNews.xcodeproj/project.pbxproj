@@ -28,6 +28,8 @@
 		4B66B974262893ED007F38C6 /* ArticleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B66B973262893ED007F38C6 /* ArticleViewController.swift */; };
 		4B72872B263080C400A072DA /* CountryNewsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B72872A263080C400A072DA /* CountryNewsViewController.swift */; };
 		4B73261B2652B91300F3C3EF /* CountryAutoCompletionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B73261A2652B91300F3C3EF /* CountryAutoCompletionTableViewCell.swift */; };
+		4B9E2EDD2765792C00FEBFF5 /* NewsMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E2EDC2765792C00FEBFF5 /* NewsMapViewModel.swift */; };
+		4B9E2EDF27657C3B00FEBFF5 /* CountryNewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9E2EDE27657C3B00FEBFF5 /* CountryNewsViewModel.swift */; };
 		4B9F5AE627504FAF009264AB /* NewsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F5AE527504FAF009264AB /* NewsViewModel.swift */; };
 		4B9F5AE827504FF3009264AB /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F5AE727504FF3009264AB /* APIService.swift */; };
 		4B9F5AEA27505130009264AB /* HTTPMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B9F5AE927505130009264AB /* HTTPMethod.swift */; };
@@ -97,6 +99,8 @@
 		4B66B973262893ED007F38C6 /* ArticleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArticleViewController.swift; sourceTree = "<group>"; };
 		4B72872A263080C400A072DA /* CountryNewsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryNewsViewController.swift; sourceTree = "<group>"; };
 		4B73261A2652B91300F3C3EF /* CountryAutoCompletionTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryAutoCompletionTableViewCell.swift; sourceTree = "<group>"; };
+		4B9E2EDC2765792C00FEBFF5 /* NewsMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsMapViewModel.swift; sourceTree = "<group>"; };
+		4B9E2EDE27657C3B00FEBFF5 /* CountryNewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryNewsViewModel.swift; sourceTree = "<group>"; };
 		4B9F5AE527504FAF009264AB /* NewsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsViewModel.swift; sourceTree = "<group>"; };
 		4B9F5AE727504FF3009264AB /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
 		4B9F5AE927505130009264AB /* HTTPMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPMethod.swift; sourceTree = "<group>"; };
@@ -210,6 +214,8 @@
 				4B73261A2652B91300F3C3EF /* CountryAutoCompletionTableViewCell.swift */,
 				4BF66E89261F51830078CE36 /* NewsMapViewController.swift */,
 				4B72872A263080C400A072DA /* CountryNewsViewController.swift */,
+				4B9E2EDC2765792C00FEBFF5 /* NewsMapViewModel.swift */,
+				4B9E2EDE27657C3B00FEBFF5 /* CountryNewsViewModel.swift */,
 			);
 			path = "World Map";
 			sourceTree = "<group>";
@@ -657,6 +663,8 @@
 				4B0BED4D2640547700FF75F9 /* SettingsSelectionViewController.swift in Sources */,
 				4B72872B263080C400A072DA /* CountryNewsViewController.swift in Sources */,
 				4B0BED4726404B0700FF75F9 /* SettingsSection.swift in Sources */,
+				4B9E2EDD2765792C00FEBFF5 /* NewsMapViewModel.swift in Sources */,
+				4B9E2EDF27657C3B00FEBFF5 /* CountryNewsViewModel.swift in Sources */,
 				4BBAA07126272E30000C2D19 /* NetworkMonitor.swift in Sources */,
 				4BBAA07C26272ED1000C2D19 /* CustomView.swift in Sources */,
 				4B19B2CD276162BD007E9547 /* NewsViewModelProtocol.swift in Sources */,

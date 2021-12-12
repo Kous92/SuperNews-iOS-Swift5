@@ -8,7 +8,7 @@
 import UIKit
 import Kingfisher
 
-class NewsTableViewCell: UITableViewCell {
+final class NewsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var articleTitleLabel: UILabel!
     @IBOutlet weak var articleImage: UIImageView!
@@ -44,7 +44,7 @@ class NewsTableViewCell: UITableViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        // Reset Thumnail Image View
+        // Reset Thumbnail Image View
         articleImage.image = nil
     }
 }

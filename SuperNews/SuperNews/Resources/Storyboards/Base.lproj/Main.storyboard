@@ -203,7 +203,6 @@
                         <outlet property="newsAvailabilityLabel" destination="9IJ-wH-L7J" id="8fb-DT-FN8"/>
                         <outlet property="searchBar" destination="5mm-wV-gnf" id="fvO-Dz-zxu"/>
                         <outlet property="spinner" destination="NTL-iR-mMh" id="EAC-OO-G7T"/>
-                        <segue destination="QCX-UJ-XLl" kind="presentation" identifier="newsSegue" modalPresentationStyle="fullScreen" id="WdZ-DO-9bf"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qb7-6m-5aO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -213,7 +212,7 @@
         <!--Article View Controller-->
         <scene sceneID="Jrx-lL-ZXR">
             <objects>
-                <viewController id="QCX-UJ-XLl" customClass="ArticleViewController" customModule="SuperNews" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="articleViewController" id="QCX-UJ-XLl" customClass="ArticleViewController" customModule="SuperNews" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Da1-71-vKG">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -409,7 +408,7 @@
                     <connections>
                         <outlet property="articleAuthorLabel" destination="AJN-Jz-kmB" id="0XP-cw-zey"/>
                         <outlet property="articleContentLabel" destination="U2y-TF-IBX" id="b7M-WW-iYh"/>
-                        <outlet property="articleImageLabel" destination="Kvs-dS-n0A" id="gl1-XS-g4p"/>
+                        <outlet property="articleImageView" destination="Kvs-dS-n0A" id="21S-xZ-t7d"/>
                         <outlet property="articlePublishDateLabel" destination="JDW-Eb-6qV" id="neH-0J-Sg4"/>
                         <outlet property="articleSourceLabel" destination="pAZ-9d-VN3" id="g7D-IT-V4h"/>
                         <outlet property="articleTitleLabel" destination="kUD-Mn-wfU" id="N2H-Yn-b4r"/>
@@ -422,7 +421,7 @@
         <!--Country News View Controller-->
         <scene sceneID="h8A-xX-or8">
             <objects>
-                <viewController id="pwi-0Y-YK0" customClass="CountryNewsViewController" customModule="SuperNews" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="countryNewsViewController" id="pwi-0Y-YK0" customClass="CountryNewsViewController" customModule="SuperNews" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="isv-1d-Fg6">
                         <rect key="frame" x="0.0" y="0.0" width="428" height="926"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -560,7 +559,6 @@
                         <outlet property="articleTableView" destination="gi6-LP-ika" id="omp-xY-eFc"/>
                         <outlet property="countryNewsLabel" destination="sWL-2x-KB5" id="B6s-LI-4sJ"/>
                         <outlet property="spinner" destination="EvT-Zt-CMx" id="IjA-eL-eOx"/>
-                        <segue destination="QCX-UJ-XLl" kind="presentation" identifier="countryArticleSegue" modalPresentationStyle="fullScreen" id="r4K-hm-7Ep"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ode-RR-dpJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -831,7 +829,6 @@
                         <outlet property="countryAutoCompletionTableView" destination="Ogf-8c-GT8" id="Bkb-1g-Kk7"/>
                         <outlet property="countrySearchBar" destination="2Oo-6a-OU3" id="4Fo-oO-tlV"/>
                         <outlet property="map" destination="A3E-eE-Es7" id="4nI-oS-pVH"/>
-                        <segue destination="pwi-0Y-YK0" kind="presentation" identifier="countryNewsSegue" modalPresentationStyle="fullScreen" id="npn-hr-aVt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ezi-jX-R9f" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1198,9 +1195,6 @@
             <size key="intrinsicContentSize" width="20" height="22"/>
         </designable>
     </designables>
-    <inferredMetricsTieBreakers>
-        <segue reference="WdZ-DO-9bf"/>
-    </inferredMetricsTieBreakers>
     <resources>
         <image name="Alamofire" width="133.33332824707031" height="133.33332824707031"/>
         <image name="ArticleImageNotAvailable" width="486" height="242.33332824707031"/>

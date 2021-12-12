@@ -8,7 +8,7 @@
 import Foundation
 
 // MARK: - Languages
-struct Languages: Codable {
+struct Languages: Decodable {
     let language: [Language]
 }
 

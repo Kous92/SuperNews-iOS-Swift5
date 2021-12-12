@@ -1,22 +1,18 @@
 //
-//  NewsViewModel.swift
+//  CountryNewsViewMode.swift
 //  SuperNews
 //
-//  Created by Koussaïla Ben Mamar on 26/11/2021.
+//  Created by Koussaïla Ben Mamar on 12/12/2021.
 //
-
 import Foundation
 import Combine
 
-final class NewsViewModel: MainNews {
+final class CountryNewsViewModel: CountryLocalNews {
     // Les sujets, ceux qui émettent et reçoivent des événements
     var updateResult = PassthroughSubject<Bool, NewsAPIError>()
     var isLoading = PassthroughSubject<Bool, Never>()
-    @Published var searchQuery = ""
-    @Published var countryCode = "fr"
-    @Published var countryName = ""
-    @Published var languageCode = "fr"
-    @Published var languageName = "Français"
+    @Published var countryCode: String
+    @Published var countryName: String
     
     private var newsData: ArticleOutput?
     var newsViewModels = [NewsCellViewModel]()
@@ -26,50 +22,29 @@ final class NewsViewModel: MainNews {
     private var subscriptions = Set<AnyCancellable>()
     
     // Injection de dépendance
-    init(apiService: APIService = NewsAPIService()) {
+    init(apiService: APIService = NewsAPIService(), countryCode: String = "fr", countryName: String = "France") {
+        self.countryCode = countryCode
+        self.countryName = countryName
         self.apiService = apiService
         setBindings()
     }
     
     private func setBindings() {
-        $searchQuery
-            .receive(on: RunLoop.main)
-            .removeDuplicates()
-            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
-            .filter { !$0.isEmpty }
-            .sink { [weak self] value in
-                self?.searchNews()
-            }.store(in: &subscriptions)
-        
         $countryCode
             .receive(on: RunLoop.main)
             .removeDuplicates()
             .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
             .sink { [weak self] value in
-                self?.initNews()
+                self?.initLocalNews()
             }.store(in: &subscriptions)
     }
-    
-    func initNews() {
-        isLoading.send(true)
-        apiService.initializeLocalNews(country: countryCode) { [weak self] result in
-            switch result {
-            case .success(let response):
-                self?.newsData = response
-                self?.parseData()
-            case .failure(let error):
-                print(error.rawValue)
-                self?.updateResult.send(completion: .failure(error))
-            }
-        }
-    }
-    
 }
 
-extension NewsViewModel {
-    private func searchNews() {
+extension CountryNewsViewModel {
+    func initLocalNews() {
         isLoading.send(true)
-        apiService.searchNews(language: languageCode, query: searchQuery) { [weak self] result in
+        
+        apiService.initializeLocalNews(country: countryCode) { [weak self] result in
             switch result {
             case .success(let response):
                 self?.newsData = response

@@ -8,6 +8,7 @@
 import UIKit
 import MapKit
 import CoreLocation
+import Combine
 
 class NewsMapViewController: UIViewController, UITextFieldDelegate {
 
@@ -226,27 +227,20 @@ extension NewsMapViewController: MKMapViewDelegate {
             print("OK pour \(countryCode!)")
             selectedCountryCode = countryCode!
             selectedCountryName = countryName!
-            performSegue(withIdentifier: "countryNewsSegue", sender: self)
+            
+            // De la fenêtre de la bulle du marqueur, on transite vers le ViewController de l'article en transférant les données de la cellule
+            guard let countryNewsViewController = storyboard?.instantiateViewController(withIdentifier: "countryNewsViewController") as? CountryNewsViewController else {
+                fatalError("Le ViewController n'est pas détecté dans le Storyboard.")
+            }
+            
+            countryNewsViewController.configure(code: selectedCountryCode, name: selectedCountryName)
+            countryNewsViewController.modalPresentationStyle = .fullScreen
+            present(countryNewsViewController, animated: true, completion: nil)
         }
-        
     }
 
     func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         print("Annotation sélectionnée: \(String(describing: view.annotation?.title!))")
-    }
-    
-    // De la fenêtre de la bulle du marqueur, on transite vers le ViewController de l'article en transférant les données de la cellule
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        if let destination = segue.destination as? CountryNewsViewController {
-            
-            guard !selectedCountryName.isEmpty && !selectedCountryCode.isEmpty else {
-                return
-            }
-            
-            // On envoie au ViewController le code du pays pour cibler les articles en questions
-            destination.countryCode = selectedCountryCode
-            destination.countryName = selectedCountryName
-        }
     }
 }
 

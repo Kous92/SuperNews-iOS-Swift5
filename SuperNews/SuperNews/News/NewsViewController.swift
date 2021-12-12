@@ -19,15 +19,6 @@ class NewsViewController: UIViewController {
     private var subscriptions = Set<AnyCancellable>()
     private var viewModel = NewsViewModel()
     
-    var countryCode = ""
-    var languageCode = ""
-    var languageName = "" {
-        didSet {
-            
-        }
-    }
-    // let newsAPI = NewsAPIService.shared
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         loadCountryAndLanguage()
@@ -41,20 +32,15 @@ class NewsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // L'utilisateur a choisi une langue différente dans les paramètres.
-        if let language = UserDefaults.standard.string(forKey: "languageCode"), let name = UserDefaults.standard.string(forKey: "languageName"), name != languageName && language != languageCode {
+        if let language = UserDefaults.standard.string(forKey: "languageCode"), let name = UserDefaults.standard.string(forKey: "languageName"), name != viewModel.languageName && language != viewModel.languageCode {
             viewModel.languageCode = language
             viewModel.languageName = name
         }
         
         // L'utilisateur a choisi un pays différent dans les paramètres.
-        if let code = UserDefaults.standard.string(forKey: "countryCode"), code != countryCode {
+        if let code = UserDefaults.standard.string(forKey: "countryCode"), code != viewModel.countryCode {
             viewModel.countryCode = code
-            /*
-             articleTableView.isHidden = true
-             spinner.startAnimating()
-             spinner.isHidden = false
-             */
-            print("\(code) != \(countryCode)")
+            print("\(code) != \(viewModel.countryCode)")
         }
         
         viewModel.initNews()
@@ -159,41 +145,10 @@ extension NewsViewController {
     }
 }
 
-/*
- extension NewsViewController: UITextFieldDelegate {
- func textFieldShouldReturn(_ textField: UITextField) -> Bool {
- searchBar.resignFirstResponder() // Le clavier disparaît (ce n'est pas automatique de base)
- 
- guard let search = searchBar.text, !search.isEmpty else {
- return false
- }
- 
- let query = search.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
- articles.removeAll()
- spinner.startAnimating()
- spinner.isHidden = false
- articleTableView.isHidden = true
- 
- newsAPI.searchNews(language: languageCode, query: query!) { [weak self] result in
- switch result {
- case .success(let newsData):
- self?.articles = newsData
- // Mise à jour au niveau visuel dans la propriété observée didSet de articles.
- case .failure(_):
- print("Pas de données")
- }
- }
- 
- return true
- }
- }
- */
-
 extension NewsViewController: UITableViewDataSource {
     // Nombre d'articles.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return viewModel.newsViewModels.count
-        // return articles.count
     }
     
     // Cellule à utiliser pour le TableView, avec les données téléchargées.
@@ -230,27 +185,14 @@ extension NewsViewController: UISearchBarDelegate {
 }
 
 extension NewsViewController: UITableViewDelegate {
-    /*
-    // Au clic sur la ligne de la liste
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "newsSegue", sender: self)
-    }
-    
-    // De la cellule, on transite vers le ViewController de l'article en transférant les données de la cellule
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        if let destination = segue.destination as? ArticleViewController{
-            // On vérifie que le contenu de l'article existe
-            guard let index = articleTableView.indexPathForSelectedRow?.row else {
-                return
-            }
-            
-            // On extrait le contenu de la cellule
-            let cell = articleTableView.cellForRow(at: articleTableView.indexPathForSelectedRow!) as! NewsTableViewCell
-            
-            // On envoie au ViewController les données de l'article
-            destination.article = articles[index]
-            destination.image = cell.articleImage.image! // Extraction de l'image du TableViewCell (on évite de refaire un téléchargement asynchrone).
+        guard let articleViewController = storyboard?.instantiateViewController(withIdentifier: "articleViewController") as? ArticleViewController else {
+            fatalError("Le ViewController n'est pas détecté dans le Storyboard.")
         }
+        
+        articleTableView.deselectRow(at: indexPath, animated: true)
+        articleViewController.configure(with: ArticleViewModel(article: viewModel.newsViewModels[indexPath.row].article))
+        articleViewController.modalPresentationStyle = .fullScreen
+        present(articleViewController, animated: true, completion: nil)
     }
-    */
 }

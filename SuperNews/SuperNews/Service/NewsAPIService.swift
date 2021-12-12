@@ -8,7 +8,7 @@
 import Foundation
 import Alamofire
 
-class NewsAPIService: APIService {
+final class NewsAPIService: APIService {
     private var apiKey: String = ""
     var keyUnitTestMode: Bool
     
