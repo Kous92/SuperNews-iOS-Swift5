@@ -8,16 +8,13 @@
 import UIKit
 
 class CountryAutoCompletionTableViewCell: UITableViewCell {
-
     @IBOutlet weak var countryImage: UIImageView!
     @IBOutlet weak var countryNameLabel: UILabel!
-    var country: Country?
     
-    func configuration(country: Country) {
-        self.country = country
-        // print(self.country)
-        countryImage.image = UIImage(named: country.countryCode)
-        countryNameLabel.text = country.countryName
+    // Injection de dépendance
+    func configuration(with viewModel: CountryCellViewModel) {
+        countryImage.image = UIImage(named: viewModel.countryCode)
+        countryNameLabel.text = viewModel.countryName
     }
 
 }

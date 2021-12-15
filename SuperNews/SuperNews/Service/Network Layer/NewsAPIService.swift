@@ -52,7 +52,7 @@ final class NewsAPIService: APIService {
     }
     
     private func getRequest<T: Decodable>(endpoint: NewsAPIEndpoint, completion: @escaping (Result<T, NewsAPIError>) -> ()) {
-        guard let url = URL(string: endpoint.baseURL + endpoint.path + "&apiKey=\(apiKey)") else {
+        guard let url = URL(string: endpoint.baseURL + endpoint.path + "&sortBy=publishedAt&apiKey=\(apiKey)") else {
             completion(.failure(.invalidURL))
             return
         }

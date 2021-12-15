@@ -25,6 +25,7 @@ class NewsViewController: UIViewController {
         setTableView()
         setSearchBar()
         setBindings()
+        viewModel.initNews()
     }
     
     // Lorsque la vue est affichée, se déclenche à chaque fois que l'utilisateur se rend sur cette vue
@@ -41,9 +42,10 @@ class NewsViewController: UIViewController {
         if let code = UserDefaults.standard.string(forKey: "countryCode"), code != viewModel.countryCode {
             viewModel.countryCode = code
             print("\(code) != \(viewModel.countryCode)")
+            
+            // L'actualisation ne se fait que s'il y a eu un changement de pays
+            viewModel.initNews()
         }
-        
-        viewModel.initNews()
     }
 }
 
@@ -175,6 +177,7 @@ extension NewsViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchQuery = ""
         self.searchBar.text = ""
+        viewModel.initNews()
         searchBar.resignFirstResponder() // Masquer le clavier et stopper l'édition du texte
     }
     

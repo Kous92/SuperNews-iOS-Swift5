@@ -13,7 +13,6 @@ final class NewsTableViewCell: UITableViewCell {
     @IBOutlet weak var articleTitleLabel: UILabel!
     @IBOutlet weak var articleImage: UIImageView!
     @IBOutlet weak var articleSourceLabel: UILabel!
-    @IBOutlet weak var articleCellView: UIView!
     
     private var viewModel: NewsCellViewModel!
     

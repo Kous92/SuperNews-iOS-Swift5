@@ -69,6 +69,12 @@ final class NewsViewModel: MainNews {
 extension NewsViewModel {
     private func searchNews() {
         isLoading.send(true)
+        
+        guard !searchQuery.isEmpty else {
+            initNews()
+            return
+        }
+        
         apiService.searchNews(language: languageCode, query: searchQuery) { [weak self] result in
             switch result {
             case .success(let response):
