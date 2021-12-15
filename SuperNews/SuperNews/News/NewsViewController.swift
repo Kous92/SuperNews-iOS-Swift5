@@ -21,10 +21,11 @@ class NewsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        loadCountryAndLanguage()
+        // loadCountryAndLanguage()
         setTableView()
         setSearchBar()
         setBindings()
+        viewModel.loadCountryAndLanguage()
         viewModel.initNews()
     }
     
@@ -33,19 +34,10 @@ class NewsViewController: UIViewController {
         super.viewWillAppear(animated)
         
         // L'utilisateur a choisi une langue différente dans les paramètres.
-        if let language = UserDefaults.standard.string(forKey: "languageCode"), let name = UserDefaults.standard.string(forKey: "languageName"), name != viewModel.languageName && language != viewModel.languageCode {
-            viewModel.languageCode = language
-            viewModel.languageName = name
-        }
+        viewModel.checkCountry()
         
         // L'utilisateur a choisi un pays différent dans les paramètres.
-        if let code = UserDefaults.standard.string(forKey: "countryCode"), code != viewModel.countryCode {
-            viewModel.countryCode = code
-            print("\(code) != \(viewModel.countryCode)")
-            
-            // L'actualisation ne se fait que s'il y a eu un changement de pays
-            viewModel.initNews()
-        }
+        viewModel.checkLanguage()
     }
 }
 
@@ -73,12 +65,6 @@ extension NewsViewController {
         newsAvailabilityLabel.text = "Aucun résultat pour \"\(searchQuery)\". Veuillez réessayer avec une autre recherche."
     }
     
-    private func loadCountryAndLanguage() {
-        viewModel.countryCode = UserDefaults.standard.string(forKey: "countryCode") ?? "fr"
-        viewModel.languageCode = UserDefaults.standard.string(forKey: "languageCode") ?? "fr"
-        viewModel.languageName = UserDefaults.standard.string(forKey: "languageName") ?? "Français"
-    }
-    
     private func updateTableView() {
         newsAvailabilityLabel.isHidden = true
         articleTableView.isHidden = false
@@ -96,10 +82,9 @@ extension NewsViewController {
                 }.store(in: &subscriptions)
         }
         
-        func setCountryBinding() {
-            viewModel.$languageName
+        func setLanguageBinding() {
+            viewModel.languageUpdated
                 .receive(on: RunLoop.main)
-                .removeDuplicates()
                 .sink { [weak self] value in
                     print(value)
                     self?.searchBar.placeholder = "Recherche (langue: \(value))"
@@ -143,7 +128,7 @@ extension NewsViewController {
         setLoadingBinding()
         setSearchBinding()
         setUpdateBinding()
-        setLoadingBinding()
+        setLanguageBinding()
     }
 }
 
@@ -177,8 +162,9 @@ extension NewsViewController: UISearchBarDelegate {
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
         self.searchQuery = ""
         self.searchBar.text = ""
-        viewModel.initNews()
+        self.searchBar.setShowsCancelButton(false, animated: true) // Masquer le bouton d'annulation
         searchBar.resignFirstResponder() // Masquer le clavier et stopper l'édition du texte
+        viewModel.initNews()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {

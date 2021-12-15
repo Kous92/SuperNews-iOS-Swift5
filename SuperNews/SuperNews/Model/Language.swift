@@ -13,7 +13,7 @@ struct Languages: Decodable {
 }
 
 // MARK: - Language
-struct Language: Codable {
+struct Language: Decodable {
     let languageCode, languageName, languageDefaultFlag: String
     let defaultLanguage: Bool
 }

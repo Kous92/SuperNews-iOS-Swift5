@@ -92,27 +92,27 @@ func getTodayDate() -> String {
     return formatter.string(from: currentTime as Date).capitalized
 }
 
+// Conversion de la chaîne de date au format "yyyy-MM-dd'T'HH:mm:ss+0000Z" au format "dd/MM/yyyy à HH:mm"
 func stringToDateFormat(date: String?) -> String? {
     if let publishDate = date {
-        let formatter1 = DateFormatter()
-        let formatter2 = DateFormatter()
-        formatter1.locale = Locale(identifier: "en_US_POSIX")
-        formatter1.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        formatter2.locale = Locale(identifier: "en_US_POSIX")
-        formatter2.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        
-        if let date = formatter1.date(from: publishDate), let time = formatter2.date(from: publishDate) {
-            formatter1.locale = Locale(identifier: "fr_FR")
-            formatter2.locale = Locale(identifier: "fr_FR")
-            formatter1.dateStyle = .short
-            formatter2.timeStyle = .short
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+
+        if let date = formatter.date(from: publishDate) {
+            formatter.locale = Locale(identifier: "fr_FR")
+            formatter.dateStyle = .short
             
-            formatter1.string(from: date)
-            formatter2.string(from: time)
+            let dateString = formatter.string(from: date) // Jour, mois, année
             
-            return "Le " + formatter1.string(from: date) + " à " + formatter2.string(from: time)
+            formatter.dateStyle = .none
+            formatter.timeStyle = .short
+            
+            let timeString = formatter.string(from: date) // Heure, minutes
+            
+            return "Le " + dateString + " à " + timeString
         }
     }
-    
+
     return nil
 }

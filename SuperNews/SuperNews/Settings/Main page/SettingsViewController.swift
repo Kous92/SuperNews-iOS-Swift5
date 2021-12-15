@@ -8,11 +8,18 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
+    
     @IBOutlet weak var settingsTable: UITableView!
+    var viewModel = SettingsViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        setTableView()
+    }
+}
+
+extension SettingsViewController {
+    private func setTableView() {
         settingsTable.delegate = self
         settingsTable.dataSource = self
         
@@ -21,7 +28,7 @@ class SettingsViewController: UIViewController {
     }
 }
 
-extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
+extension SettingsViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
@@ -39,42 +46,38 @@ extension SettingsViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return SettingsSection.allCases.count
+        return viewModel.sections
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let settingsCell = settingsTable.dequeueReusableCell(withIdentifier: "settingsCell") as! SettingTableViewCell
-        let setting = SettingsSection(rawValue: indexPath.row)
+        guard let settingsCell = settingsTable.dequeueReusableCell(withIdentifier: "settingsCell") as? SettingTableViewCell,
+              let setting = viewModel.getSettingSection(with: indexPath.row) else {
+                  return UITableViewCell()
+              }
         
-        switch setting {
-        case .NewsCountry:
-            settingsCell.settingContent.text = "Pays des news"
-            settingsCell.settingType = "country"
-        case .NewsLanguage:
-            settingsCell.settingContent.text = "Langue des news"
-            settingsCell.settingType = "language"
-        case .none:
-            break
-        }
+        
+        settingsCell.settingContent.text = setting.detail
+        settingsCell.settingType = setting.description
         
         return settingsCell
     }
-    
+}
+
+extension SettingsViewController: UITableViewDelegate {
     // Au clic sur la ligne de la liste
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "settingSegue", sender: self)
-        // Déselectionner la cellule, doit être fait après le segue pour éviter le crash.
         settingsTable.deselectRow(at: indexPath, animated: false)
-    }
-    
-    // De la cellule, on transite vers le ViewController de l'article en transférant les données de la cellule
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?){
-        if let destination = segue.destination as? SettingsSelectionViewController {
-            // On extrait le contenu de la cellule
-            let cell = settingsTable.cellForRow(at: settingsTable.indexPathForSelectedRow!) as! SettingTableViewCell
-            
-            // On envoie au ViewController les données de l'article
-            destination.settingType = cell.settingType
+        
+        guard let settingsSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "settingsSelectionViewController") as? SettingsSelectionViewController else {
+            fatalError("Le ViewController n'est pas détecté dans le Storyboard.")
         }
+        
+        guard let settingType = viewModel.getSettingSection(with: indexPath.row) else {
+            fatalError("Le type de paramètre sélectionné n'existe pas")
+        }
+        
+        print("Paramètre sélectionné: \(settingType.detail) -> type: \(settingType.description)")
+        settingsSelectionViewController.configure(with: settingType.description)
+        present(settingsSelectionViewController, animated: true, completion: nil)
     }
 }

@@ -613,19 +613,19 @@
         <!--Settings Selection View Controller-->
         <scene sceneID="Whc-V2-TCl">
             <objects>
-                <viewController id="Mg6-GR-xmW" customClass="SettingsSelectionViewController" customModule="SuperNews" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="settingsSelectionViewController" id="Mg6-GR-xmW" customClass="SettingsSelectionViewController" customModule="SuperNews" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="L1g-Gm-oQi">
-                        <rect key="frame" x="0.0" y="0.0" width="390" height="790"/>
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choix du paramètre" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gUQ-Z2-bPf">
-                                <rect key="frame" x="102.66666666666667" y="30" width="184.66666666666663" height="25.333333333333329"/>
+                                <rect key="frame" x="102.66666666666667" y="74" width="184.66666666666663" height="25.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="21"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="m1f-eb-aBh" userLabel="settingsChoiceTable">
-                                <rect key="frame" x="0.0" y="85.333333333333314" width="390" height="670.66666666666674"/>
+                                <rect key="frame" x="0.0" y="129.33333333333331" width="390" height="680.66666666666674"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" restorationIdentifier="settingChoice" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" accessoryType="checkmark" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="settingsChoice" rowHeight="60" id="PBa-KS-yFD" customClass="SettingChoiceTableViewCell" customModule="SuperNews" customModuleProvider="target">
@@ -924,7 +924,6 @@
                     <tabBarItem key="tabBarItem" title="Paramètres" image="wrench.and.screwdriver.fill" catalog="system" id="6pD-Ib-P22"/>
                     <connections>
                         <outlet property="settingsTable" destination="bJt-Kw-2gj" id="3KM-UA-nmi"/>
-                        <segue destination="Mg6-GR-xmW" kind="show" identifier="settingSegue" id="mdT-2R-vU6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="30S-SA-PQO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -972,7 +971,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="R8e-lt-17k" userLabel="Xcode12 Stack">
-                                                <rect key="frame" x="25" y="514" width="178.66666666666666" height="65"/>
+                                                <rect key="frame" x="25" y="514" width="179" height="65"/>
                                                 <subviews>
                                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Xcode12" translatesAutoresizingMaskIntoConstraints="NO" id="1n3-Rm-U7I">
                                                         <rect key="frame" x="0.0" y="0.0" width="65" height="65"/>
@@ -981,8 +980,8 @@
                                                             <constraint firstAttribute="height" constant="65" id="RmO-qM-UWh"/>
                                                         </constraints>
                                                     </imageView>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Xcode 12" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6O-ht-tuR">
-                                                        <rect key="frame" x="90" y="19.333333333333371" width="88.666666666666686" height="26.333333333333329"/>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Xcode 13" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n6O-ht-tuR">
+                                                        <rect key="frame" x="90" y="19.333333333333371" width="89" height="26.333333333333329"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="22"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -1056,7 +1055,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="a2a-UZ-8BN" userLabel="iOS Framewoks Stack">
-                                                <rect key="frame" x="25" y="1050" width="340" height="161.66666666666674"/>
+                                                <rect key="frame" x="25" y="1050" width="340" height="197"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MapKit" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nwd-So-LJy">
                                                         <rect key="frame" x="0.0" y="0.0" width="53.666666666666664" height="20.333333333333332"/>
@@ -1082,16 +1081,22 @@
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SafariServices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="No1-7L-ejZ" userLabel="Foundation">
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SafariServices" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="No1-7L-ejZ">
                                                         <rect key="frame" x="0.0" y="141.33333333333326" width="109" height="20.333333333333343"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Combine" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jSh-uN-q6M" userLabel="Combine">
+                                                        <rect key="frame" x="0.0" y="176.66666666666674" width="68.333333333333329" height="20.333333333333343"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Projet personnel réalisé par Koussaïla BEN MAMAR, ingénieur jeune diplômé d'EFREI Paris. Mai 2021." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAF-eo-zBq">
-                                                <rect key="frame" x="25" y="1251.6666666666667" width="340" height="61"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Projet personnel réalisé par Koussaïla BEN MAMAR, ingénieur jeune diplômé d'EFREI Paris. Mise à jour Décembre 2021." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAF-eo-zBq">
+                                                <rect key="frame" x="25" y="1287" width="340" height="61"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="Copyright"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>

@@ -11,12 +11,13 @@ import Combine
 final class NewsViewModel: MainNews {
     // Les sujets, ceux qui émettent et reçoivent des événements
     var updateResult = PassthroughSubject<Bool, NewsAPIError>()
+    var languageUpdated = PassthroughSubject<String, Never>()
     var isLoading = PassthroughSubject<Bool, Never>()
     @Published var searchQuery = ""
     @Published var countryCode = "fr"
-    @Published var countryName = ""
-    @Published var languageCode = "fr"
-    @Published var languageName = "Français"
+    public private(set) var countryName = ""
+    public private(set) var languageCode = "fr"
+    public private(set) var languageName = "Français"
     
     private var newsData: ArticleOutput?
     var newsViewModels = [NewsCellViewModel]()
@@ -98,5 +99,35 @@ extension NewsViewModel {
         newsViewModels.removeAll()
         data.forEach { newsViewModels.append(NewsCellViewModel(article: $0)) }
         updateResult.send(true)
+    }
+    
+    func loadCountryAndLanguage() {
+        countryCode = UserDefaults.standard.string(forKey: "countryCode") ?? "fr"
+        languageCode = UserDefaults.standard.string(forKey: "languageCode") ?? "fr"
+        languageName = UserDefaults.standard.string(forKey: "languageName") ?? "Français"
+        
+        languageUpdated.send(languageName)
+    }
+    
+    // L'utilisateur a choisi un pays différent dans les paramètres.
+    func checkCountry() {
+        // L'utilisateur a choisi un pays différent dans les paramètres.
+        if let code = UserDefaults.standard.string(forKey: "countryCode"), code != countryCode {
+            countryCode = code
+            print("\(code) != \(countryCode)")
+            
+            // L'actualisation ne se fait que s'il y a eu un changement de pays
+            initNews()
+        }
+    }
+    
+    // L'utilisateur a choisi une langue différente dans les paramètres.
+    func checkLanguage() {
+        if let language = UserDefaults.standard.string(forKey: "languageCode"), let name = UserDefaults.standard.string(forKey: "languageName"), name != languageName && language != languageCode {
+            languageCode = language
+            languageName = name
+            
+            languageUpdated.send(languageName)
+        }
     }
 }

@@ -29,6 +29,7 @@ class NewsMapViewController: UIViewController {
         setSearchBar()
         setMapView()
         setBindings()
+        setButton()
         viewModel.initCountries()
         viewModel.getUserLocation()
     }
@@ -164,7 +165,6 @@ class NewsMapViewController: UIViewController {
 }
 
 extension NewsMapViewController {
-    
     private func showSuggestedLocationAlert(with actualLocation: (location: CLLocation, countryName: String), to suggestedLocation: (location: CLLocation, countryName: String)) {
         
         var message = ""

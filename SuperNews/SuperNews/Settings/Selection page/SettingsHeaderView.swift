@@ -7,6 +7,6 @@
 
 import UIKit
 
-class SettingsHeaderView: UITableViewHeaderFooterView {
+final class SettingsHeaderView: UITableViewHeaderFooterView {
     @IBOutlet weak var title: UILabel!
 }
