@@ -32,14 +32,9 @@ final class ArticleViewController: UIViewController {
         self.viewModel = viewModel
     }
     
-    @IBAction func articleWebsiteButton(_ sender: Any) {
-        guard !viewModel.sourceURL.isEmpty else {
-            print("-> ERREUR: URL de la source indisponible.")
-            return
-        }
-        
+    @IBAction func articleWebsiteButton(_ sender: Any) {        
         // On ouvre le navigateur
-        guard let url = URL(string: viewModel.sourceURL) else {
+        guard let url = viewModel.getURL() else {
             // On affiche une alerte
             let alert = UIAlertController(title: "Erreur", message: "Une erreur est survenue pour l'ouverture du navigateur avec le lien suivant: \(viewModel.sourceURL).", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
@@ -50,6 +45,29 @@ final class ArticleViewController: UIViewController {
         
         let safari = SFSafariViewController(url: url)
         present(safari, animated: true)
+    }
+    
+    @IBAction func shareButton(_ sender: Any) {
+        // On ouvre le navigateur
+        guard let url = viewModel.getURL() else {
+            // On affiche une alerte
+            let alert = UIAlertController(title: "Erreur", message: "Une erreur est survenue pour l'ouverture du navigateur avec le lien suivant: \(viewModel.sourceURL).", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "OK", style: .cancel, handler: nil))
+            self.present(alert, animated: true)
+            
+            return
+        }
+        
+        let items = [viewModel.articleTitle, url] as [Any]
+        let activityViewController = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        
+        // Support de l'iPad. Il est nécessaire d'ajouter ces lignes car sinon ça crashe sur un iPad. Mais ça marche avec un iPhone.
+        if let popover = activityViewController.popoverPresentationController, let sender = sender as? UIButton {
+            popover.sourceView = sender
+            popover.sourceRect = sender.frame
+        }
+            
+        present(activityViewController, animated: true)
     }
     
     @IBAction func backButton(_ sender: Any) {

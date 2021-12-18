@@ -30,4 +30,14 @@ final class ArticleViewModel: NewsArticle {
         self.content = article.content ?? "Contenu de l'article indisponible"
         self.sourceURL = article.url ?? ""
     }
+    
+    func getURL() -> URL? {
+        // On ouvre le navigateur
+        guard !sourceURL.isEmpty, let url = URL(string: sourceURL) else {
+            print("-> ERREUR: URL de la source indisponible.")
+            return nil
+        }
+        
+        return url
+    }
 }

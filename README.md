@@ -6,9 +6,9 @@ Projet personnel en développement iOS. Cette idée que je propose ici est basé
 
 Application iOS native de news en temps réel ayant les fonctionnalités suivantes:
 - Téléchargement asynchrone et récupération de news locales d'un pays par le biais d'une API REST
-- Carte des news par pays (avec option de recherche d'un pays)
+- Carte des news par pays (avec option de recherche d'un pays) et suggetion de pays le plus proche avec la localisation GPS
 - Paramètres de news locales favorites et de langue des news lors de la recherche.
-- Architecture MVVM
+- Architecture MVVM + programmation réactive fonctionnelle avec **Combine** (le framework officiel d'**Apple**, l'équivalent du fameux framework **RxSwift**)
 - Tests Unitaires et UI
 
 ## Branche actuelle: MVVM
@@ -44,11 +44,11 @@ Ou bien dans dans ce même fichier en y ajoutant le code sous format XML et en y
 </plist>
 ```
 
-La clé sera ensuite récupérée par la fonction privée ci-dessous de la classe singleton `NewsAPIService`, en lisant le contenu du fichier plist créé au préalable et initialisé depuis le constructeur de `NewsAPIService` via la propriété `shared`.
+La clé sera ensuite récupérée par la fonction privée ci-dessous de la classe `NewsAPIService`, en lisant le contenu du fichier plist créé au préalable et initialisé depuis le constructeur de `NewsAPIService`.
 ```swift
 class NewsAPIService {
-    static let shared = NewsAPIService()
-
+    private var apiKey: String = ""
+    
     private func getApiKey() -> String? {
         guard let path = Bundle.main.path(forResource: "ApiKey", ofType: "plist") else {
             print("ERREUR: Fichier ApiKey.plist inexistant")
@@ -62,7 +62,7 @@ class NewsAPIService {
         
         return dictionary.object(forKey: "NewsApiKey") as? String
     }
-
+    
     init() {
         self.apiKey = getApiKey() ?? ""
     }
@@ -102,6 +102,7 @@ Frameworks officiels:
 - MapKit
 - Network
 - SafariServices
+- Combine (programmation réactive fonctionnelle)
 
 Frameworks tiers (par le biais de CocoaPods):
 - Alamofire: appels HTTPS et téléchargement des news.
