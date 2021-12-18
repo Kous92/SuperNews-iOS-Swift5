@@ -9,7 +9,7 @@ import UIKit
 
 @IBDesignable
 class CustomButton: UIButton {
-
+    
     // MARK: - IBInspectable properties
     /// Renders vertical gradient if true else horizontal
     @IBInspectable public var verticalGradient: Bool = true {
@@ -17,77 +17,77 @@ class CustomButton: UIButton {
             updateUI()
         }
     }
-
+    
     /// Start color of the gradient
     @IBInspectable public var startColor: UIColor = .clear {
         didSet {
             updateUI()
         }
     }
-
+    
     /// End color of the gradient
     @IBInspectable public var endColor: UIColor = .clear {
         didSet {
             updateUI()
         }
     }
-
+    
     /// Border color of the view
     @IBInspectable public var borderColor: UIColor? = nil {
         didSet {
             updateUI()
         }
     }
-
+    
     /// Border width of the view
     @IBInspectable public var borderWidth: CGFloat = 0 {
         didSet {
             updateUI()
         }
     }
-
+    
     /// Corner radius of the view
     @IBInspectable public var cornerRadius: CGFloat = 0 {
         didSet {
             updateUI()
         }
     }
-
+    
     // MARK: - Variables
     /// Closure is called on click event of the button
     public var onClick = { () }
-
+    
     private var gradientlayer = CAGradientLayer()
-
+    
     // MARK: - init methods
     override public init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }
-
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         setupUI()
     }
-
+    
     // MARK: - Layout
     override public func layoutSubviews() {
         super.layoutSubviews()
         updateFrame()
     }
-
+    
     // MARK: - UI Setup
     private func setupUI() {
         gradientlayer = CAGradientLayer()
         updateUI()
         layer.addSublayer(gradientlayer)
     }
-
+    
     // MARK: - Update frame
     private func updateFrame() {
         gradientlayer.frame = bounds
     }
-
+    
     // MARK: - Update UI
     private func updateUI() {
         addTarget(self, action: #selector(clickAction(button:)), for: UIControl.Event.touchUpInside)
@@ -107,7 +107,7 @@ class CustomButton: UIButton {
         }
         updateFrame()
     }
-
+    
     // MARK: - On Click
     @objc private func clickAction(button: UIButton) {
         onClick()

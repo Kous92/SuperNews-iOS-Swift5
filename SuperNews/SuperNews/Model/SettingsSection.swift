@@ -19,4 +19,13 @@ enum SettingsSection: Int, CaseIterable, CustomStringConvertible {
             return "country"
         }
     }
+    
+    var detail: String {
+        switch self {
+        case .NewsLanguage:
+            return "Langue des news"
+        case .NewsCountry:
+            return "Pays des news"
+        }
+    }
 }

@@ -1,0 +1,20 @@
+{
+    "status": "ok",
+    "totalResults": 492,
+    "articles": [
+        {
+            "source": {
+                "id": "lequipe",
+                "name": "L'equipe"
+            },
+            "author": "Rédaction",
+            "title": "F1 - GP d'Abu Dhabi - La FIA va lancer une analyse sur la fin mouvementée du Grand Prix d'Abu Dhabi",
+            "description": "Le Conseil mondial de la Fédération internationale de l'Automobile (FIA), réuni ce mercredi à Paris, a soutenu la proposition de Jean Todt de lancer une analyse sur les faits survenus à la fin du Grand Prix d'Abu Dhabi, dimanche.",
+            "url": "https://www.lequipe.fr/Formule-1/Actualites/La-fia-va-lancer-une-analyse-sur-la-fin-mouvementee-du-grand-prix-d-abu-dhabi/1305527",
+            "urlToImage": "https://medias.lequipe.fr/img-photo-jpg/le-titre-de-champion-du-monde-s-est-joue-dans-le-dernier-dimanche-a-abu-dhabi-entre-max-verstappen/1500000001582431/0:0,1998:1332-640-427-75/c0f0e.jpg",
+            "publishedAt": "2021-12-15T20:23:00Z",
+            "content": "Alors que plane la menace d'un boycott de la remise des prix annuelle de la FIA de la part de Mercedes, très remontée après avoir vu le titre pilotes filer sous le nez de Lewis Hamilton dimanche lors… [+1923 chars]"
+        }
+    ]
+}
+

@@ -6,10 +6,12 @@ Projet personnel en développement iOS. Cette idée que je propose ici est basé
 
 Application iOS native de news en temps réel ayant les fonctionnalités suivantes:
 - Téléchargement asynchrone et récupération de news locales d'un pays par le biais d'une API REST
-- Carte des news par pays (avec option de recherche d'un pays)
+- Carte des news par pays (avec option de recherche d'un pays) et suggetion de pays le plus proche avec la localisation GPS
 - Paramètres de news locales favorites et de langue des news lors de la recherche.
-- Architecture MVC (**migration en cours vers MVVM (premiers travaux consultables dans la branche MVVM**)
+- Architecture MVVM + programmation réactive fonctionnelle avec **Combine** (le framework officiel d'**Apple**, l'équivalent du fameux framework **RxSwift**)
 - Tests Unitaires et UI
+
+## Branche actuelle: MVVM
 
 ## Plan de navigation
 - [Important: avant d'essayer l'appli iOS](#important)
@@ -42,11 +44,11 @@ Ou bien dans dans ce même fichier en y ajoutant le code sous format XML et en y
 </plist>
 ```
 
-La clé sera ensuite récupérée par la fonction privée ci-dessous de la classe singleton `NewsAPIService`, en lisant le contenu du fichier plist créé au préalable et initialisé depuis le constructeur de `NewsAPIService` via la propriété `shared`.
+La clé sera ensuite récupérée par la fonction privée ci-dessous de la classe `NewsAPIService`, en lisant le contenu du fichier plist créé au préalable et initialisé depuis le constructeur de `NewsAPIService`.
 ```swift
 class NewsAPIService {
-    static let shared = NewsAPIService()
-
+    private var apiKey: String = ""
+    
     private func getApiKey() -> String? {
         guard let path = Bundle.main.path(forResource: "ApiKey", ofType: "plist") else {
             print("ERREUR: Fichier ApiKey.plist inexistant")
@@ -60,7 +62,7 @@ class NewsAPIService {
         
         return dictionary.object(forKey: "NewsApiKey") as? String
     }
-
+    
     init() {
         self.apiKey = getApiKey() ?? ""
     }
@@ -75,13 +77,24 @@ Cette application iOS native est réalisée avec:
 - Xcode 13
 - Swift 5.5
 
-Architecture MVC (Model View Controller):
-- Principal avantage: sa facilité pour l'implémentation des interactions et des fonctionnalités. C'est aussi l'architecture par défaut avec UIKit.
-- Inconvénients: `ViewController` massifs, difficultés pour les tester avec des tests unitaires. Pas adaptée pour la programmation réactive (RxSwift, Combine, ...).
+Architecture MVVM (Model View ViewModel):
+- Principaux avantages: 
+    + Architecture adaptée pour séparer la vue de la logique métier par le biais de `ViewModel`.
+    + `ViewController` allégés.
+    + Tests facilités de la logique métier
+    + Adaptée avec **SwiftUI**
+    + Adaptée pour la programmation réactive (**RxSwift, Combine**)
+- Inconvénients:
+    + Les `ViewModel` deviennent massifs si la séparation des éléments ne sont pas maîtrisés, notamment si le principe de responsabilité unique n'est pas correctement appliqué.
+    + Complexe pour des projets de petite taille.
+    + Maîtrise compliquée pour les débutants
+
+![MVVM](https://github.com/Kous92/SuperNews-iOS-Swift5/blob/mvvm/MVVM.png)<br>
 
 Patterns:
 - DataSource: par le biais des TableView (pour la récupération des données)
 - Delegate: par le biais des TableView (pour les actions sur les cellules), pour les barres de recherche, la carte interactive.
+- Injection de dépendances
 
 Frameworks officiels:
 - UIKit
@@ -89,6 +102,7 @@ Frameworks officiels:
 - MapKit
 - Network
 - SafariServices
+- Combine (programmation réactive fonctionnelle)
 
 Frameworks tiers (par le biais de CocoaPods):
 - Alamofire: appels HTTPS et téléchargement des news.

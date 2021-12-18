@@ -8,12 +8,12 @@
 import Foundation
 
 // MARK: - Welcome
-struct Countries: Codable {
+struct Countries: Decodable {
     let countries: [Country]
 }
 
 // MARK: - Country
-struct Country: Codable {
+struct Country: Decodable {
     let countryCode, countryName, capital: String
     let lat, lon: Double
 }
