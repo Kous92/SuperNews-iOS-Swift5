@@ -123,20 +123,19 @@ En cliquant sur "News" dans la barre de navigation du bas, l'interface des news 
 Pour rechercher le contenu, il suffit tout simplement de toucher la barre de recherche puis de saisir le contenu recherché. La recherche est réactive, chaque modification distincte dans la barre de recherche va automatiquement déclencher un appel HTTP de l'API REST et mettre à jour la liste s'il y a du contenu.
 
 Par défaut la langue des news est en français. Lorsque vous avez séléctionné une news, une vue défilante (`ScrollView`) apparaît pour y voir les détails de l'article. Le bouton en bas de la vue vous permet de consulter le site de la source de l'article afin de lire l'article dans son intégralité.<br>
-<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsFeatureDark.png" width="250">
-<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsFeatureLight.png" width="250">
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsFeatureDark.gif" width="250">
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsFeatureLight.gif" width="250">
 
 ### <a name="newsmap"></a>Carte des news
 
 Avec les possibilités que donne NewsAPI, il est donc possible de récupérer les news en tendance de 54 pays différents dans le monde entier. Je propose donc ici une option de carte interactive où des marqueurs personnalisés apparaîssent sur la carte représentant les pays en question.<br>
-<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapDark.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapLight.png" width="250"><br>
 
 La barre de recherche en haut vous permettra de center la carte sur les pays à leurs positions respectives. En la touchant, une liste d'autocomplétion apparaît et change par un filtrage en fonction de la saisie. Par exemple, si je veux centrer la carte sur l'Italie, je valide ma recherche soit en saississant le nom du pays, soit en sélectionnant sa cellule de la liste d'autocomplétion, et cela va donc centrer la carte sur le pays et le marqueur en question.<br>
 
 **Nouveauté:** Avec la localisation GPS, vous avez la possibilité de centrer la carte sur le pays le plus proche de votre position actuelle (par rapport à son emplacement sur la carte).
 
 En cliquant sur le drapeau de la carte, une info-bulle apparaît, cliquez sur le "i" pour afficher les news locales du pays sélectionné. La fonctionnalité est similaire à celle des news.<br>
-<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapFeatureDark.png" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapFeatureLight.png" width="250"><br>
+<img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapFeatureDark.gif" width="250"> <img src="https://github.com/Kous92/SuperNews-iOS-Swift5/blob/main/Screenshots/NewsMapFeatureLight.gif" width="250"><br>
 
 ### <a name="settings"></a>Paramètres langue et pays des news
 
