@@ -76,93 +76,7 @@ class SuperNewsTests: XCTestCase {
         XCTAssertEqual(language2.languageName, "Anglais", "Erreur: le nom de la langue n'est pas Anglais, retourné: \(language2.languageName)")
     }
     
-    func testNewsCellViewModel() {
-        guard let data = loadLocalData(with: "localDataTest") else {
-            XCTFail("Erreur: pas de données.")
-            
-            return
-        }
-
-        let viewModel = NewsCellViewModel(article: data)
-        
-        XCTAssertEqual(viewModel.articleTitle, "PSG : Wenger dément une rumeur - Barça")
-        XCTAssertEqual(viewModel.article.url, "https://news.maxifoot.fr/psg/wenger-dement-une-rumeur-foot-359827.htm")
-    }
     
-    func testNewsViewModel() {
-        let expectation = XCTestExpectation(description: "Récupérer le contenu d'un article local.")
-        
-        newsViewModel.initNews()
-        newsViewModel.updateResult
-            .receive(on: RunLoop.main)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    print("OK: terminé")
-                case .failure(let error):
-                    print("Erreur reçue: \(error.rawValue)")
-                }
-            } receiveValue: { updated in
-                expectation.fulfill()
-            }.store(in: &subscriptions)
-        
-        wait(for: [expectation], timeout: 10)
-        
-        XCTAssertGreaterThan(newsViewModel.newsViewModels.count, 0)
-    }
-    
-    func testNewsViewModelError() {
-        let expectation1 = XCTestExpectation(description: "Entrée reçue")
-        let expectation2 = XCTestExpectation(description: "Une erreur est retournée")
-        
-        searchQuery = "Crise"
-        $searchQuery
-            .receive(on: RunLoop.main)
-            .removeDuplicates()
-            .sink { [weak self] value in
-                print(value)
-                self?.newsViewModel.searchQuery = value
-                expectation1.fulfill()
-            }.store(in: &subscriptions)
-        
-        newsViewModel.updateResult
-            .receive(on: RunLoop.main)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    print("OK: terminé")
-                case .failure(_):
-                    expectation2.fulfill()
-                }
-            } receiveValue: { updated in
-                XCTFail()
-            }.store(in: &subscriptions)
-        
-        wait(for: [expectation1, expectation2], timeout: 15)
-    }
-    
-    func testNewsViewModelLanguageUpdate() {
-        // let expectation1 = XCTestExpectation(description: "Entrée reçue")
-        let expectation01 = XCTestExpectation(description: "Mise à jour effectuéee")
-        
-        newsViewModel.initNews()
-        newsViewModel.loadCountryAndLanguage()
-        
-        newsViewModel.updateResult
-            .receive(on: RunLoop.main)
-            .sink { completion in
-                switch completion {
-                case .finished:
-                    print("OK: terminé")
-                case .failure(_):
-                    print("Erreur")
-                }
-            } receiveValue: { updated in
-                expectation01.fulfill()
-            }.store(in: &subscriptions)
-        
-        wait(for: [expectation01], timeout: 10)
-    }
     
     func testArticleViewModel() {
         guard let data = loadLocalData(with: "localDataTest") else {
@@ -265,6 +179,4 @@ class SuperNewsTests: XCTestCase {
             }
         }
     }
-    
-    
 }

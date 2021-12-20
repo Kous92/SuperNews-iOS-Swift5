@@ -53,7 +53,7 @@ extension NewsViewController {
     private func setSearchBar() {
         // Configuration barre de recherche
         UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).title = "Annuler"
-        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .white
+        UIBarButtonItem.appearance(whenContainedInInstancesOf: [UISearchBar.self]).tintColor = .label
         searchBar.backgroundImage = UIImage() // Supprimer le fond par défaut
         searchBar.showsCancelButton = false
         searchBar.delegate = self
