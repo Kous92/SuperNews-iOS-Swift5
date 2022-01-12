@@ -11,6 +11,15 @@ final class CountryNewsViewModel: CountryLocalNews {
     // Les sujets, ceux qui émettent et reçoivent des événements
     var updateResult = PassthroughSubject<Bool, NewsAPIError>()
     var isLoading = PassthroughSubject<Bool, Never>()
+    
+    var updateResultPublisher: AnyPublisher<Bool, NewsAPIError> {
+        return updateResult.eraseToAnyPublisher()
+    }
+    
+    var isLoadingPublisher: AnyPublisher<Bool, Never> {
+        return isLoading.eraseToAnyPublisher()
+    }
+    
     @Published var countryCode: String
     @Published var countryName: String
     

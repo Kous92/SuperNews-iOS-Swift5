@@ -7,11 +7,6 @@
 
 import Foundation
 
-// MARK: - Welcome
-struct Countries: Decodable {
-    let countries: [Country]
-}
-
 // MARK: - Country
 struct Country: Decodable {
     let countryCode, countryName, capital: String

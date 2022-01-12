@@ -8,7 +8,7 @@
 import UIKit
 import Combine
 
-class CountryNewsViewController: UIViewController {
+final class CountryNewsViewController: UIViewController {
     @IBOutlet weak var articleTableView: UITableView!
     @IBOutlet weak var countryNewsLabel: UILabel!
     @IBOutlet weak var spinner: UIActivityIndicatorView!

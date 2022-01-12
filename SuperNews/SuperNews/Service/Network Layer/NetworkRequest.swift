@@ -9,7 +9,7 @@ import Foundation
 import Alamofire
 
 // MARK: - Appel réseau générique en GET pour chaque endpoint de l'API
-class NetworkRequest {
+final class NetworkRequest {
     func getRequest<T: Decodable>(url: URL, completion: @escaping (Result<T, NewsAPIError>) -> ()) {
         AF.request(url).validate().responseDecodable(of: T.self) { response in
             switch response.result {

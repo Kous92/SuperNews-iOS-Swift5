@@ -8,20 +8,18 @@
 import UIKit
 import Combine
 
-class NewsViewController: UIViewController {
+final class NewsViewController: UIViewController {
     
     @IBOutlet weak var articleTableView: UITableView!
     @IBOutlet weak var newsAvailabilityLabel: UILabel!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    @Published private(set) var searchQuery = ""
     private var subscriptions = Set<AnyCancellable>()
     private var viewModel = NewsViewModel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // loadCountryAndLanguage()
         setTableView()
         setSearchBar()
         setBindings()
@@ -62,7 +60,7 @@ extension NewsViewController {
     private func displayNoResult() {
         articleTableView.isHidden = true
         newsAvailabilityLabel.isHidden = false
-        newsAvailabilityLabel.text = "Aucun résultat pour \"\(searchQuery)\". Veuillez réessayer avec une autre recherche."
+        newsAvailabilityLabel.text = "Aucun résultat pour \"\(viewModel.searchQuery)\". Veuillez réessayer avec une autre recherche."
     }
     
     private func updateTableView() {
@@ -72,18 +70,8 @@ extension NewsViewController {
     }
     
     private func setBindings() {
-        func setSearchBinding() {
-            $searchQuery
-                .receive(on: RunLoop.main)
-                .removeDuplicates()
-                .sink { [weak self] value in
-                    print(value)
-                    self?.viewModel.searchQuery = value
-                }.store(in: &subscriptions)
-        }
-        
         func setLanguageBinding() {
-            viewModel.languageUpdated
+            viewModel.languagePublisher
                 .receive(on: RunLoop.main)
                 .sink { [weak self] value in
                     print(value)
@@ -92,7 +80,7 @@ extension NewsViewController {
         }
         
         func setUpdateBinding() {
-            viewModel.updateResult
+            viewModel.updateResultPublisher
                 .receive(on: RunLoop.main)
                 .sink { completion in
                     switch completion {
@@ -114,7 +102,7 @@ extension NewsViewController {
         }
         
         func setLoadingBinding() {
-            viewModel.isLoading
+            viewModel.isLoadingPublisher
                 .receive(on: RunLoop.main)
                 .sink { [weak self] isLoading in
                     if isLoading {
@@ -126,7 +114,6 @@ extension NewsViewController {
         }
         // L'intérêt d'utiliser des fonctions imbriquées est de pouvoir respecter le 1er prinicipe du SOLID étant le principe de responsabilité unique (SRP: Single Responsibility Principle)
         setLoadingBinding()
-        setSearchBinding()
         setUpdateBinding()
         setLanguageBinding()
     }
@@ -156,11 +143,11 @@ extension NewsViewController: UISearchBarDelegate {
     }
     
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-        self.searchQuery = searchText
+        self.viewModel.searchQuery = searchText
     }
     
     func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
-        self.searchQuery = ""
+        self.viewModel.searchQuery = ""
         self.searchBar.text = ""
         self.searchBar.setShowsCancelButton(false, animated: true) // Masquer le bouton d'annulation
         searchBar.resignFirstResponder() // Masquer le clavier et stopper l'édition du texte

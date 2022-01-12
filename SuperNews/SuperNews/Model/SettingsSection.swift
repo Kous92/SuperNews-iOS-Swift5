@@ -10,6 +10,7 @@ import Foundation
 enum SettingsSection: Int, CaseIterable, CustomStringConvertible {
     case NewsLanguage
     case NewsCountry
+    case NewsReset
     
     var description: String {
         switch self {
@@ -17,6 +18,8 @@ enum SettingsSection: Int, CaseIterable, CustomStringConvertible {
             return "language"
         case .NewsCountry:
             return "country"
+        case .NewsReset:
+            return "reset"
         }
     }
     
@@ -26,6 +29,8 @@ enum SettingsSection: Int, CaseIterable, CustomStringConvertible {
             return "Langue des news"
         case .NewsCountry:
             return "Pays des news"
+        case .NewsReset:
+            return "Réinitialiser les paramètres"
         }
     }
 }

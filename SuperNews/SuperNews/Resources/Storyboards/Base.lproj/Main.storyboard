@@ -1098,7 +1098,7 @@
                                                     </label>
                                                 </subviews>
                                             </stackView>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Projet personnel réalisé par Koussaïla BEN MAMAR, ingénieur jeune diplômé d'EFREI Paris. Mise à jour Décembre 2021." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAF-eo-zBq">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Projet personnel réalisé par Koussaïla BEN MAMAR, ingénieur jeune diplômé d'EFREI Paris. Mise à jour Janvier 2022." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iAF-eo-zBq">
                                                 <rect key="frame" x="25" y="1287" width="340" height="61"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="Copyright"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>

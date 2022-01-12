@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController {
     
     @IBOutlet weak var settingsTable: UITableView!
     var viewModel = SettingsViewModel()
@@ -29,7 +29,6 @@ extension SettingsViewController {
 }
 
 extension SettingsViewController: UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -68,12 +67,25 @@ extension SettingsViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         settingsTable.deselectRow(at: indexPath, animated: false)
         
-        guard let settingsSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "settingsSelectionViewController") as? SettingsSelectionViewController else {
-            fatalError("Le ViewController n'est pas détecté dans le Storyboard.")
-        }
-        
         guard let settingType = viewModel.getSettingSection(with: indexPath.row) else {
             fatalError("Le type de paramètre sélectionné n'existe pas")
+        }
+        
+        // Si on veut réinitialiser les paramètres
+        if settingType == .NewsReset {
+            let alert = UIAlertController(title: "Attention", message: "Voulez-vous réinitialiser les paramètres des news favorites et de la langue de recherche des news ? Si oui, les paramètres seront réinitialisés par défaut.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { [weak self] _ in
+                self?.viewModel.resetSettings()
+            }))
+            alert.addAction(UIAlertAction(title: "Non", style: .cancel))
+            self.present(alert, animated: true)
+            
+            return
+        }
+        
+        // Si on choisit de changer la langue de recherche ou bien le pays favori.
+        guard let settingsSelectionViewController = storyboard?.instantiateViewController(withIdentifier: "settingsSelectionViewController") as? SettingsSelectionViewController else {
+            fatalError("Le ViewController n'est pas détecté dans le Storyboard.")
         }
         
         print("Paramètre sélectionné: \(settingType.detail) -> type: \(settingType.description)")

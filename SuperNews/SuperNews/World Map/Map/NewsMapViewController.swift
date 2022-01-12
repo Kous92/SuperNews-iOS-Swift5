@@ -10,7 +10,7 @@ import MapKit
 import CoreLocation
 import Combine
 
-class NewsMapViewController: UIViewController {
+final class NewsMapViewController: UIViewController {
     
     @IBOutlet weak var map: MKMapView!
     @IBOutlet weak var countrySearchBar: UISearchBar!
@@ -177,10 +177,10 @@ extension NewsMapViewController {
         
         let alert = UIAlertController(title: "Suggestion", message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Oui", style: .default, handler: { [weak self] _ in
-            self?.centerMapToPosition(with: suggestedLocation.location, and: 10000)
+            self?.centerMapToPosition(with: suggestedLocation.location, and: 100000)
         }))
         alert.addAction(UIAlertAction(title: "Non", style: .default, handler: { [weak self] _ in
-            self?.centerMapToPosition(with: actualLocation.location, and: 10000)
+            self?.centerMapToPosition(with: actualLocation.location, and: 100000)
         }))
         self.present(alert, animated: true)
     }
@@ -283,7 +283,7 @@ extension NewsMapViewController: CLLocationManagerDelegate {
             return
         }
         
-        centerMapToPosition(with: location, and: 10000)
+        centerMapToPosition(with: location, and: 100000)
     }
 }
 
@@ -312,6 +312,6 @@ extension NewsMapViewController: UITableViewDelegate, UITableViewDataSource {
         countrySearchBar.text = search
         
         // Centrer sur le pays en question
-        centerMapToPosition(with: viewModel.autocompletionViewModels[indexPath.row].coordinates, and: 10)
+        centerMapToPosition(with: viewModel.autocompletionViewModels[indexPath.row].coordinates, and: 100000)
     }
 }

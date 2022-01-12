@@ -7,8 +7,8 @@
 
 import UIKit
 
-class HomeViewController: UIViewController {
-
+final class HomeViewController: UIViewController {
+    
     @IBOutlet weak var dayDateLabel: UILabel!
     @IBOutlet weak var dayTimeLabel: UILabel!
     

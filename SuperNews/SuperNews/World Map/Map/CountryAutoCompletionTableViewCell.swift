@@ -7,7 +7,7 @@
 
 import UIKit
 
-class CountryAutoCompletionTableViewCell: UITableViewCell {
+final class CountryAutoCompletionTableViewCell: UITableViewCell {
     @IBOutlet weak var countryImage: UIImageView!
     @IBOutlet weak var countryNameLabel: UILabel!
     

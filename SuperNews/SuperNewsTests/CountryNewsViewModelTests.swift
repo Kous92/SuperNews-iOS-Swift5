@@ -67,7 +67,7 @@ class CountryNewsViewModelTests: XCTestCase {
             .removeDuplicates()
             .sink { [weak self] value in
                 print(value)
-                viewModel.searchQuery = value
+                self?.viewModel.searchQuery = value
                 expectation2.fulfill()
             }.store(in: &subscriptions)
         

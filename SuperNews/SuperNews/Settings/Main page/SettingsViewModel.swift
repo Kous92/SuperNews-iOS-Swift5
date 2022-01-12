@@ -17,4 +17,11 @@ final class SettingsViewModel {
         
         return nil
     }
+    
+    func resetSettings() {
+        // Réinitialisation aux paramètres par défaut
+        UserDefaults.standard.setValue("Français", forKey: "languageName")
+        UserDefaults.standard.setValue("fr", forKey: "languageCode")
+        UserDefaults.standard.setValue("fr", forKey: "countryCode")
+    }
 }

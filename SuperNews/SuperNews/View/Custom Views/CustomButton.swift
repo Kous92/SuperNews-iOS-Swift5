@@ -7,8 +7,7 @@
 
 import UIKit
 
-@IBDesignable
-class CustomButton: UIButton {
+@IBDesignable final class CustomButton: UIButton {
     
     // MARK: - IBInspectable properties
     /// Renders vertical gradient if true else horizontal

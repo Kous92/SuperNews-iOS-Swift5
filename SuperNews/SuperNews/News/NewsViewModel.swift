@@ -8,11 +8,28 @@
 import Foundation
 import Combine
 
-final class NewsViewModel: MainNews {
+final class NewsViewModel: MainNews {    
     // Les sujets, ceux qui émettent et reçoivent des événements
-    var updateResult = PassthroughSubject<Bool, NewsAPIError>()
-    var languageUpdated = PassthroughSubject<String, Never>()
-    var isLoading = PassthroughSubject<Bool, Never>()
+    private var updateResult = PassthroughSubject<Bool, NewsAPIError>()
+    private var languageUpdated = PassthroughSubject<String, Never>()
+    private var isLoading = PassthroughSubject<Bool, Never>()
+    
+    /* En programmation réactive fonctionnelle, il faut s'assurer que les Subjects ne soient pas exploités à mauvais escient.
+    -> Seul le ViewModel doit émettre des événements, le ViewController qui a une référence avec le ViewModel ne doit pas émettre d'événement, mais seulement s'abonner aux événements.
+    -> Les sujets ci-dessus sont donc privés et pour le data binding avec le ViewController, il faut utiliser des AnyPublisher pour que la vue ne s'occupe que de l'abonnement (Subscriber)
+    */
+    var updateResultPublisher: AnyPublisher<Bool, NewsAPIError> {
+        return updateResult.eraseToAnyPublisher()
+    }
+    
+    var languagePublisher: AnyPublisher<String, Never> {
+        return languageUpdated.eraseToAnyPublisher()
+    }
+    
+    var isLoadingPublisher: AnyPublisher<Bool, Never> {
+        return isLoading.eraseToAnyPublisher()
+    }
+    
     @Published var searchQuery = ""
     @Published var countryCode = "fr"
     public private(set) var countryName = ""
@@ -36,8 +53,7 @@ final class NewsViewModel: MainNews {
         $searchQuery
             .receive(on: RunLoop.main)
             .removeDuplicates()
-            .debounce(for: .seconds(0.5), scheduler: RunLoop.main)
-            .filter { !$0.isEmpty }
+            .debounce(for: .seconds(0.8), scheduler: RunLoop.main)
             .sink { [weak self] value in
                 self?.searchNews()
             }.store(in: &subscriptions)
@@ -71,6 +87,7 @@ extension NewsViewModel {
     private func searchNews() {
         isLoading.send(true)
         
+        // Contenu vide
         guard !searchQuery.isEmpty else {
             initNews()
             return
